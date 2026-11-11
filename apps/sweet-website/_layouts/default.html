@@ -16,6 +16,11 @@
   margin-top: 30px;
 }
 
+.project-notice {
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
 .toc-h2 {
   margin-left: 20px;
 }
@@ -108,6 +113,7 @@ li code {
         <ul class="nav navbar-nav">
           <li><a href="{{ '/doc/tutorial.html' | relative_url }}">Tutorial</a></li>
           <li><a href="{{ '/doc/reference.html' | relative_url }}">Reference</a></li>
+          <li><a href="{{ '/doc/status.html' | relative_url }}">Status</a></li>
           <li><a href="{{ '/browser/editor.html' | relative_url }}">Try it out!</a></li>
           <li><a href="https://github.com/sweet-js">GitHub <img src="{{ '/images/gh-mark.png' | relative_url }}" height="25" style="margin-left:5px" /></a></li>
         </ul>
@@ -115,6 +121,14 @@ li code {
     </div>
   </nav>
 
+  <div class="container">
+    <div class="alert alert-warning project-notice" role="alert">
+      <strong>Archived upstream project.</strong>
+      This documentation describes a preservation fork of the archived Sweet.js
+      repositories, not an official Sweet.js release.
+      <a href="{{ '/doc/status.html' | relative_url }}" class="alert-link">See what changed</a>.
+    </div>
+  </div>
 
   <div class="container content">
 
@@ -126,10 +140,12 @@ li code {
   <footer class="footer">
     <div class="container">
       <p class="text-muted">
-        <a href="https://github.com/sweet-js/sweet-core">Sweet.js</a>
+        <a href="https://github.com/ionian-wind/sweet">Preservation fork</a>
+        ·
+        based on the archived <a href="https://github.com/sweet-js">Sweet.js</a> projects
         ·
         <a href="https://github.com/sweet-js/sweet-core/blob/master/LICENSE.BSD">
-          Distributed under the BSD license
+          BSD license
         </a>
       </p>
     </div>
