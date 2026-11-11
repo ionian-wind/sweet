@@ -77,7 +77,8 @@ export syntax declare = ctx => {
         let attrType = isMaybe ? { typeName: 'Maybe', arg: getAttrType(innerCtx) } : getAttrType(innerCtx);
         attributes.push({
           attrName,
-          attrType: attrType
+          attrType: attrType,
+          isOptional: isMaybe
         });
       }
     }
@@ -85,13 +86,17 @@ export syntax declare = ctx => {
   }
 
   function getHasAttrTemplate(attrs, attributes) {
-    let hasAttrsTemplate = attributes.map(function (attr) {
-      let attrStx = here.fromString(attr.attrName);
-      return #`
-        if(!{}.hasOwnProperty.call(${attrs}, ${attrStx})) {
-          throw new Error('Missing attribute: ' + ${attrStx});
-        }`;
-    });
+    let hasAttrsTemplate = attributes
+      .filter(function (attr) {
+        return !attr.isOptional;
+      })
+      .map(function (attr) {
+        let attrStx = here.fromString(attr.attrName);
+        return #`
+          if(!{}.hasOwnProperty.call(${attrs}, ${attrStx})) {
+            throw new Error('Missing attribute: ' + ${attrStx});
+          }`;
+      });
     let temp = #``;
     for (let check of hasAttrsTemplate) {
       temp = temp.concat(check);

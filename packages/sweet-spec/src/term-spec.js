@@ -230,6 +230,8 @@ declare export class TsInterfaceDeclaration extends InterfaceDeclaration {
 }
 
 // TypeScript interface elements
+declare export class TypeElement extends Term {}
+
 declare export class TsTypeElement extends TypeElement {}
 
 declare export class FunctionSignatureLikeTsTypeElement extends TsTypeElement {

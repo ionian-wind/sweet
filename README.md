@@ -51,13 +51,34 @@ npx turbo run test --continue
 
 ## Current status (Node 24)
 
-| Check | Result |
-| ----- | ------ |
-| `npm run build` | Works: `sweet-core`, `sweet-helpers`, and `sweet-spec` produce their `dist`/compiled output |
-| `sweet-spec-macro` tests | 8 tests pass (ava 0.16) |
-| `sweet-core` / `sweet-helpers` tests | Blocked by an upstream bug in `sweet-spec`: the generated `dist/term-spec.js` extends an undeclared `TypeElement` class |
-| `sweet-core` lint | Legacy ESLint 3 / babel-eslint 7 configuration reports errors under current dependency resolution |
-| `sweet-shell`, `sweet-spec` | Have no upstream tests; their `test` scripts are no-ops |
+The full pipeline is green: `npm run build`, `npm run lint`, and `npm test` all pass.
+
+| Workspace | Build | Tests |
+| --------- | ----- | ----- |
+| `@sweet-js/core` | ✔ | 208 passing (ava) |
+| `@sweet-js/helpers` | ✔ | 24 passing (ava) |
+| `sweet-spec` | ✔ | No upstream tests |
+| `sweet-spec-macro` | — | 8 passing (ava) |
+| `@sweet-js/cli`, `sweet.js`, `@sweet-js/website` | — | No test scripts |
+
+### Compatibility fixes applied
+
+The archived repositories are not mutually consistent, so a few targeted fixes were
+needed to get the legacy suites running:
+
+- **`sweet-spec`**: added the missing `TypeElement` base class and bumped the local
+  package to `4.1.0`. Its master branch is an unreleased TypeScript-era revision that
+  differs from published `4.0.0`.
+- **`sweet-spec-macro`**: `?` (optional) attributes are no longer treated as required
+  by the generated `hasOwnProperty` checks.
+- **`sweet-core` / `sweet-js/helpers`**: depend on published `sweet-spec@4.0.0`
+  (installed nested by npm) because their source matches that release, not the local
+  `4.1.0` master.
+- **`sweet-core` lint**: ESLint 4.19 / babel-eslint 8.2 replaced the ESLint 3 pair
+  (which could not scope-analyze Flow class properties), with the legacy Prettier
+  version pinned and `ecmaVersion` moved into `parserOptions`.
+- **Flow**: `sweet-core`'s `.flowconfig` includes the hoisted root `node_modules`.
+
 
 ## History
 
@@ -72,10 +93,10 @@ git subtree add --prefix=packages/sweet-core \
 ## Legacy toolchain notes
 
 The imported projects date from 2014–2017 and use Babel 6, ava 0.16, Flow, and
-other tooling from that era. Dependencies are pinned as they were upstream; the
-monorepo intentionally does not modernize them yet. On current Node.js versions some
-legacy scripts (notably old Flow binaries and ava versions) may fail. `turbo run
-build` skips packages that define no matching script.
+other tooling from that era. Dependencies are pinned close to their upstream
+versions; the compatibility fixes above are the only deviations required to run
+them on current Node.js. `turbo run build` skips packages that define no matching
+script.
 
 ## License
 

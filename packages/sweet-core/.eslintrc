@@ -8,8 +8,8 @@
     "es6": true,
     "node": true
   },
-  "ecmaVersion": 6,
   "parserOptions": {
+    "ecmaVersion": 6,
     "sourceType": "module"
   },
   "extends": [
