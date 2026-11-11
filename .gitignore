@@ -1,0 +1,18 @@
+# dependencies
+node_modules/
+
+# turbo
+.turbo/
+graph.html
+
+# build output
+dist/
+build/
+lib/
+coverage/
+.nyc_output/
+
+# logs and OS files
+*.log
+npm-debug.log*
+.DS_Store
