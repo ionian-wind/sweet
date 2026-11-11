@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Sweet.js - Hygienic Macros for JavaScript</title>
+
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Quicksand" rel="stylesheet">
+  <link href='/css/friendly.css' rel='stylesheet' />
+<style>
+
+.section-nav {
+  margin-top: 30px;
+}
+
+.toc-h2 {
+  margin-left: 20px;
+}
+
+.toc-h3 {
+  margin-left: 40px;
+}
+
+.toc-h4 {
+  margin-left: 60px;
+}
+
+.footer {
+  margin-top: 50px;
+  padding-top: 10px;
+  text-align: center;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 40px;
+  background-color: #f5f5f5;
+}
+
+.hero {
+  font-size: 55px;
+}
+
+.content {
+  padding-top: 60px;
+}
+
+@media (min-width: 750px) {
+  .container {
+    width: 750px;
+  }
+}
+
+h1,h2,h3 {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 100;
+  position: relative;
+  color: #444;
+}
+h1 {
+  font-size: 300%;
+}
+h2 {
+  font-size: 180%;
+}
+h3 {
+  font-size: 150%;
+}
+
+p, li {
+  font-family: 'Open Sans', sans-serif;
+  font-size: large;
+}
+
+footer p {
+  font-size: 15px;
+}
+
+pre {
+  background-color: white;
+}
+
+p code {
+  font-size: 14px;
+}
+li code {
+  font-size: 14px;
+}
+
+</style>
+</head>
+
+<body class="language-javascript">
+
+  <nav class="navbar navbar-inverse">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">Sweet.js</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="/doc/tutorial">Tutorial</a></li>
+          <li><a href="/doc/reference">Reference</a></li>
+          <li><a href="/browser/editor.html">Try it out!</a></li>
+          <li><a href="https://github.com/sweet-js">GitHub <img src="/images/gh-mark.png" height="25" style="margin-left:5px" /></a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
+
+
+  <div class="container content">
+
+    {{content | toc}}
+
+  </div>
+
+
+  <footer class="footer">
+    <div class="container">
+      <p class="text-muted">
+        <a href="https://github.com/sweet-js/sweet-core">Sweet.js</a>
+        ·
+        <a href="https://github.com/sweet-js/sweet-core/blob/master/LICENSE.BSD">
+          Distributed under the BSD liscense
+        </a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  {% if page.use_anchors %}
+  <script src="/js/anchor.min.js"></script>
+  <script>
+    anchors.options.placement = 'left';
+    anchors.add();
+  </script>
+  {% endif %}
+</body>
+</html>
