@@ -16,11 +16,6 @@
   margin-top: 30px;
 }
 
-.project-notice {
-  margin-top: 20px;
-  margin-bottom: 0;
-}
-
 .toc-h2 {
   margin-left: 20px;
 }
@@ -121,14 +116,7 @@ li code {
     </div>
   </nav>
 
-  <div class="container">
-    <div class="alert alert-warning project-notice" role="alert">
-      <strong>Archived upstream project.</strong>
-      This documentation describes a preservation fork of the archived Sweet.js
-      repositories, not an official Sweet.js release.
-      <a href="{{ '/doc/status.html' | relative_url }}" class="alert-link">See what changed</a>.
-    </div>
-  </div>
+  {% include status-panel.html %}
 
   <div class="container content">
 

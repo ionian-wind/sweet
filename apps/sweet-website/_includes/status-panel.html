@@ -1,0 +1,39 @@
+<style>
+  .sweet-status-panel {
+    box-sizing: border-box;
+    max-width: 750px;
+    margin: 20px auto 0;
+    padding: 12px 16px;
+    border: 1px solid #faebcc;
+    border-radius: 4px;
+    background: #fcf8e3;
+    color: #8a6d3b;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .sweet-status-panel a {
+    color: #66512c;
+    font-weight: 600;
+    text-decoration: underline;
+  }
+
+  .sweet-status-panel--fixed {
+    position: fixed;
+    right: 12px;
+    bottom: 12px;
+    left: auto;
+    z-index: 1000;
+    width: min(420px, calc(100vw - 24px));
+    margin: 0;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+  }
+</style>
+
+<div class="sweet-status-panel{% if include.fixed %} sweet-status-panel--fixed{% endif %}" role="status">
+  <strong>Archived upstream project.</strong>
+  This documentation describes a preservation fork of the archived Sweet.js
+  repositories, not an official Sweet.js release.
+  <a href="{{ '/doc/status.html' | relative_url }}">See what changed</a>.
+</div>
