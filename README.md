@@ -147,6 +147,9 @@ Dependencies otherwise stay close to the versions pinned in the original reposit
 
 ## License
 
-Each package keeps its original license, primarily **BSD-2-Clause**. License files are
-kept inside the package directories where the originals provided them. See the
-`LICENSE*` files in each project and the `license` field in each `package.json`.
+This monorepo is released under the **BSD 2-Clause License**; see
+[`LICENSE`](./LICENSE).
+
+The imported packages keep their original licenses, primarily BSD-2-Clause. License
+files are kept inside the package directories where the originals provided them. See
+the `LICENSE*` files in each project and the `license` field in each `package.json`.
