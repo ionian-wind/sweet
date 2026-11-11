@@ -123,9 +123,9 @@ npx turbo run test --continue
 
 The website is published to **https://ionian-wind.github.io/sweet/** by
 [`.github/workflows/pages.yml`](.github/workflows/pages.yml). On the repository's
-**Settings → Pages** screen, set **Source** to **GitHub Actions** once. After that,
-pushes touching `apps/sweet-website/**` deploy automatically, and the workflow can be
-run manually from the Actions tab.
+[Pages settings](https://github.com/ionian-wind/sweet/settings/pages), set **Source**
+to **GitHub Actions** once. After that, pushes touching `apps/sweet-website/**` deploy
+automatically, and the workflow can be run manually from the Actions tab.
 
 The Jekyll build injects the project base path (`/sweet`) through
 `actions/configure-pages`, so the same source also works when served locally from the
