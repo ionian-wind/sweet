@@ -15,7 +15,7 @@
   "author": "Tim Disney",
   "license": "BSD-2-Clause",
   "devDependencies": {
-    "@babel/cli": "7.29.7",
+    "@babel/cli": "8.1.0",
     "@sweet-js/babel-preset": "0.0.0",
     "sweet-spec-macro": "3.0.0",
     "@sweet-js/cli": "3.0.13",

@@ -34,9 +34,9 @@
   },
   "homepage": "https://github.com/sweet-js/sweet-helpers#readme",
   "devDependencies": {
-    "@babel/cli": "7.29.7",
-    "@babel/core": "7.29.13",
-    "@babel/register": "7.29.13",
+    "@babel/cli": "8.1.0",
+    "@babel/core": "8.1.0",
+    "@babel/register": "8.0.6",
     "@sweet-js/babel-preset": "0.0.0",
     "@sweet-js/core": "3.0.13",
     "@sweet-js/eslint-config": "0.0.0",

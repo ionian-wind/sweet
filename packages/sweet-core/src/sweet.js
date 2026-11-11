@@ -1,6 +1,6 @@
 // @flow
 import type SweetLoader from './sweet-loader';
-import { transform as babel } from '@babel/core';
+import { transformSync as babel } from '@babel/core';
 
 type CompileOptions = {
   refererName?: string,

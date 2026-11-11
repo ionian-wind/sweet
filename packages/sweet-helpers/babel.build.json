@@ -1,3 +1,13 @@
 {
-  "presets": [["@sweet-js/babel-preset", { "modules": false }]]
+  "presets": [
+    [
+      "@sweet-js/babel-preset",
+      {
+        "modules": false,
+        "targets": {
+          "node": "8"
+        }
+      }
+    ]
+  ]
 }

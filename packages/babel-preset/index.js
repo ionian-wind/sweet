@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function sweetBabelPreset(api, options = {}) {
-  api.assertVersion(7);
+  api.assertVersion(8);
 
   const {
     flow = true,

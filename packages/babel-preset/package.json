@@ -5,10 +5,10 @@
   "description": "Shared Babel preset for the sweet-monorepo packages",
   "main": "index.js",
   "dependencies": {
-    "@babel/preset-env": "7.29.7",
-    "@babel/preset-flow": "7.29.7"
+    "@babel/preset-env": "8.0.7",
+    "@babel/preset-flow": "8.0.1"
   },
   "peerDependencies": {
-    "@babel/core": "7.29.13"
+    "@babel/core": "8.1.0"
   }
 }

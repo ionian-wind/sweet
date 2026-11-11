@@ -11,7 +11,7 @@ import SweetModule from './sweet-module';
 import * as _ from 'ramda';
 import ScopeReducer from './scope-reducer';
 import { wrapInTerms } from './macro-context';
-import { transform as babel } from '@babel/core';
+import { transformSync as babel } from '@babel/core';
 import Store from './store';
 import Multimap from './multimap';
 
