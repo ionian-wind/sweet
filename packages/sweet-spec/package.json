@@ -18,7 +18,7 @@
     "@babel/cli": "7.29.7",
     "@sweet-js/babel-preset": "0.0.0",
     "sweet-spec-macro": "3.0.0",
-    "sweet.js": "2.2.1",
-    "ramda": "0.19.1"
+    "@sweet-js/cli": "3.0.13",
+    "@sweet-js/core": "3.0.13"
   }
 }

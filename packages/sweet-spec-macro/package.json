@@ -13,7 +13,7 @@
     "@babel/register": "7.29.13",
     "@sweet-js/babel-preset": "0.0.0",
     "ava": "5.3.1",
-    "sweet.js": "2.2.1"
+    "@sweet-js/core": "3.0.13"
   },
   "ava": {
     "files": [

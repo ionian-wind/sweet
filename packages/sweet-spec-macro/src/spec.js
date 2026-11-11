@@ -1,31 +1,57 @@
 #lang 'sweet.js';
+'lang sweet.js';
 
 export syntax declare = ctx => {
   ctx.next(); // export
   let defaultOrClass = ctx.next().value; // class or default
-  if (defaultOrClass.isKeyword('default')) {
+  if (isKeyword(defaultOrClass, 'default')) {
     ctx.next(); // consume class
   }
   let name = ctx.next();
   let bodyOrExtends = ctx.next();
   let here = #`here`.get(0);
 
+  function isDelimiter(x) {
+    return x != null && x.type === 'RawDelimiter';
+  }
+  function isParens(x) {
+    return isDelimiter(x) && x.kind === 'parens';
+  }
+  function isBrackets(x) {
+    return isDelimiter(x) && x.kind === 'brackets';
+  }
+  function isBraces(x) {
+    return isDelimiter(x) && x.kind === 'braces';
+  }
+  function isKeyword(x, value) {
+    return !isDelimiter(x) && x.value.isKeyword(value);
+  }
+  function isIdentifier(x) {
+    return !isDelimiter(x) && x.value.isIdentifier();
+  }
+  function isPunctuator(x, value) {
+    return !isDelimiter(x) && x.value.isPunctuator(value);
+  }
+  function val(x) {
+    return isDelimiter(x) ? x.kind : x.value.val();
+  }
+
   function getBaseType(ctx) {
     let next = ctx.next().value;
     let arg = null;
     let typeName;
-    if (next.isParens()) {
-      arg = getAttrType(next.inner());
+    if (isParens(next)) {
+      arg = getAttrType(ctx.contextify(next));
     } else {
-      typeName = next.val();
+      typeName = val(next);
       arg = {
-        typeName: next.val()
+        typeName: val(next)
       };
     }
 
     let marker = ctx.mark();
     let typeArgStx = ctx.next();
-    if (!typeArgStx.done && typeArgStx.value.isBrackets()) {
+    if (!typeArgStx.done && isBrackets(typeArgStx.value)) {
       return {
         typeName: 'List', arg
       };
@@ -41,7 +67,7 @@ export syntax declare = ctx => {
   function getAttrType(ctx) {
     let attrType = getBaseType(ctx);
     let next = ctx.next();
-    if (!next.done && next.value.isPunctuator('|')) {
+    if (!next.done && isPunctuator(next.value, '|')) {
       attrType = {
         typeName: 'Union',
         arg: [attrType]
@@ -50,28 +76,28 @@ export syntax declare = ctx => {
         let nextType = getBaseType(ctx);
         attrType.arg.push(nextType);
         next = ctx.next();
-      } while (!next.done && next.value.isPunctuator('|'));
-    } else if (!next.done && !next.value.isPunctuator(';')) {
-      throw new Error(`Unexpected token ${next.value.val()}`);
+      } while (!next.done && isPunctuator(next.value, '|'));
+    } else if (!next.done && !isPunctuator(next.value, ';')) {
+      throw new Error('Unexpected token ' + val(next.value));
     }
     return attrType;
   }
 
-  function findFields (delim) {
+  function findFields (delim, ctx) {
     let attributes = [];
-    let innerCtx = delim.inner();
+    let innerCtx = ctx.contextify(delim);
 
     for (let stx of innerCtx) {
-      if (stx.isIdentifier() || stx.isKeyword()) {
-        let attrName = stx.val();
+      if (isIdentifier(stx) || isKeyword(stx)) {
+        let attrName = val(stx);
         let colonOrMaybe = innerCtx.next();
         let isMaybe = false;
-        if (colonOrMaybe.value.isPunctuator('?')) {
+        if (isPunctuator(colonOrMaybe.value, '?')) {
           colonOrMaybe = innerCtx.next();
           isMaybe = true;
         }
-        if (!colonOrMaybe.value.isPunctuator(':')) {
-          throw new Error('Unexpected syntax: ' + colonOrMaybe.value.val());
+        if (!isPunctuator(colonOrMaybe.value, ':')) {
+          throw new Error('Unexpected syntax: ' + val(colonOrMaybe.value));
         }
 
         let attrType = isMaybe ? { typeName: 'Maybe', arg: getAttrType(innerCtx) } : getAttrType(innerCtx);
@@ -135,7 +161,7 @@ export syntax declare = ctx => {
           attrName: attr.attrName,
           attrType: attr.attrType.arg,
         };
-        action = #`${attrStx}.map(a => ${attrAction(reducerStx, #`a`, mappedAttr)})`
+        action = #`${attrStx}.map(function () { return ${attrAction(reducerStx, #`arguments[0]`, mappedAttr)}; })`
         break;
       case 'Union':
         action = attr.attrType.arg.reduce((acc, attrType) => {
@@ -183,10 +209,10 @@ export syntax declare = ctx => {
     }, #``);
   }
 
-  let reduceNameStx = here.fromIdentifier(`reduce${name.value.val()}`);
-  let nameStr = here.fromString(name.value.val());
-  if ((!bodyOrExtends.done) && bodyOrExtends.value.isBraces()) {
-    let attributes = findFields(bodyOrExtends.value);
+  let reduceNameStx = here.fromIdentifier('reduce' + val(name.value));
+  let nameStr = here.fromString(val(name.value));
+  if ((!bodyOrExtends.done) && isBraces(bodyOrExtends.value)) {
+    let attributes = findFields(bodyOrExtends.value, ctx);
     return #`
       class ${name.value} {
         constructor(attrs, type) {
@@ -271,7 +297,7 @@ export syntax declare = ctx => {
   } else {
     let base = ctx.next();
     let body = ctx.next();
-    let attributes = findFields(body.value);
+    let attributes = findFields(body.value, ctx);
     return #`
       class ${name.value} extends ${base.value} {
         constructor(attrs, type) {

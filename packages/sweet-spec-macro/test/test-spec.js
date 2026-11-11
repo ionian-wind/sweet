@@ -1,11 +1,33 @@
 import test from 'ava';
-import { compile } from 'sweet.js';
+import { compile } from '@sweet-js/core';
+import NodeLoader from '@sweet-js/core/dist/node-loader';
 import { transformSync } from '@babel/core';
+import { join } from 'node:path';
+
+class EntrypointNodeLoader extends NodeLoader {
+  constructor(entrypoint, basedir, options) {
+    super(basedir, options);
+    this.sourceCache.set(`${basedir}/*entrypoint*`, entrypoint);
+  }
+
+  normalize(name, refererName, refererAddress) {
+    if (name === '*entrypoint*') {
+      return `${this.baseDir}/*entrypoint*:0`;
+    }
+    return super.normalize(name, refererName, refererAddress);
+  }
+}
 
 function compileAndEval(code) {
   let output;
-  let res = transformSync(compile(code).code, { configFile: false, babelrc: false, presets: [['@sweet-js/babel-preset']] }).code;
-  // console.log(res);
+  let loader = new EntrypointNodeLoader(code, join(__dirname, '..'), {});
+  let res = transformSync(compile('*entrypoint*', loader).code, {
+    configFile: false,
+    babelrc: false,
+    presets: [['@sweet-js/babel-preset', { modules: 'commonjs' }]],
+  }).code;
+  const module = { exports: {} };
+  const exports = module.exports;
   eval(res);
   return output;
 }
@@ -92,7 +114,7 @@ test('a field can be another type', t => {
     output = b.reduce({
       reduceA (node, state) {
         return new A({ a: state.a + 'a' });
-      }
+      },
 
       reduceB (node, state) {
         return new B({ a: state.a, b: state.b.a + 'b' });
@@ -119,7 +141,7 @@ test('a field can be an array', t => {
 
       reduceA(node, state) {
         return new A({ a: state.a.map(el => el + 'a') });
-      }
+      },
 
       reduceB(node, state) {
         return new B({ a: state.a, b: state.b })
@@ -154,10 +176,10 @@ test('a field can be a union', t => {
     output = e.reduce({
       reduceLeft(node, state) {
         return new Left({ l: 'l' });
-      }
+      },
       reduceRight(node, state) {
         return new Right({ r: 'r' });
-      }
+      },
       reduceEither(node, state) {
         return new Either({ e: state.e });
       }
@@ -190,10 +212,10 @@ test('a field can be a list of unions', t => {
     output = e.reduce({
       reduceLeft(node, state) {
         return new Left({ l: 'l' });
-      }
+      },
       reduceRight(node, state) {
         return new Right({ r: 'r' });
-      }
+      },
       reduceEither(node, state) {
         return new Either({ e: state.e });
       }
@@ -220,7 +242,7 @@ test('supports maybe types', t => {
     output = b.reduce({
       reduceA(node, state) {
         return new A({ a: state.a });
-      }
+      },
       reduceB(node, state) {
         return new B({ b: state.b });
       }

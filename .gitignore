@@ -20,3 +20,7 @@ npm-debug.log*
 # editor/IDE
 .idea/
 .vscode/
+
+# sweet-spec bootstrap compiler (needed to compile itself)
+!packages/sweet-spec/dist/
+!packages/sweet-spec/dist/**

@@ -177,15 +177,17 @@ toolchain does not run unmodified on Node 24. The following fixes were applied:
   `contains` helpers were replaced with `mergeRight` and `includes`, and
   shift-codegen 8 is imported through its named `codeGen` export. The unused
   `shift-reducer` and `semver` dependencies were removed from core.
-- **`sweet-spec` build** — keeps the legacy `sjs` 2.2.1 compiler for macro expansion
-  (the specification is written in Sweet.js 2 syntax) but uses Babel 7 to emit `dist`.
+- **`sweet-spec` / `sweet-spec-macro` build** — the `declare` macro DSL was ported to
+  Sweet.js 3's term API, so the spec now builds with the workspace `@sweet-js/cli`
+  instead of the legacy `sjs` 2.2.1 compiler. Because the spec is self-hosting (Core
+  needs `sweet-spec` to compile anything), the generated
+  `packages/sweet-spec/dist/term-spec.js` is committed as a bootstrap artifact; the
+  build regenerates it and Babel emits the final `dist`.
 - **CLI/website** — the CLI was converted to ESM and upgraded to yargs 18.2 (latest);
   asciidoctor tooling was replaced with `@asciidoctor/cli` 4.
 
-Only `sweet.js@2.2.1` remains on a legacy major: it is the build-time compiler for the
-archived `declare` macro DSL used by `sweet-spec`. Sweet.js 3 cannot compile that
-dialect, and replacing it needs a full port of the macro source (the published
-`sweet-spec@4.0.0` pin has been removed; the workspace uses local `4.1.0`).
+No registry `sweet.js@2` dependency remains. The workspace package named `sweet.js` is
+only the local 3.0.15 compatibility wrapper around `@sweet-js/core`/`cli`.
 
 ## Dependency alignment and pinning
 
