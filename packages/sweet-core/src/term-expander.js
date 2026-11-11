@@ -70,10 +70,12 @@ export default class TermExpander extends ASTDispatcher {
   expandSwitchStatementWithDefault(term) {
     return new T.SwitchStatementWithDefault({
       discriminant: this.expand(term.discriminant),
-      preDefaultCases: term.preDefaultCases.map(c => this.expand(c)).toArray(),
+      preDefaultCases: term.preDefaultCases
+        .map((c) => this.expand(c))
+        .toArray(),
       defaultCase: this.expand(term.defaultCase),
       postDefaultCases: term.postDefaultCases
-        .map(c => this.expand(c))
+        .map((c) => this.expand(c))
         .toArray(),
     });
   }
@@ -88,14 +90,14 @@ export default class TermExpander extends ASTDispatcher {
   expandSwitchStatement(term) {
     return new T.SwitchStatement({
       discriminant: this.expand(term.discriminant),
-      cases: term.cases.map(c => this.expand(c)).toArray(),
+      cases: term.cases.map((c) => this.expand(c)).toArray(),
     });
   }
 
   expandFormalParameters(term) {
     let rest = term.rest == null ? null : this.expand(term.rest);
     return new T.FormalParameters({
-      items: term.items.map(i => this.expand(i)),
+      items: term.items.map((i) => this.expand(i)),
       rest,
     });
   }
@@ -110,14 +112,14 @@ export default class TermExpander extends ASTDispatcher {
 
   expandSwitchDefault(term) {
     return new T.SwitchDefault({
-      consequent: term.consequent.map(c => this.expand(c)).toArray(),
+      consequent: term.consequent.map((c) => this.expand(c)).toArray(),
     });
   }
 
   expandSwitchCase(term) {
     return new T.SwitchCase({
       test: this.expand(term.test),
-      consequent: term.consequent.map(c => this.expand(c)).toArray(),
+      consequent: term.consequent.map((c) => this.expand(c)).toArray(),
     });
   }
 
@@ -205,13 +207,13 @@ export default class TermExpander extends ASTDispatcher {
 
   expandObjectBinding(term) {
     return new T.ObjectBinding({
-      properties: term.properties.map(t => this.expand(t)).toArray(),
+      properties: term.properties.map((t) => this.expand(t)).toArray(),
     });
   }
 
   expandObjectAssignmentTarget(term) {
     return new T.ObjectAssignmentTarget({
-      properties: term.properties.map(t => this.expand(t)).toArray(),
+      properties: term.properties.map((t) => this.expand(t)).toArray(),
     });
   }
 
@@ -219,7 +221,7 @@ export default class TermExpander extends ASTDispatcher {
     let rest = term.rest == null ? null : this.expand(term.rest);
     return new T.ArrayBinding({
       elements: term.elements
-        .map(t => (t == null ? null : this.expand(t)))
+        .map((t) => (t == null ? null : this.expand(t)))
         .toArray(),
       rest,
     });
@@ -229,7 +231,7 @@ export default class TermExpander extends ASTDispatcher {
     let rest = term.rest == null ? null : this.expand(term.rest);
     return new T.ArrayAssignmentTarget({
       elements: term.elements
-        .map(t => (t == null ? null : this.expand(t)))
+        .map((t) => (t == null ? null : this.expand(t)))
         .toArray(),
       rest,
     });
@@ -318,7 +320,7 @@ export default class TermExpander extends ASTDispatcher {
     );
 
     let markedBody, bodyTerm;
-    markedBody = term.statements.map(b =>
+    markedBody = term.statements.map((b) =>
       b.reduce(
         new ScopeReducer(
           [{ scope, phase: ALL_PHASES, flip: false }],
@@ -351,7 +353,7 @@ export default class TermExpander extends ASTDispatcher {
     return new T.ClassDeclaration({
       name: term.name == null ? null : this.expand(term.name),
       super: term.super == null ? null : this.expand(term.super),
-      elements: term.elements.map(el => this.expand(el)).toArray(),
+      elements: term.elements.map((el) => this.expand(el)).toArray(),
     });
   }
 
@@ -359,7 +361,7 @@ export default class TermExpander extends ASTDispatcher {
     return new T.ClassExpression({
       name: term.name == null ? null : this.expand(term.name),
       super: term.super == null ? null : this.expand(term.super),
-      elements: term.elements.map(el => this.expand(el)).toArray(),
+      elements: term.elements.map((el) => this.expand(el)).toArray(),
     });
   }
 
@@ -386,7 +388,7 @@ export default class TermExpander extends ASTDispatcher {
       name: name,
     });
 
-    let expandedInterps = r.interp.map(i => {
+    let expandedInterps = r.interp.map((i) => {
       let enf = new Enforester(i, List(), this.context);
       return this.expand(enf.enforest('expression'));
     });
@@ -424,7 +426,7 @@ export default class TermExpander extends ASTDispatcher {
 
   expandArrayExpression(term) {
     return new T.ArrayExpression({
-      elements: term.elements.map(t => (t == null ? t : this.expand(t))),
+      elements: term.elements.map((t) => (t == null ? t : this.expand(t))),
     });
   }
 
@@ -481,7 +483,7 @@ export default class TermExpander extends ASTDispatcher {
 
   expandObjectExpression(term) {
     return new T.ObjectExpression({
-      properties: term.properties.map(t => this.expand(t)),
+      properties: term.properties.map((t) => this.expand(t)),
     });
   }
 
@@ -503,7 +505,7 @@ export default class TermExpander extends ASTDispatcher {
     }
     return new T.VariableDeclaration({
       kind: term.kind,
-      declarators: term.declarators.map(d => this.expand(d)),
+      declarators: term.declarators.map((d) => this.expand(d)),
     });
   }
 
@@ -568,7 +570,7 @@ export default class TermExpander extends ASTDispatcher {
   expandNewExpression(term) {
     let callee = this.expand(term.callee);
     let enf = new Enforester(term.arguments, List(), this.context);
-    let args = enf.enforestArgumentList().map(arg => this.expand(arg));
+    let args = enf.enforestArgumentList().map((arg) => this.expand(arg));
     return new T.NewExpression({
       callee,
       arguments: args.toArray(),
@@ -582,7 +584,7 @@ export default class TermExpander extends ASTDispatcher {
   expandCallExpressionE(term) {
     let callee = this.expand(term.callee);
     let enf = new Enforester(term.arguments, List(), this.context);
-    let args = enf.enforestArgumentList().map(arg => this.expand(arg));
+    let args = enf.enforestArgumentList().map((arg) => this.expand(arg));
     return new T.CallExpression({
       callee: callee,
       arguments: args,
@@ -616,7 +618,7 @@ export default class TermExpander extends ASTDispatcher {
     if (type !== 'Getter' && type !== 'Setter') {
       // TODO: need to register the parameter bindings again
       params = term.params.reduce(
-        new class extends Term.CloneReducer {
+        new (class extends Term.CloneReducer {
           reduceBindingIdentifier(term) {
             let name = term.name.addScope(
               scope,
@@ -636,7 +638,7 @@ export default class TermExpander extends ASTDispatcher {
             });
             return new T.BindingIdentifier({ name });
           }
-        }(),
+        })(),
       );
       params = this.expand(params);
     }
@@ -658,14 +660,14 @@ export default class TermExpander extends ASTDispatcher {
       bodyTerm = this.expand(term.body.reduce(scopeReducer));
     } else {
       let compiledBody = compiler.compile(
-        term.body.map(b => b.reduce(scopeReducer)),
+        term.body.map((b) => b.reduce(scopeReducer)),
       );
       const directives = compiledBody
         .takeWhile(
-          s =>
+          (s) =>
             isExpressionStatement(s) && isLiteralStringExpression(s.expression),
         )
-        .map(s => new T.Directive({ rawValue: s.expression.value }));
+        .map((s) => new T.Directive({ rawValue: s.expression.value }));
       bodyTerm = new T.FunctionBody({
         directives: directives,
         statements: compiledBody.slice(directives.size),

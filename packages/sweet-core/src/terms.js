@@ -165,7 +165,7 @@ export const isFunctionWithName = R.and(
 export const isParenthesizedExpression = R.whereEq({
   type: 'ParenthesizedExpression',
 });
-export const isExportSyntax = R.both(isExport, exp =>
+export const isExportSyntax = R.both(isExport, (exp) =>
   R.or(
     isSyntaxDeclaration(exp.declaration),
     isSyntaxrecDeclaration(exp.declaration),
@@ -173,14 +173,14 @@ export const isExportSyntax = R.both(isExport, exp =>
 );
 export const isSyntaxDeclarationStatement = R.both(
   isVariableDeclarationStatement,
-  decl => isCompiletimeDeclaration(decl.declaration),
+  (decl) => isCompiletimeDeclaration(decl.declaration),
 );
 
 export const isCompiletimeDeclaration = R.either(
   isSyntaxDeclaration,
   isSyntaxrecDeclaration,
 );
-export const isCompiletimeStatement = term => {
+export const isCompiletimeStatement = (term) => {
   return (
     term instanceof Term &&
     isVariableDeclarationStatement(term) &&

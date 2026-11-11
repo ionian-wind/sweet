@@ -30,6 +30,6 @@ export default class Compiler {
       }),
     );
 
-    return tokenExpander.expand(stxl).map(t => termExpander.expand(t));
+    return tokenExpander.expand(stxl).map((t) => termExpander.expand(t));
   }
 }

@@ -1,0 +1,13 @@
+{
+  "singleQuote": true,
+  "trailingComma": "all",
+  "printWidth": 80,
+  "overrides": [
+    {
+      "files": ["*.js", "*.cjs", "*.mjs", "*.jsx"],
+      "options": {
+        "parser": "flow"
+      }
+    }
+  ]
+}

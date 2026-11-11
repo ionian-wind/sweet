@@ -10,6 +10,7 @@ type Scopeset = any;
 type ScopesetBinding = {
   scopes: Scopeset,
   binding: SymbolClass,
+  // $FlowFixMe[value-as-type]
   alias: Maybe<Syntax>,
 };
 
@@ -41,7 +42,10 @@ export default class BindingMap {
 
     let scopesetBindingList = this._map.get(stxName);
     if (scopesetBindingList) {
-      if (skipDup && scopesetBindingList.some(s => s.scopes.equals(scopeset))) {
+      if (
+        skipDup &&
+        scopesetBindingList.some((s) => s.scopes.equals(scopeset))
+      ) {
         return;
       }
       this._map.set(
@@ -100,7 +104,7 @@ export default class BindingMap {
     }
   }
 
-  get(stx: Syntax) {
+  get(stx: Syntax): any {
     return this._map.get(stx.token.value);
   }
 }

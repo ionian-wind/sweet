@@ -1,6 +1,7 @@
 // @flow
 import { List } from 'immutable';
 
+// $FlowFixMe[untyped-type-import]
 import type { CharStream } from 'readtable';
 import { isEOS } from 'readtable';
 
@@ -8,7 +9,9 @@ import { readStringEscape } from './utils';
 import { getSlice } from './token-reader';
 import { TemplateToken, TemplateElementToken } from '../tokens';
 
+// $FlowFixMe[missing-this-annot]
 export default function readTemplateLiteral(
+  // $FlowFixMe[value-as-type]
   stream: CharStream,
   prefix: List<any>,
 ): TemplateToken {
@@ -30,11 +33,14 @@ export default function readTemplateLiteral(
   });
 }
 
+// $FlowFixMe[missing-this-annot]
+// $FlowFixMe[value-as-type]
 function readTemplateElement(stream: CharStream): TemplateElementToken {
   let char = stream.peek(),
     idx = 0,
     value = '',
     octal = null;
+  // $FlowFixMe[unsafe-object-assign]
   const startLocation = Object.assign({}, this.locationInfo, stream.sourceInfo);
   while (!isEOS(char)) {
     switch (char) {
@@ -66,6 +72,7 @@ function readTemplateElement(stream: CharStream): TemplateElementToken {
       }
       case '\\': {
         let newVal;
+        // $FlowFixMe[definition-cycle]
         [newVal, idx, octal] = readStringEscape.call(
           this,
           '',

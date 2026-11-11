@@ -280,7 +280,8 @@ class BaseToken {
   }
 }
 
-export function isString(x: any, value?: string) {
+export function isString(x: any, value?: string): false | boolean {
+  // $FlowFixMe[incompatible-type]
   let r = hasType(x, TT.STRING);
   if (value != null) {
     return r && x.str === value;
@@ -303,6 +304,7 @@ export class StringToken {
     octal: ?string,
     slice?: Slice,
   }) {
+    // $FlowFixMe[incompatible-type]
     this.type = TT.STRING;
     this.typeCode = TypeCodes.StringLiteral;
     this.str = str;
@@ -322,7 +324,8 @@ export const TypeCodes = {
   RegExp: 7,
 };
 
-export function isIdentifier(x: any, value?: string) {
+export function isIdentifier(x: any, value?: string): false | boolean {
+  // $FlowFixMe[incompatible-type]
   let r = hasType(x, TT.IDENTIFIER);
   if (value != null) {
     return r && x.value === value;
@@ -334,6 +337,7 @@ export class IdentifierToken extends BaseToken {
   constructor({ value, slice }: { value: string, slice?: Slice }) {
     super({
       typeCode: TypeCodes.Identifier,
+      // $FlowFixMe[incompatible-type]
       type: TT.IDENTIFIER,
       value,
       slice,
@@ -341,13 +345,14 @@ export class IdentifierToken extends BaseToken {
   }
 }
 
-export function isKeyword(x: any, value?: string | string[]) {
+export function isKeyword(x: any, value?: string | string[]): false | boolean {
+  // $FlowFixMe[incompatible-type]
   let r = hasKlass(x, TC.Keyword);
   if (value != null) {
     if (typeof value === 'string') {
       return r && x.value === value;
     } else if (typeof value.some === 'function') {
-      return value.some(v => v === x.value);
+      return value.some((v) => v === x.value);
     }
   }
   return r;
@@ -357,6 +362,7 @@ export class KeywordToken extends BaseToken {
   constructor({ value, slice }: { value: string, slice?: Slice }) {
     super({
       typeCode: TypeCodes.Keyword,
+      // $FlowFixMe[invalid-computed-prop]
       type: keywordTable[value],
       value,
       slice,
@@ -364,7 +370,8 @@ export class KeywordToken extends BaseToken {
   }
 }
 
-export function isPunctuator(x: any, value?: string) {
+export function isPunctuator(x: any, value?: string): false | boolean {
+  // $FlowFixMe[incompatible-type]
   let r = hasKlass(x, TC.Punctuator);
   if (value != null) {
     return r && x.value === value;
@@ -375,6 +382,7 @@ export class PunctuatorToken extends BaseToken {
   constructor({ value, slice }: { value: string, slice?: Slice }) {
     super({
       typeCode: TypeCodes.Punctuator,
+      // $FlowFixMe[invalid-computed-prop]
       type: punctuatorTable[value],
       value,
       slice,
@@ -382,7 +390,8 @@ export class PunctuatorToken extends BaseToken {
   }
 }
 
-export function isNumeric(x: any, value?: number) {
+export function isNumeric(x: any, value?: number): false | boolean {
+  // $FlowFixMe[incompatible-type]
   let r = hasType(x, TT.NUMBER);
   if (value != null) {
     return r && x.value === value;
@@ -406,6 +415,7 @@ export class NumericToken extends BaseToken {
   }) {
     super({
       typeCode: TypeCodes.NumericLiteral,
+      // $FlowFixMe[incompatible-type]
       type: TT.NUMBER,
       value,
       slice,
@@ -415,7 +425,8 @@ export class NumericToken extends BaseToken {
   }
 }
 
-export function isTemplateElement(x: any, value?: string) {
+export function isTemplateElement(x: any, value?: string): false | boolean {
+  // $FlowFixMe[incompatible-type]
   let r = hasType(x, TT.TEMPLATE) && x.items == null;
   if (value != null) {
     return r && x.value === value;
@@ -439,6 +450,7 @@ export class TemplateElementToken extends BaseToken {
     slice?: Slice,
   }) {
     super({
+      // $FlowFixMe[incompatible-type]
       type: TT.TEMPLATE,
       typeCode: TypeCodes.TemplateElement,
       value,
@@ -449,19 +461,22 @@ export class TemplateElementToken extends BaseToken {
   }
 }
 
-export function isTemplate(x: any) {
+export function isTemplate(x: any): false | boolean {
+  // $FlowFixMe[incompatible-type]
   return hasType(x, TT.TEMPLATE) && x.items != null;
 }
 export class TemplateToken extends BaseToken {
   items: List<Token>;
 
   constructor({ items, slice }: { items: List<Token>, slice?: Slice }) {
+    // $FlowFixMe[incompatible-type]
     super({ type: TT.TEMPLATE, typeCode: TypeCodes.Template, slice });
     this.items = items;
   }
 }
 
-export function isRegExp(x: any, value?: string) {
+export function isRegExp(x: any, value?: string): false | boolean {
+  // $FlowFixMe[incompatible-type]
   let r = hasType(x, TT.REGEXP);
   if (value != null) {
     return r && x.value === value;
@@ -470,10 +485,12 @@ export function isRegExp(x: any, value?: string) {
 }
 export class RegExpToken extends BaseToken {
   constructor({ value, slice }: { value: string, slice?: Slice }) {
+    // $FlowFixMe[incompatible-type]
     super({ type: TT.REGEXP, typeCode: TypeCodes.RegExp, value, slice });
   }
 }
 
+// $FlowFixMe[missing-local-annot]
 const isDelimiterType = (x, type) => {
   if (x && x[Symbol.iterator] && ([x] = x)) {
     return x && hasType(x, type);
@@ -481,25 +498,31 @@ const isDelimiterType = (x, type) => {
   return false;
 };
 
-export const isParens = (x: any) => isDelimiterType(x, TT.LPAREN);
-export const isBraces = (x: any) => isDelimiterType(x, TT.LBRACE);
-export const isBrackets = (x: any) => isDelimiterType(x, TT.LBRACK);
-export const isSyntaxTemplate = (x: any) => isDelimiterType(x, TT.LSYNTAX);
+export const isParens = (x: any): false | boolean =>
+  isDelimiterType(x, TT.LPAREN);
+export const isBraces = (x: any): false | boolean =>
+  isDelimiterType(x, TT.LBRACE);
+export const isBrackets = (x: any): false | boolean =>
+  isDelimiterType(x, TT.LBRACK);
+export const isSyntaxTemplate = (x: any): false | boolean =>
+  isDelimiterType(x, TT.LSYNTAX);
 
-export const isDelimiter = (x: any) =>
+export const isDelimiter = (x: any): false | boolean =>
   isParens(x) || isBraces(x) || isBrackets(x) || isSyntaxTemplate(x);
 
-export function getKind(x: List<TokenTree>) {
+export function getKind(x: List<TokenTree>): string {
   return isParens(x)
     ? 'parens'
     : isBraces(x)
       ? 'braces'
       : isBrackets(x)
         ? 'brackets'
-        : isSyntaxTemplate(x) ? 'syntaxTemplate' : '';
+        : isSyntaxTemplate(x)
+          ? 'syntaxTemplate'
+          : '';
 }
 
-export function getLineNumber(t: any) {
+export function getLineNumber(t: any): ?any {
   if (t.slice && t.slice.startLocation) {
     return t.slice.startLocation.line;
   } else if (t[Symbol.iterator] && ([t] = t)) {

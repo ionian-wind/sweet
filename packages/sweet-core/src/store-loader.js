@@ -1,5 +1,6 @@
 // @flow
 import SweetLoader from './sweet-loader';
+// $FlowFixMe[cannot-resolve-module]
 import vm from 'vm';
 import Store from './store';
 
@@ -15,7 +16,8 @@ export default class extends SweetLoader {
     this.store = store;
   }
 
-  fetch({ name, address }: { name: string, address: any }) {
+  // $FlowFixMe[incompatible-type]
+  fetch({ name, address }: { name: string, address: any }): any {
     if (this.store.has(address.path)) {
       return this.store.get(address.path);
     }
@@ -24,11 +26,12 @@ export default class extends SweetLoader {
     );
   }
 
-  freshStore() {
+  freshStore(): any {
     return new Store(vm.createContext());
   }
 
-  eval(source: string, store: Store) {
+  // $FlowFixMe[value-as-type]
+  eval(source: string, store: Store): any {
     return vm.runInContext(source, store.getBackingObject());
   }
 }

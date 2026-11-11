@@ -31,7 +31,7 @@ x;`,
 );
 
 test(
-  'NewExpression followed by identifier',
+  'NewExpression followed by identifier after a macro',
   testParseComparison,
   items,
   `

@@ -41,7 +41,7 @@ export function sanitizeReplacementValues(values) {
 // (Expression, Context) -> [function]
 export function evalCompiletimeValue(expr: S.Expression, context: any) {
   let sandbox = {
-    syntaxTemplate: function(ident, ...values) {
+    syntaxTemplate: function (ident, ...values) {
       return replaceTemplate(
         context.templateMap.get(ident),
         sanitizeReplacementValues(values),
@@ -50,7 +50,7 @@ export function evalCompiletimeValue(expr: S.Expression, context: any) {
   };
 
   let sandboxKeys = List(Object.keys(sandbox));
-  let sandboxVals = sandboxKeys.map(k => sandbox[k]).toArray();
+  let sandboxVals = sandboxKeys.map((k) => sandbox[k]).toArray();
 
   let parsed = new S.Module({
     directives: List(),
@@ -61,7 +61,7 @@ export function evalCompiletimeValue(expr: S.Expression, context: any) {
           isGenerator: false,
           name: null,
           params: new S.FormalParameters({
-            items: sandboxKeys.map(param => {
+            items: sandboxKeys.map((param) => {
               return new S.BindingIdentifier({
                 name: Syntax.from('identifier', param),
               });

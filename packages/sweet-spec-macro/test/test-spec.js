@@ -1,10 +1,10 @@
 import test from 'ava';
 import { compile } from 'sweet.js';
-import { transform } from 'babel-core';
+import { transformSync } from '@babel/core';
 
 function compileAndEval(code) {
   let output;
-  let res = transform(compile(code).code, {"plugins": ["transform-es2015-modules-commonjs"]}).code;
+  let res = transformSync(compile(code).code, { configFile: false, babelrc: false, presets: [['@sweet-js/babel-preset']] }).code;
   // console.log(res);
   eval(res);
   return output;
@@ -42,7 +42,7 @@ test('cannot construct terms missing attributes', t => {
       a: any;
     }
     new A({ b: 'b' });
-  `), /missing attribute/i);
+  `), { message: /missing attribute/i });
 
   t.throws(() => compileAndEval(`
     #lang 'sweet.js';
@@ -55,7 +55,7 @@ test('cannot construct terms missing attributes', t => {
       b: any;
     }
     new B({ a: 'a', c: 'c' });
-  `), /missing attribute/i);
+  `), { message: /missing attribute/i });
 });
 
 test('can clone reduce', t => {

@@ -27,9 +27,9 @@ function testParseResults(source, tst) {
   tst(result);
 }
 
-test('should parse Unicode identifiers', t => {
+test('should parse Unicode identifiers', (t) => {
   function testParseIdentifier(source, id) {
-    testParse(source, result => {
+    testParse(source, (result) => {
       t.is(result.value, id);
       t.is(result.type, TT.IDENTIFIER);
       t.deepEqual(result.slice.startLocation, {
@@ -58,15 +58,15 @@ test('should parse Unicode identifiers', t => {
   testParseIdentifier('\\u0061a', 'aa');
 });
 
-test('should throw given invalid characters', t => {
+test('should throw given invalid characters', (t) => {
   const error = t.throws(() => read('∇'));
 
   t.true(error.message.includes('Invalid or unexpected token'));
 });
 
-test('should parse keywords', t => {
+test('should parse keywords', (t) => {
   function testParseKeyword(source, id) {
-    testParse(source, result => {
+    testParse(source, (result) => {
       t.is(result.value, id);
       t.is(result.type.klass, TC.Keyword);
       t.deepEqual(result.slice.startLocation, {
@@ -85,9 +85,9 @@ test('should parse keywords', t => {
   testParseKeyword('class ', 'class');
 });
 
-test('should parse punctuators', t => {
+test('should parse punctuators', (t) => {
   function testParsePunctuator(source, p) {
-    testParse(source, result => {
+    testParse(source, (result) => {
       t.is(result.value, p);
       t.is(result.type.klass, TC.Punctuator);
       t.deepEqual(result.slice.startLocation, {
@@ -106,18 +106,18 @@ test('should parse punctuators', t => {
   testParsePunctuator('+42', '+');
 });
 
-test('should parse whitespace', t => {
+test('should parse whitespace', (t) => {
   function testParseWhiteSpace(source) {
-    testParse(source, result => t.is(result, EmptyToken));
+    testParse(source, (result) => t.is(result, EmptyToken));
   }
   testParseWhiteSpace(' ');
   testParseWhiteSpace('\t');
   testParseWhiteSpace('\uFEFF');
 });
 
-test('should parse line terminators', t => {
+test('should parse line terminators', (t) => {
   function testParseLineTerminators(source) {
-    testParse(source, result => {
+    testParse(source, (result) => {
       t.is(result, EmptyToken);
     });
   }
@@ -127,9 +127,9 @@ test('should parse line terminators', t => {
   testParseLineTerminators('\u2029');
 });
 
-test('should parse numeric literals', t => {
+test('should parse numeric literals', (t) => {
   function testParseNumericLiterals(source, value) {
-    testParse(source, result => t.is(result.value, value));
+    testParse(source, (result) => t.is(result.value, value));
   }
   testParseNumericLiterals('0', 0);
   testParseNumericLiterals('1', 1);
@@ -153,9 +153,9 @@ test('should parse numeric literals', t => {
   testParseNumericLiterals('1.5', 1.5);
 });
 
-test('should parse string literals', t => {
+test('should parse string literals', (t) => {
   function testParseStringLiteral(source, value) {
-    testParse(source, result => {
+    testParse(source, (result) => {
       expect(result.type).to.eql(TT.STRING);
       expect(result.str).to.eql(value);
     });
@@ -190,9 +190,9 @@ test('should parse string literals', t => {
   testParseStringLiteral('"\\u{0000000000F8}"', '\xF8');
 });
 
-test('should parse template literals', t => {
+test('should parse template literals', (t) => {
   function testParseTemplateLiteral(source, value, isTail, isInterp) {
-    testParse(source, result => {
+    testParse(source, (result) => {
       t.is(result.type, TT.TEMPLATE);
       const elt = result.items.first();
       t.is(elt.type, TT.TEMPLATE);
@@ -207,7 +207,7 @@ test('should parse template literals', t => {
   // should test that this throws in strict mode and passes in sloppy
   // testParseTemplateLiteral('`\\111`', 'I', true, false);
   testParseTemplateLiteral('`foo${bar}`', 'foo', false, true);
-  testParse('`foo${bar}baz`', result => {
+  testParse('`foo${bar}baz`', (result) => {
     t.is(result.type, TT.TEMPLATE);
     const [x, y, z] = result.items;
 
@@ -227,9 +227,9 @@ test('should parse template literals', t => {
   });
 });
 
-test('should parse delimiters', t => {
+test('should parse delimiters', (t) => {
   function testParseDelimiter(source, value) {
-    testParse(source, results => {
+    testParse(source, (results) => {
       t.true(List.isList(results));
       results.forEach((r, i) => t.true(source.includes(r.value)));
     });
@@ -237,7 +237,7 @@ test('should parse delimiters', t => {
 
   testParseDelimiter('{a}', 'a');
 
-  testParse('{ x + z }', result => {
+  testParse('{ x + z }', (result) => {
     t.true(List.isList(result));
 
     const [v, w, x, y, z] = result;
@@ -255,7 +255,7 @@ test('should parse delimiters', t => {
     t.is(z.type, TT.RBRACE);
   });
 
-  testParse('[ x , z ]', result => {
+  testParse('[ x , z ]', (result) => {
     t.true(List.isList(result));
 
     const [v, w, x, y, z] = result;
@@ -273,7 +273,7 @@ test('should parse delimiters', t => {
     t.is(z.type, TT.RBRACK);
   });
 
-  testParse('[{x : 3}, z]', result => {
+  testParse('[{x : 3}, z]', (result) => {
     t.true(List.isList(result));
 
     const [v, w, x, y, z] = result;
@@ -320,9 +320,9 @@ test('should parse delimiters', t => {
   });
 });
 
-test('should parse regexp literals', t => {
+test('should parse regexp literals', (t) => {
   function testParseRegExpLiteral(source, value) {
-    testParse(source, result => {
+    testParse(source, (result) => {
       t.is(result.type, TT.REGEXP);
       t.is(result.value, value);
     });
@@ -340,7 +340,7 @@ test('should parse regexp literals', t => {
   });
 });
 
-test('should parse division expressions', t => {
+test('should parse division expressions', (t) => {
   testParseResults('a/4/3', ([v, w, x, y, z]) => {
     t.is(v.type, TT.IDENTIFIER);
     t.is(v.value, 'a');
@@ -357,7 +357,7 @@ test('should parse division expressions', t => {
   });
 });
 
-test('should parse syntax templates', t => {
+test('should parse syntax templates', (t) => {
   testParseResults('#`a 1 ${}`', ([result]) => {
     const [u, v, w, x, y, z] = result;
     t.is(u.type, TT.LSYNTAX);
@@ -379,19 +379,19 @@ test('should parse syntax templates', t => {
   });
 });
 
-test('should erase #lang pragmas', t => {
+test('should erase #lang pragmas', (t) => {
   const results = read(`#lang "sweet.js"`);
   t.true(List.isList(results));
   t.true(results.size === 1);
 });
 
-test('should return an identifier for a lone #', t => {
+test('should return an identifier for a lone #', (t) => {
   const results = read(`const # = 3`);
   t.true(List.isList(results));
   t.is(results.get(1).type, TT.IDENTIFIER);
 });
 
-test('should parse comments', t => {
+test('should parse comments', (t) => {
   function testParseComment(source) {
     const result = read(source);
     t.true(result.isEmpty());
@@ -411,7 +411,7 @@ test('should parse comments', t => {
   );
 });
 
-test('should properly update location information', t => {
+test('should properly update location information', (t) => {
   function testLocationInfo(
     source,
     { idx, size, line: expectedLine, column: expectedColumn },

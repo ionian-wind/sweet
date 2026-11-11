@@ -11,7 +11,7 @@ import {
   isIdentifier,
 } from '../../src/tokens';
 
-test('terminating macros should delimit identifiers and numbers', t => {
+test('terminating macros should delimit identifiers and numbers', (t) => {
   const prevTable = getCurrentReadtable();
   const newTable = prevTable.extend(
     {
@@ -44,17 +44,17 @@ test('terminating macros should delimit identifiers and numbers', t => {
   setCurrentReadtable(newTable);
 
   // reading with 'z' and '0' as 'terminating'
-  let [x, y, z] = read('abczefgzhij\u{102A7}ba ').map(s => s.value);
+  let [x, y, z] = read('abczefgzhij\u{102A7}ba ').map((s) => s.value);
   t.is(x, 'abc');
   t.is(y, 'efg');
   t.is(z, 'hij𐊧ba');
-  [x, y, z] = read('12304560789').map(s => s.value);
+  [x, y, z] = read('12304560789').map((s) => s.value);
   t.is(x, 123);
   t.is(y, 456);
   t.is(z, 789);
   setCurrentReadtable(prevTable);
 });
-test('should create a dispatch macro', t => {
+test('should create a dispatch macro', (t) => {
   const prevTable = getCurrentReadtable();
   const newTable = prevTable.extend({
     key: ':',
@@ -76,9 +76,9 @@ test('should create a dispatch macro', t => {
     return result.push(closeParen);
   }
   const kwLetters = Array.from(
-    new Set(Object.keys(keywordTable).map(w => w[0])),
+    new Set(Object.keys(keywordTable).map((w) => w[0])),
   );
-  const keywordEntries = kwLetters.map(key => ({
+  const keywordEntries = kwLetters.map((key) => ({
     key,
     mode: 'non-terminating',
     action: readDefault,
@@ -89,9 +89,8 @@ test('should create a dispatch macro', t => {
   });
   setCurrentReadtable(newTable);
   // eslint-disable-next-line no-unused-vars
-  const [one, [open, kw, close], iff, els, [open2, elkw]] = read(
-    '#:for if #:else',
-  );
+  const [one, [open, kw, close], iff, els, [open2, elkw]] =
+    read('#:for if #:else');
   t.true(isIdentifier(one, 'Keyword'));
   t.true(isKeyword(kw, 'for'));
   t.true(isKeyword(iff, 'if'));
@@ -99,7 +98,7 @@ test('should create a dispatch macro', t => {
   t.true(isKeyword(elkw, 'else'));
   setCurrentReadtable(prevTable);
 });
-test('should allow replacing the dispatch character', t => {
+test('should allow replacing the dispatch character', (t) => {
   const prevTable = getCurrentReadtable();
   const newTable = prevTable.extend(
     {

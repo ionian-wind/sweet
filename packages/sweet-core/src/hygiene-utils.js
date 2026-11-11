@@ -45,7 +45,9 @@ export class CollectBindingSyntax extends ASTDispatcher {
     return this.names
       .concat(rest)
       .concat(
-        term.elements.filter(el => el != null).flatMap(el => this.collect(el)),
+        term.elements
+          .filter((el) => el != null)
+          .flatMap((el) => this.collect(el)),
       );
   }
 

@@ -1,6 +1,6 @@
 // @flow
 import type SweetLoader from './sweet-loader';
-import { transform as babel } from 'babel-core';
+import { transform as babel } from '@babel/core';
 
 type CompileOptions = {
   refererName?: string,
@@ -25,7 +25,7 @@ export function parse(
   entryPath: string,
   loader: SweetLoader,
   options?: CompileOptions,
-) {
+): any {
   let refererName;
   if (options != null) {
     refererName = options.refererName;
@@ -37,11 +37,12 @@ export function compile(
   entryPath: string,
   loader: SweetLoader,
   options?: CompileOptions,
-) {
+): any | { code: any } {
   let refererName,
     noBabel = true;
   if (options != null) {
     refererName = options.refererName;
+    // $FlowFixMe[incompatible-type]
     noBabel = options.noBabel;
   }
   let code = compileModule(entryPath, loader, refererName).codegen();
@@ -51,6 +52,8 @@ export function compile(
     };
   }
   return babel(code, {
-    babelrc: true,
+    babelrc: false,
+    configFile: false,
+    presets: [['@sweet-js/babel-preset', { modules: false }]],
   });
 }

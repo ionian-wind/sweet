@@ -4,13 +4,13 @@ import Syntax from '../../src/syntax';
 import { makeEnforester } from '../assertions';
 import { List } from 'immutable';
 
-test('a macro context should have a name', t => {
+test('a macro context should have a name', (t) => {
   let enf = makeEnforester('a');
   let ctx = new MacroContext(enf, Syntax.fromIdentifier('foo'), {});
   t.true(ctx.name().value.val() === 'foo');
 });
 
-test('a macro context should be resettable', t => {
+test('a macro context should be resettable', (t) => {
   let enf = makeEnforester('a b c');
   let ctx = new MacroContext(enf, 'foo', enf.context);
 
@@ -28,7 +28,7 @@ test('a macro context should be resettable', t => {
   t.true(c1 === c2);
 });
 
-test('a macro context should be able to create a reset point', t => {
+test('a macro context should be able to create a reset point', (t) => {
   let enf = makeEnforester('a b c');
   let ctx = new MacroContext(enf, Syntax.fromIdentifier('foo'), {});
 
@@ -65,7 +65,7 @@ test('a macro context should be able to create a reset point', t => {
   t.true(c1.value === c2 && c2 === c3.value && c2 === c4 && c4 === c5.value);
 });
 
-test("an enforester should be able to access a macro context's syntax list", t => {
+test("an enforester should be able to access a macro context's syntax list", (t) => {
   let enf = makeEnforester('a');
   let ctx = new MacroContext(enf, Syntax.fromIdentifier('foo'), {});
   t.true(ctx._rest(enf) instanceof List);

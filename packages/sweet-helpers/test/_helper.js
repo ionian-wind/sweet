@@ -1,7 +1,7 @@
 import { ImmutableContext } from '../src/parser';
 import { compile } from '@sweet-js/core';
 import NodeLoader from '@sweet-js/core/dist/node-loader';
-import { transform } from 'babel-core';
+import { transformSync } from '@babel/core';
 
 export class MockContext {
   constructor(...values) {
@@ -13,21 +13,23 @@ export class MockContext {
     return new ImmutableContext(new MockContext(...values));
   }
 
-  mark() { return this.index; }
-  reset(mark) { this.index = mark; }
+  mark() {
+    return this.index;
+  }
+  reset(mark) {
+    this.index = mark;
+  }
 
   next() {
     if (this.index < this.values.length - 1) {
       return {
         done: false,
-        value: this.values[++this.index]
+        value: this.values[++this.index],
       };
     }
     return { done: true };
   }
 }
-
-/* globals __dirname */
 
 class EntrypointNodeLoader extends NodeLoader {
   constructor(entrypoint, basedir, options) {
@@ -46,7 +48,11 @@ class EntrypointNodeLoader extends NodeLoader {
 export function compileAndEval(code) {
   let output;
   let loader = new EntrypointNodeLoader(code, __dirname);
-  let res = transform(compile('*entrypoint*', loader).code).code;
+  let res = transformSync(compile('*entrypoint*', loader).code, {
+    configFile: false,
+    babelrc: false,
+    presets: [['@sweet-js/babel-preset', { modules: false }]],
+  }).code;
   eval(res);
   return output;
 }

@@ -4,7 +4,7 @@
   "main": "dist/sweet.js",
   "version": "3.0.13",
   "engines": {
-    "node": ">=7.0.0"
+    "node": ">=18.0.0"
   },
   "author": "Tim Disney",
   "licenses": [
@@ -16,9 +16,9 @@
   "scripts": {
     "clean": "rm -rf dist",
     "lint": "eslint src test && flow",
-    "format": "eslint src test --fix",
+    "format": "prettier --write \"src/**/*.js\" \"test/**/*.js\"",
     "prebuild": "mkdir -p dist/",
-    "build:src": "babel --out-dir dist/ src --plugins transform-es2015-modules-commonjs",
+    "build:src": "babel --out-dir dist/ src",
     "build": "npm run build:src",
     "preprofile": "npm run build",
     "profile": "node --prof profile.js && node --prof-process *v8.log > v8-processed.log && rm *v8.log",
@@ -26,7 +26,6 @@
     "test:262": "ava test/parser/test-run-test262.js",
     "test:ci": "npm run pretest && ava && ava test/parser/test-*.js",
     "test": "ava",
-    "report": "nyc ava && nyc report--reporter=html",
     "prepublish": "npm run build"
   },
   "files": [
@@ -37,7 +36,7 @@
     "test": "test"
   },
   "dependencies": {
-    "babel-core": "6.26.3",
+    "@babel/core": "7.29.13",
     "immutable": "3.8.4",
     "ramda": "0.22.1",
     "ramda-fantasy": "0.6.1",
@@ -48,32 +47,20 @@
     "shift-reducer": "4.4.1",
     "sweet-spec": "4.0.0",
     "transit-js": "0.8.874",
-    "utils-dirname": "1.0.0"
+    "utils-dirname": "1.0.0",
+    "@sweet-js/babel-preset": "0.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "7.29.7",
+    "@babel/register": "7.29.13",
+    "@sweet-js/eslint-config": "0.0.0",
     "angular": "1.6.0",
-    "ava": "0.19.1",
-    "babel-cli": "6.26.0",
-    "babel-eslint": "8.2.6",
-    "babel-plugin-transform-es2015-modules-commonjs": "6.26.2",
-    "babel-plugin-transform-flow-strip-types": "6.22.0",
-    "babel-preset-node7": "1.4.0",
-    "babel-register": "6.26.0",
-    "eslint": "4.19.1",
-    "eslint-config-prettier": "2.3.0",
-    "eslint-plugin-flowtype": "2.50.3",
-    "eslint-plugin-prettier": "2.1.2",
-    "event-stream": "3.3.5",
+    "ava": "5.3.1",
+    "eslint": "9.39.5",
     "expect.js": "0.3.1",
-    "flow-bin": "0.45.0",
+    "flow-bin": "0.339.0",
     "jquery": "3.1.1",
-    "nyc": "6.6.1",
-    "prettier": "1.5.3",
-    "prettier-eslint": "5.1.0",
-    "rimraf": "2.7.1",
-    "source-map": "0.5.7",
-    "source-map-support": "0.4.18",
-    "webpack": "1.15.0"
+    "rimraf": "6.1.4"
   },
   "repository": {
     "type": "git",
@@ -86,13 +73,12 @@
   "license": "BSD-2-Clause",
   "ava": {
     "failWithoutAssertions": false,
-    "babel": "inherit",
     "files": [
       "test/unit/*.js",
       "test/parser/test-ast.js"
     ],
     "require": [
-      "babel-register"
+      "@babel/register"
     ]
   }
 }

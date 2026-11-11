@@ -1,0 +1,24 @@
+{
+  "name": "@sweet-js/eslint-config",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Shared ESLint flat config for the sweet-monorepo packages",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "dependencies": {
+    "@babel/eslint-parser": "7.29.13",
+    "@babel/preset-flow": "7.29.7",
+    "@eslint/js": "9.39.5",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-prettier": "5.5.7",
+    "globals": "17.14.0"
+  },
+  "peerDependencies": {
+    "@babel/core": "7.29.13",
+    "eslint": "9.39.5",
+    "prettier": "3.9.10"
+  }
+}

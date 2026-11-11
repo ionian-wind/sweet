@@ -3,25 +3,25 @@
 import * as T from 'sweet-spec';
 import * as _ from 'ramda';
 
-export const isImportDeclaration = _.is(T.ImportDeclaration);
+export const isImportDeclaration: any = _.is(T.ImportDeclaration);
 
-export const isExportDeclaration = _.is(T.ExportDeclaration);
-export const isExport = _.is(T.Export);
-export const isExportDefault = _.is(T.ExportDefault);
-export const isExportFrom = _.is(T.ExportFrom);
-export const isExportLocals = _.is(T.ExportLocals);
+export const isExportDeclaration: any = _.is(T.ExportDeclaration);
+export const isExport: any = _.is(T.Export);
+export const isExportDefault: any = _.is(T.ExportDefault);
+export const isExportFrom: any = _.is(T.ExportFrom);
+export const isExportLocals: any = _.is(T.ExportLocals);
 
-export const isVariableDeclaration = _.is(T.VariableDeclaration);
-export const isVariableDeclarator = _.is(T.VariableDeclarator);
-export const isSyntaxVariableDeclartion = _.both(
+export const isVariableDeclaration: any = _.is(T.VariableDeclaration);
+export const isVariableDeclarator: any = _.is(T.VariableDeclarator);
+export const isSyntaxVariableDeclartion: any = _.both(
   isVariableDeclaration,
   _.either(_.propEq('kind', 'syntax'), _.propEq('kind', 'syntaxrec')),
 );
 
-export const isVariableDeclarationStatement = _.is(
+export const isVariableDeclarationStatement: any = _.is(
   T.VariableDeclarationStatement,
 );
-export const isSyntaxDeclarationStatement = (term: any) => {
+export const isSyntaxDeclarationStatement = (term: any): false | boolean => {
   // syntax m = ...
   // syntaxrec m = ...
   return (
@@ -35,5 +35,5 @@ export const isSyntaxDeclarationStatement = (term: any) => {
 
 export const isCompiletimeStatement = isSyntaxDeclarationStatement;
 
-export const isFunctionDeclaration = _.is(T.FunctionDeclaration);
-export const isClassDeclaration = _.is(T.ClassDeclaration);
+export const isFunctionDeclaration: any = _.is(T.FunctionDeclaration);
+export const isClassDeclaration: any = _.is(T.ClassDeclaration);

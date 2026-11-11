@@ -5,9 +5,9 @@ import { compile, parse } from '../src/sweet';
 import { Enforester } from '../src/enforester';
 import StoreLoader from '../src/store-loader';
 
-export const stmt = x => x.items[0];
-export const expr = x => stmt(x).expression;
-export const items = x => x.items;
+export const stmt = (x) => x.items[0];
+export const expr = (x) => stmt(x).expression;
+export const items = (x) => x.items;
 
 export function makeEnforester(code) {
   let stxl = read(code);
@@ -64,19 +64,19 @@ export function evalWithStore(t, inputStore, expected) {
   for (let key of Object.keys(inputStore)) {
     store.set(key, inputStore[key]);
   }
-  testEval(store, output => t.is(output, expected));
+  testEval(store, (output) => t.is(output, expected));
 }
 evalWithStore.title = (title, inputStore, expected) =>
   `${title}
 ${Array.from(Object.entries(inputStore))
-    .map(([modName, modSrc]) => `${modName}\n----\n${modSrc}\n----`)
-    .join('\n')}
+  .map(([modName, modSrc]) => `${modName}\n----\n${modSrc}\n----`)
+  .join('\n')}
 > ${expected}`;
 
 export function evalWithOutput(t, input, expected) {
   let store = new Map();
   store.set('main.js', input);
-  testEval(store, output => t.is(output, expected));
+  testEval(store, (output) => t.is(output, expected));
 }
 evalWithOutput.title = (title, input, expected) =>
   `${title}

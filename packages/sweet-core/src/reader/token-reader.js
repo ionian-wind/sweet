@@ -20,6 +20,7 @@ type Context = {
 };
 
 export function getSlice(
+  // $FlowFixMe[value-as-type]
   stream: CharStream,
   startLocation: StartLocation,
 ): Slice {
@@ -31,6 +32,7 @@ export function getSlice(
   };
 }
 
+// $FlowFixMe[underconstrained-implicit-instantiation]
 const streams = new WeakMap();
 
 class ReadError extends Error {
@@ -60,6 +62,7 @@ class ReadError extends Error {
 class TokenReader extends Reader {
   locationInfo: LocationInfo;
   context: ?Context;
+  // $FlowFixMe[value-as-type]
   constructor(stream: CharStream, context?: Context) {
     super();
     this.context = context;
@@ -76,20 +79,26 @@ class TokenReader extends Reader {
     );
     return new ReadError({
       message,
-      // $FlowFixMe: decide on how to handle possible nullability
-      index: streams.get(this).sourceInfo.position,
+      // $FlowFixMe[incompatible-type]
+      index: streams.get(this)?.sourceInfo?.position,
       line: this.locationInfo.line,
       column: this.locationInfo.column,
     });
   }
 
+  // $FlowFixMe[missing-local-annot]
   createILLEGAL(char) {
     return !isEOS(char)
-      ? this.createError('Unexpected {0}', char)
+      ? // $FlowFixMe[extra-arg]
+        this.createError('Unexpected {0}', char)
       : this.createError('Unexpected end of input');
   }
 
+  // $FlowFixMe[missing-local-annot]
+  // $FlowFixMe[value-as-type]
   readToken(stream: CharStream, ...rest: Array<any>) {
+    // $FlowFixMe[prop-missing]
+    // $FlowFixMe[unsafe-object-assign]
     const startLocation = Object.assign(
       {},
       this.locationInfo,
@@ -114,6 +123,7 @@ class TokenReader extends Reader {
 
   readUntil(
     close: ?Function | ?string,
+    // $FlowFixMe[value-as-type]
     stream: CharStream,
     prefix: List<any>,
     exprAllowed: boolean,
@@ -140,6 +150,7 @@ class TokenReader extends Reader {
 }
 
 export default function read(
+  // $FlowFixMe[value-as-type]
   source: string | CharStream,
   context?: Context,
 ): List<any> {

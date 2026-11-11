@@ -11,7 +11,7 @@ import { isTemplate, isDelimiter, getKind } from './tokens';
 import type { TokenTree } from './tokens';
 
 export function wrapInTerms(stx: List<TokenTree>): List<Term> {
-  return stx.map(s => {
+  return stx.map((s) => {
     if (isTemplate(s)) {
       if (s.items) {
         s.items = wrapInTerms(s.items);
@@ -241,13 +241,8 @@ export default class MacroContext {
   }
 
   next() {
-    const {
-      enf,
-      noScopes,
-      useScope,
-      introducedScope,
-      context,
-    } = privateData.get(this);
+    const { enf, noScopes, useScope, introducedScope, context } =
+      privateData.get(this);
     if (enf.rest.size === 0) {
       return {
         done: true,

@@ -40,6 +40,7 @@ function getFirstSlice(stx: ?Syntax) {
   return stx.token.get(0).token.slice;
 }
 
+// $FlowFixMe[missing-local-annot]
 function sizeDecending(a, b) {
   if (a.scopes.size > b.scopes.size) {
     return -1;
@@ -59,7 +60,7 @@ type TypesHelper = {
 
 export let Types: TypesHelper = {
   null: {
-    match: token =>
+    match: (token) =>
       !Types.delimiter.match(token) && token.type === TokenType.NULL,
     create: (value, stx) =>
       new Syntax(
@@ -68,11 +69,12 @@ export let Types: TypesHelper = {
           value: null,
           typeCode: TypeCodes.Keyword,
         },
+        // $FlowFixMe[incompatible-exact]
         stx,
       ),
   },
   number: {
-    match: token =>
+    match: (token) =>
       !Types.delimiter.match(token) &&
       token.type.klass === TokenClass.NumericLiteral,
     create: (value, stx) =>
@@ -82,11 +84,12 @@ export let Types: TypesHelper = {
           value,
           typeCode: TypeCodes.NumericLiteral,
         },
+        // $FlowFixMe[incompatible-exact]
         stx,
       ),
   },
   string: {
-    match: token =>
+    match: (token) =>
       !Types.delimiter.match(token) &&
       token.type.klass === TokenClass.StringLiteral,
     create: (value, stx) =>
@@ -96,11 +99,12 @@ export let Types: TypesHelper = {
           str: value,
           typeCode: TypeCodes.StringLiteral,
         },
+        // $FlowFixMe[incompatible-exact]
         stx,
       ),
   },
   punctuator: {
-    match: token =>
+    match: (token) =>
       !Types.delimiter.match(token) &&
       token.type.klass === TokenClass.Punctuator,
     create: (value, stx) =>
@@ -113,11 +117,12 @@ export let Types: TypesHelper = {
           typeCode: TypeCodes.Punctuator,
           value,
         },
+        // $FlowFixMe[incompatible-exact]
         stx,
       ),
   },
   keyword: {
-    match: token =>
+    match: (token) =>
       !Types.delimiter.match(token) && token.type.klass === TokenClass.Keyword,
     create: (value, stx) =>
       new Syntax(
@@ -129,11 +134,12 @@ export let Types: TypesHelper = {
           typeCode: TypeCodes.Keyword,
           value,
         },
+        // $FlowFixMe[incompatible-exact]
         stx,
       ),
   },
   identifier: {
-    match: token =>
+    match: (token) =>
       !Types.delimiter.match(token) && token.type.klass === TokenClass.Ident,
     create: (value, stx) =>
       new Syntax(
@@ -142,11 +148,12 @@ export let Types: TypesHelper = {
           value,
           typeCode: TypeCodes.Identifier,
         },
+        // $FlowFixMe[incompatible-exact]
         stx,
       ),
   },
   regularExpression: {
-    match: token =>
+    match: (token) =>
       !Types.delimiter.match(token) &&
       token.type.klass === TokenClass.RegularExpression,
     create: (value, stx) =>
@@ -156,15 +163,16 @@ export let Types: TypesHelper = {
           value,
           typeCode: TypeCodes.RegExp,
         },
+        // $FlowFixMe[incompatible-exact]
         stx,
       ),
   },
-  // $FlowFixMe: cleanup all this
   braces: {
-    match: token =>
+    match: (token) =>
       Types.delimiter.match(token) &&
       token.get(0).token.type === TokenType.LBRACE,
     create: (inner, stx) => {
+      // $FlowFixMe[extra-arg]
       let left = new T.RawSyntax({
         value: new Syntax({
           type: TokenType.LBRACE,
@@ -173,6 +181,7 @@ export let Types: TypesHelper = {
           slice: getFirstSlice(stx),
         }),
       });
+      // $FlowFixMe[extra-arg]
       let right = new T.RawSyntax({
         value: new Syntax({
           type: TokenType.RBRACE,
@@ -181,18 +190,20 @@ export let Types: TypesHelper = {
           slice: getFirstSlice(stx),
         }),
       });
+      // $FlowFixMe[extra-arg]
+      // $FlowFixMe[incompatible-type]
       return new T.RawDelimiter({
         kind: 'braces',
         inner: List.of(left).concat(inner).push(right),
       });
     },
   },
-  // $FlowFixMe: cleanup all this
   brackets: {
-    match: token =>
+    match: (token) =>
       Types.delimiter.match(token) &&
       token.get(0).token.type === TokenType.LBRACK,
     create: (inner, stx) => {
+      // $FlowFixMe[extra-arg]
       let left = new T.RawSyntax({
         value: new Syntax({
           type: TokenType.LBRACK,
@@ -201,6 +212,7 @@ export let Types: TypesHelper = {
           slice: getFirstSlice(stx),
         }),
       });
+      // $FlowFixMe[extra-arg]
       let right = new T.RawSyntax({
         value: new Syntax({
           type: TokenType.RBRACK,
@@ -209,18 +221,20 @@ export let Types: TypesHelper = {
           slice: getFirstSlice(stx),
         }),
       });
+      // $FlowFixMe[extra-arg]
+      // $FlowFixMe[incompatible-type]
       return new T.RawDelimiter({
         kind: 'brackets',
         inner: List.of(left).concat(inner).push(right),
       });
     },
   },
-  // $FlowFixMe: cleanup all this
   parens: {
-    match: token =>
+    match: (token) =>
       Types.delimiter.match(token) &&
       token.get(0).token.type === TokenType.LPAREN,
     create: (inner, stx) => {
+      // $FlowFixMe[extra-arg]
       let left = new T.RawSyntax({
         value: new Syntax({
           type: TokenType.LPAREN,
@@ -229,6 +243,7 @@ export let Types: TypesHelper = {
           slice: getFirstSlice(stx),
         }),
       });
+      // $FlowFixMe[extra-arg]
       let right = new T.RawSyntax({
         value: new Syntax({
           type: TokenType.RPAREN,
@@ -237,6 +252,8 @@ export let Types: TypesHelper = {
           slice: getFirstSlice(stx),
         }),
       });
+      // $FlowFixMe[extra-arg]
+      // $FlowFixMe[incompatible-type]
       return new T.RawDelimiter({
         kind: 'parens',
         inner: List.of(left).concat(inner).push(right),
@@ -245,7 +262,7 @@ export let Types: TypesHelper = {
   },
 
   assign: {
-    match: token => {
+    match: (token) => {
       if (Types.punctuator.match(token)) {
         switch (token.value) {
           case '=':
@@ -270,26 +287,27 @@ export let Types: TypesHelper = {
   },
 
   boolean: {
-    match: token =>
+    match: (token) =>
       (!Types.delimiter.match(token) && token.type === TokenType.TRUE) ||
       token.type === TokenType.FALSE,
   },
 
   template: {
-    match: token =>
+    match: (token) =>
       !Types.delimiter.match(token) && token.type === TokenType.TEMPLATE,
   },
 
   delimiter: {
-    match: token => List.isList(token),
+    match: (token) => List.isList(token),
   },
 
   syntaxTemplate: {
-    match: token => Types.delimiter.match(token) && token.get(0).val() === '#`',
+    match: (token) =>
+      Types.delimiter.match(token) && token.get(0).val() === '#`',
   },
 
   eof: {
-    match: token =>
+    match: (token) =>
       !Types.delimiter.match(token) && token.type === TokenType.EOS,
   },
 };
@@ -320,11 +338,12 @@ export default class Syntax {
     Object.freeze(this);
   }
 
-  static of(token: Token, stx: ?Syntax) {
+  static of(token: Token, stx: ?Syntax): any {
+    // $FlowFixMe[incompatible-exact]
     return new Syntax(token, stx);
   }
 
-  static from(type, value, stx: ?Syntax) {
+  static from(type: any, value: any, stx: ?Syntax): any {
     if (!Types[type]) {
       throw new Error(type + ' is not a valid type');
     } else if (!Types[type].create) {
@@ -338,73 +357,74 @@ export default class Syntax {
     return newstx;
   }
 
-  from(type: TokenTag, value: any) {
+  from(type: TokenTag, value: any): any {
     // TODO: this is gross, fix
     let s = Syntax.from(type, value, this);
     if (s instanceof Syntax) {
+      // $FlowFixMe[extra-arg]
       return new T.RawSyntax({ value: s });
     }
     return s;
   }
 
-  fromNull() {
+  fromNull(): any {
     return this.from('null', null);
   }
 
-  fromNumber(value: number) {
+  fromNumber(value: number): any {
     return this.from('number', value);
   }
 
-  fromString(value: string) {
+  fromString(value: string): any {
     return this.from('string', value);
   }
 
-  fromPunctuator(value: string) {
+  fromPunctuator(value: string): any {
     return this.from('punctuator', value);
   }
 
-  fromKeyword(value: string) {
+  fromKeyword(value: string): any {
     return this.from('keyword', value);
   }
 
-  fromIdentifier(value: string) {
+  fromIdentifier(value: string): any {
     return this.from('identifier', value);
   }
 
-  fromRegularExpression(value: any) {
+  fromRegularExpression(value: any): any {
     return this.from('regularExpression', value);
   }
 
-  static fromNull(stx: Syntax) {
+  static fromNull(stx: Syntax): any {
     return Syntax.from('null', null, stx);
   }
 
-  static fromNumber(value, stx) {
+  static fromNumber(value: any, stx: any): any {
     return Syntax.from('number', value, stx);
   }
 
-  static fromString(value, stx) {
+  static fromString(value: any, stx: any): any {
     return Syntax.from('string', value, stx);
   }
 
-  static fromPunctuator(value, stx) {
+  static fromPunctuator(value: any, stx: any): any {
     return Syntax.from('punctuator', value, stx);
   }
 
-  static fromKeyword(value, stx) {
+  static fromKeyword(value: any, stx: any): any {
     return Syntax.from('keyword', value, stx);
   }
 
-  static fromIdentifier(value, stx) {
+  static fromIdentifier(value: any, stx: any): any {
     return Syntax.from('identifier', value, stx);
   }
 
-  static fromRegularExpression(value, stx) {
+  static fromRegularExpression(value: any, stx: any): any {
     return Syntax.from('regularExpression', value, stx);
   }
 
   // () -> string
-  resolve(phase: any) {
+  resolve(phase: any): any {
     assert(phase != null, 'must provide a phase to resolve');
     let allScopes = this.scopesets.all;
     let stxScopes = this.scopesets.phase.has(phase)
@@ -478,7 +498,7 @@ export default class Syntax {
     if (this.match('template')) {
       if (!this.token.items) return this.token.value;
       return this.token.items
-        .map(el => {
+        .map((el) => {
           if (typeof el.match === 'function' && el.match('delimiter')) {
             return '${...}';
           }
@@ -489,7 +509,7 @@ export default class Syntax {
     return this.token.value;
   }
 
-  lineNumber() {
+  lineNumber(): any {
     if (!this.match('delimiter')) {
       return this.token.slice.startLocation.line;
     } else {
@@ -497,20 +517,24 @@ export default class Syntax {
     }
   }
 
-  setLineNumber(line: number) {
+  setLineNumber(line: number): any {
     let newTok = {};
     if (this.isDelimiter()) {
-      newTok = this.token.map(s => s.setLineNumber(line));
+      newTok = this.token.map((s) => s.setLineNumber(line));
     } else {
       for (let key of Object.keys(this.token)) {
         newTok[key] = this.token[key];
       }
       assert(
+        // $FlowFixMe[prop-missing]
         newTok.slice && newTok.slice.startLocation,
         'all tokens must have line info',
       );
+      // $FlowFixMe[incompatible-use]
+      // $FlowFixMe[prop-missing]
       newTok.slice.startLocation.line = line;
     }
+    // $FlowFixMe[incompatible-exact]
     return new Syntax(newTok, this);
   }
 
@@ -525,13 +549,13 @@ export default class Syntax {
     bindings: any,
     phase: number | {},
     options: any = { flip: false },
-  ) {
+  ): any {
     let token = this.match('delimiter')
-      ? this.token.map(s => s.addScope(scope, bindings, phase, options))
+      ? this.token.map((s) => s.addScope(scope, bindings, phase, options))
       : this.token;
     if (this.match('template')) {
       token = _.merge(token, {
-        items: token.items.map(it => {
+        items: token.items.map((it) => {
           if (it instanceof Syntax && it.match('delimiter')) {
             return it.addScope(scope, bindings, phase, options);
           }
@@ -574,9 +598,9 @@ export default class Syntax {
     return new Syntax(token, newstx);
   }
 
-  removeScope(scope: any, phase: number) {
+  removeScope(scope: any, phase: number): any {
     let token = this.match('delimiter')
-      ? this.token.map(s => s.removeScope(scope, phase))
+      ? this.token.map((s) => s.removeScope(scope, phase))
       : this.token;
     let phaseScopeset = this.scopesets.phase.has(phase)
       ? this.scopesets.phase.get(phase)
@@ -603,7 +627,7 @@ export default class Syntax {
     return new Syntax(token, newstx);
   }
 
-  match(type: TokenTag, value: any) {
+  match(type: TokenTag, value: any): any {
     if (!Types[type]) {
       throw new Error(type + ' is an invalid type');
     }
@@ -616,73 +640,73 @@ export default class Syntax {
     );
   }
 
-  isIdentifier(value: string) {
+  isIdentifier(value: string): any {
     return this.match('identifier', value);
   }
 
-  isAssign(value: string) {
+  isAssign(value: string): any {
     return this.match('assign', value);
   }
 
-  isBooleanLiteral(value: boolean) {
+  isBooleanLiteral(value: boolean): any {
     return this.match('boolean', value);
   }
 
-  isKeyword(value: string) {
+  isKeyword(value: string): any {
     return this.match('keyword', value);
   }
 
-  isNullLiteral(value: any) {
+  isNullLiteral(value: any): any {
     return this.match('null', value);
   }
 
-  isNumericLiteral(value: number) {
+  isNumericLiteral(value: number): any {
     return this.match('number', value);
   }
 
-  isPunctuator(value: string) {
+  isPunctuator(value: string): any {
     return this.match('punctuator', value);
   }
 
-  isStringLiteral(value: string) {
+  isStringLiteral(value: string): any {
     return this.match('string', value);
   }
 
-  isRegularExpression(value: any) {
+  isRegularExpression(value: any): any {
     return this.match('regularExpression', value);
   }
 
-  isTemplate(value: any) {
+  isTemplate(value: any): any {
     return this.match('template', value);
   }
 
-  isDelimiter(value: any) {
+  isDelimiter(value: any): any {
     return this.match('delimiter', value);
   }
 
-  isParens(value: any) {
+  isParens(value: any): any {
     return this.match('parens', value);
   }
 
-  isBraces(value: any) {
+  isBraces(value: any): any {
     return this.match('braces', value);
   }
 
-  isBrackets(value: any) {
+  isBrackets(value: any): any {
     return this.match('brackets', value);
   }
 
-  isSyntaxTemplate(value: any) {
+  isSyntaxTemplate(value: any): any {
     return this.match('syntaxTemplate', value);
   }
 
-  isEOF(value: any) {
+  isEOF(value: any): any {
     return this.match('eof', value);
   }
 
-  toString() {
+  toString(): any {
     if (this.match('delimiter')) {
-      return this.token.map(s => s.toString()).join(' ');
+      return this.token.map((s) => s.toString()).join(' ');
     }
     if (this.match('string')) {
       return `'${this.token.str}'`;

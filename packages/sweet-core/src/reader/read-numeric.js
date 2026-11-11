@@ -5,6 +5,7 @@ import { code } from 'esutils';
 import { isTerminating, getHexValue } from './utils';
 import { NumericToken } from '../tokens';
 
+// $FlowFixMe[untyped-type-import]
 import type { CharStream } from 'readtable';
 
 const {
@@ -14,7 +15,9 @@ const {
 
 let terminates;
 
-export default function readNumericLiteral(stream: CharStream) {
+// $FlowFixMe[missing-this-annot]
+// $FlowFixMe[value-as-type]
+export default function readNumericLiteral(stream: CharStream): NumericToken {
   terminates = isTerminating(getCurrentReadtable());
   let idx = 0,
     char = stream.peek();
@@ -63,6 +66,8 @@ export default function readNumericLiteral(stream: CharStream) {
   });
 }
 
+// $FlowFixMe[missing-local-annot]
+// $FlowFixMe[missing-this-annot]
 function addDecimalLiteralSuffixLength(stream, idx) {
   let char = stream.peek(idx);
   if (char === '.') {
@@ -92,6 +97,8 @@ function addDecimalLiteralSuffixLength(stream, idx) {
   return idx;
 }
 
+// $FlowFixMe[missing-local-annot]
+// $FlowFixMe[missing-this-annot]
 function readLegacyOctalLiteral(stream) {
   let idx = 0,
     isOctal = true,
@@ -126,6 +133,8 @@ function readLegacyOctalLiteral(stream) {
   });
 }
 
+// $FlowFixMe[missing-local-annot]
+// $FlowFixMe[missing-this-annot]
 function readOctalLiteral(stream) {
   let start,
     idx = (start = 2),
@@ -149,6 +158,8 @@ function readOctalLiteral(stream) {
   });
 }
 
+// $FlowFixMe[missing-local-annot]
+// $FlowFixMe[missing-this-annot]
 function readBinaryLiteral(stream) {
   let start,
     idx = (start = 2);
@@ -179,6 +190,8 @@ function readBinaryLiteral(stream) {
   });
 }
 
+// $FlowFixMe[missing-local-annot]
+// $FlowFixMe[missing-this-annot]
 function readHexLiteral(stream) {
   let start,
     idx = (start = 2),
@@ -204,11 +217,13 @@ function readHexLiteral(stream) {
   });
 }
 
+// $FlowFixMe[missing-local-annot]
 function parseNumeric(stream, len, radix, start = 0) {
   stream.readString(start);
   return parseInt(stream.readString(len - start), radix);
 }
 
+// $FlowFixMe[missing-local-annot]
 function isDecimalChar(char) {
   return '0' <= char && char <= '9';
 }

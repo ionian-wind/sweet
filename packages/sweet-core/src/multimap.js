@@ -11,7 +11,7 @@ export default class Multimap<K, V> extends Map<K, List<V>> {
     }
   }
 
-  containsAt(key: K, value: V) {
+  containsAt(key: K, value: V): any {
     let bucket = this.get(key);
     if (bucket != null) {
       return bucket.contains(value);

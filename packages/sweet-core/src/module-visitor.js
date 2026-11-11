@@ -14,7 +14,8 @@ import Syntax from './syntax';
 
 import type { Context } from './sweet-loader';
 
-export function isBoundToCompiletime(name: Syntax, store: Map<*, *>) {
+// $FlowFixMe[unsupported-syntax]
+export function isBoundToCompiletime(name: Syntax, store: Map<*, *>): boolean {
   let resolvedName = name.resolve(0);
   if (store.has(resolvedName)) {
     return store.get(resolvedName) instanceof CompiletimeTransform;
@@ -28,13 +29,13 @@ export function bindImports(
   phase: any,
   context: Context,
   isEntrypoint: boolean,
-) {
+): List<any> {
   let names = [];
   let phaseToBind = impTerm.forSyntax ? phase + 1 : phase;
   if (impTerm.defaultBinding != null && impTerm instanceof T.Import) {
     let name = impTerm.defaultBinding.name;
     let exportName = exModule.exportedNames.find(
-      exName => exName.exportedName.val() === '_default',
+      (exName) => exName.exportedName.val() === '_default',
     );
     if (exportName != null) {
       let newBinding = gensym('_default');
@@ -51,9 +52,9 @@ export function bindImports(
     }
   }
   if (impTerm.namedImports) {
-    impTerm.namedImports.forEach(specifier => {
+    impTerm.namedImports.forEach((specifier) => {
       let name = specifier.binding.name;
-      let exportName = exModule.exportedNames.find(exName => {
+      let exportName = exModule.exportedNames.find((exName) => {
         if (exName.exportedName != null) {
           return exName.exportedName.val() === name.val();
         }
@@ -100,8 +101,8 @@ export default class {
     this.context = context;
   }
 
-  visit(mod: SweetModule, phase: any, store: any, cwd: string) {
-    mod.imports.forEach(imp => {
+  visit(mod: SweetModule, phase: any, store: any, cwd: string): any {
+    mod.imports.forEach((imp) => {
       if (imp.forSyntax) {
         let mod = this.context.loader.get(
           imp.moduleSpecifier.val(),
@@ -122,17 +123,17 @@ export default class {
     });
     for (let term of mod.compiletimeItems()) {
       if (S.isSyntaxDeclarationStatement(term)) {
-        this.registerSyntaxDeclaration((term: any).declaration, phase, store);
+        this.registerSyntaxDeclaration(term.declaration, phase, store);
       }
     }
     return store;
   }
 
-  invoke(mod: any, phase: any, store: any, cwd: string) {
+  invoke(mod: any, phase: any, store: any, cwd: string): any {
     if (this.context.invokedRegistry.containsAt(mod.path, phase)) {
       return store;
     }
-    mod.imports.forEach(imp => {
+    mod.imports.forEach((imp) => {
       if (!imp.forSyntax) {
         let mod = this.context.loader.get(
           imp.moduleSpecifier.val(),
@@ -151,10 +152,11 @@ export default class {
         this.registerFunctionOrClass(term, phase, store);
       }
     }
+    // $FlowFixMe[extra-arg]
     let parsed = new T.Module({
       directives: List(),
       items,
-      // $FlowFixMe: flow doesn't know about reduce yet
+      // $FlowFixMe[prop-missing]
     }).reduce(new SweetToShiftReducer(phase));
 
     let gen = codegen(parsed, new FormattedCodeGen());
@@ -166,7 +168,7 @@ export default class {
   }
 
   registerSyntaxDeclaration(term: any, phase: any, store: any) {
-    term.declarators.forEach(decl => {
+    term.declarators.forEach((decl) => {
       let val = evalCompiletimeValue(
         decl.init,
         _.merge(this.context, {
@@ -175,7 +177,7 @@ export default class {
         }),
       );
 
-      collectBindings(decl.binding).forEach(stx => {
+      collectBindings(decl.binding).forEach((stx) => {
         if (phase !== 0) {
           // phase 0 bindings extend the binding map during compilation
           let newBinding = gensym(stx.val());
@@ -201,8 +203,8 @@ export default class {
   }
 
   registerVariableDeclaration(term: any, phase: any, store: any) {
-    term.declarators.forEach(decl => {
-      collectBindings(decl.binding).forEach(stx => {
+    term.declarators.forEach((decl) => {
+      collectBindings(decl.binding).forEach((stx) => {
         if (phase !== 0) {
           // phase 0 bindings extend the binding map during compilation
           let newBinding = gensym(stx.val());
@@ -217,7 +219,7 @@ export default class {
   }
 
   registerFunctionOrClass(term: any, phase: any, store: any) {
-    collectBindings(term.name).forEach(stx => {
+    collectBindings(term.name).forEach((stx) => {
       if (phase !== 0) {
         let newBinding = gensym(stx.val());
         this.context.bindings.add(stx, {

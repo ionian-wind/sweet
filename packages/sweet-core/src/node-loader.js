@@ -1,8 +1,11 @@
 // @flow
 import SweetLoader, { phaseInModulePathRegexp } from './sweet-loader';
+// $FlowFixMe[cannot-resolve-module]
 import { readFileSync } from 'fs';
+// $FlowFixMe[cannot-resolve-module]
 import { dirname } from 'path';
 import resolve from 'resolve';
+// $FlowFixMe[cannot-resolve-module]
 import vm from 'vm';
 import Store from './store';
 import type { LoaderOptions } from './sweet-loader';
@@ -17,7 +20,7 @@ export default class NodeLoader extends SweetLoader {
     this.extensions = options.extensions || ['.js', '.mjs'];
   }
 
-  normalize(name: string, refererName?: string, refererAddress?: string) {
+  normalize(name: string, refererName?: string, refererAddress?: string): any {
     let normName = super.normalize(name, refererName, refererAddress);
     let match = normName.match(phaseInModulePathRegexp);
     if (match && match.length >= 3) {
@@ -43,7 +46,7 @@ export default class NodeLoader extends SweetLoader {
     name: string,
     address: { path: string, phase: number },
     metadata: {},
-  }) {
+  }): any {
     let src = this.sourceCache.get(address.path);
     if (src != null) {
       return src;
@@ -58,7 +61,7 @@ export default class NodeLoader extends SweetLoader {
     }
   }
 
-  freshStore() {
+  freshStore(): any {
     let sandbox = {
       process: global.process,
       console: global.console,
@@ -66,7 +69,8 @@ export default class NodeLoader extends SweetLoader {
     return new Store(vm.createContext(sandbox));
   }
 
-  eval(source: string, store: Store) {
+  // $FlowFixMe[value-as-type]
+  eval(source: string, store: Store): any {
     return vm.runInContext(source, store.getBackingObject());
   }
 }

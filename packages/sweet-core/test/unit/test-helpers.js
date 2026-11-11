@@ -8,7 +8,7 @@ function wrappingRead(src) {
   return r;
 }
 
-test('should help with an identifier', t => {
+test('should help with an identifier', (t) => {
   let r = wrappingRead('foo');
   t.true(H.isIdentifier(r));
   t.is(H.unwrap(r).value, 'foo');
@@ -18,7 +18,7 @@ test('should help with an identifier', t => {
   t.is(H.unwrap(x).value, 'foo');
 });
 
-test('should help with a keyword', t => {
+test('should help with a keyword', (t) => {
   let r = wrappingRead('if');
   t.true(H.isKeyword(r));
   t.is(H.unwrap(r).value, 'if');
@@ -28,7 +28,7 @@ test('should help with a keyword', t => {
   t.is(H.unwrap(x).value, 'if');
 });
 
-test('should help with a punctuator', t => {
+test('should help with a punctuator', (t) => {
   let r = wrappingRead(';');
   t.true(H.isPunctuator(r));
   t.is(H.unwrap(r).value, ';');
@@ -38,7 +38,7 @@ test('should help with a punctuator', t => {
   t.is(H.unwrap(x).value, ';');
 });
 
-test('should help with a numeric', t => {
+test('should help with a numeric', (t) => {
   let r = wrappingRead('42');
   t.true(H.isNumericLiteral(r));
   t.is(H.unwrap(r).value, 42);
@@ -48,7 +48,7 @@ test('should help with a numeric', t => {
   t.is(H.unwrap(x).value, 42);
 });
 
-test('should help with a string literal', t => {
+test('should help with a string literal', (t) => {
   let r = wrappingRead('"foo"');
   t.true(H.isStringLiteral(r));
   t.is(H.unwrap(r).value, 'foo');
@@ -58,7 +58,7 @@ test('should help with a string literal', t => {
   t.is(H.unwrap(x).value, 'foo');
 });
 
-test('should help with a template', t => {
+test('should help with a template', (t) => {
   let r = wrappingRead('`foo`');
   let [el] = H.unwrap(r).value;
   t.true(H.isTemplate(r));
@@ -66,12 +66,12 @@ test('should help with a template', t => {
   t.is(H.unwrap(el).value, 'foo');
 });
 
-test('should help with a syntax template', t => {
+test('should help with a syntax template', (t) => {
   let r = wrappingRead('#`foo`');
   t.true(H.isSyntaxTemplate(r));
 });
 
-test('should help with a paren', t => {
+test('should help with a paren', (t) => {
   let r = wrappingRead('(foo)');
   t.true(H.isParens(r));
 
@@ -80,7 +80,7 @@ test('should help with a paren', t => {
   t.true(H.isParens(x));
 });
 
-test('should help with a bracket', t => {
+test('should help with a bracket', (t) => {
   let r = wrappingRead('[foo]');
   t.true(H.isBrackets(r));
 
@@ -89,7 +89,7 @@ test('should help with a bracket', t => {
   t.true(H.isBrackets(x));
 });
 
-test('should help with a brace', t => {
+test('should help with a brace', (t) => {
   let r = wrappingRead('{foo}');
   t.true(H.isBraces(r));
 

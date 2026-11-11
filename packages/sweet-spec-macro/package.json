@@ -9,15 +9,18 @@
   "author": "Tim Disney",
   "license": "BSD-2-Clause",
   "devDependencies": {
-    "ava": "0.19.1",
-    "babel-core": "6.26.3",
-    "babel-plugin-transform-es2015-modules-commonjs": "6.26.2",
-    "eslint": "4.19.1",
+    "@babel/core": "7.29.13",
+    "@babel/register": "7.29.13",
+    "@sweet-js/babel-preset": "0.0.0",
+    "ava": "5.3.1",
     "sweet.js": "2.2.1"
   },
   "ava": {
     "files": [
       "test/*.js"
+    ],
+    "require": [
+      "@babel/register"
     ]
   }
 }

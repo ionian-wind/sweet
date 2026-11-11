@@ -11,11 +11,11 @@ import SweetModule from './sweet-module';
 import * as _ from 'ramda';
 import ScopeReducer from './scope-reducer';
 import { wrapInTerms } from './macro-context';
-import { transform as babel } from 'babel-core';
+import { transform as babel } from '@babel/core';
 import Store from './store';
 import Multimap from './multimap';
 
-export const phaseInModulePathRegexp = /(.*):(\d+)\s*$/;
+export const phaseInModulePathRegexp: RegExp = /(.*):(\d+)\s*$/;
 
 export type Context = {
   bindings: any,
@@ -24,6 +24,7 @@ export type Context = {
   loader: any,
   transform: any,
   phase: number,
+  // $FlowFixMe[value-as-type]
   store: Store,
   invokedRegistry: Multimap<string, number>,
 };
@@ -47,6 +48,7 @@ export default class SweetLoader {
     this.logging = options.logging || false;
 
     let bindings = new BindingMap();
+    // $FlowFixMe[underconstrained-implicit-instantiation]
     let templateMap = new Map();
     let tempIdent = 0;
     this.context = {
@@ -56,20 +58,22 @@ export default class SweetLoader {
       getTemplateIdentifier: () => ++tempIdent,
       loader: this,
       invokedRegistry: new Multimap(),
-      transform: c => {
+      transform: (c) => {
         if (options.noBabel) {
           return {
             code: c,
           };
         }
         return babel(c, {
-          babelrc: true,
+          babelrc: false,
+          configFile: false,
+          presets: [['@sweet-js/babel-preset', { modules: false }]],
         });
       },
     };
   }
 
-  normalize(name: string, refererName?: string, refererAddress?: string) {
+  normalize(name: string, refererName?: string, refererAddress?: string): any {
     // takes `..path/to/source.js:<phase>`
     // gives `/abs/path/to/source.js:<phase>`
     // missing phases are turned into 0
@@ -79,7 +83,7 @@ export default class SweetLoader {
     return name;
   }
 
-  locate({ name, metadata }: { name: string, metadata: {} }) {
+  locate({ name, metadata }: { name: string, metadata: {} }): any {
     // takes `/abs/path/to/source.js:<phase>`
     // gives { path: '/abs/path/to/source.js', phase: <phase> }
     let match = name.match(phaseInModulePathRegexp);
@@ -100,6 +104,7 @@ export default class SweetLoader {
     name: string,
     address: { path: string, phase: number },
     metadata: {},
+    // $FlowFixMe[missing-local-annot]
   }) {
     throw new Error('No default fetch defined');
   }
@@ -114,7 +119,7 @@ export default class SweetLoader {
     address: { path: string, phase: number },
     source: string,
     metadata: {},
-  }) {
+  }): any {
     let src = this.compiledCache.get(address.path);
     if (src != null) {
       return src;
@@ -134,15 +139,16 @@ export default class SweetLoader {
     address: { path: string, phase: number },
     source: SweetModule,
     metadata: {},
+    // $FlowFixMe[missing-local-annot]
   }) {
     throw new Error('Not implemented yet');
   }
 
-  eval(source: string) {
+  eval(source: string): any {
     return (0, eval)(source);
   }
 
-  load(entryPath: string) {
+  load(entryPath: string): any {
     let metadata = {};
     let name = this.normalize(entryPath);
     let address = this.locate({ name, metadata });
@@ -163,19 +169,22 @@ export default class SweetLoader {
       enforceLangPragma: boolean,
       isEntrypoint: boolean,
     },
-  ) {
+  ): any {
     let metadata = {
       isEntrypoint,
       enforceLangPragma,
       entryPath,
     };
     let name = this.normalize(entryPath, refererName);
+    // $FlowFixMe[incompatible-type]
     let address = this.locate({ name, metadata });
+    // $FlowFixMe[incompatible-type]
     let source = this.fetch({ name, address, metadata });
+    // $FlowFixMe[incompatible-type]
     return this.translate({ name, address, source, metadata });
   }
 
-  get(entryPath: string, entryPhase: number, refererName?: string) {
+  get(entryPath: string, entryPhase: number, refererName?: string): any {
     return this.compile(`${entryPath}:${entryPhase}`, {
       refererName,
       enforceLangPragma: true,
@@ -187,11 +196,11 @@ export default class SweetLoader {
     return wrapInTerms(read(source));
   }
 
-  freshStore() {
+  freshStore(): any {
     return new Store({});
   }
 
-  compileSource(source: string, path: string, metadata: any) {
+  compileSource(source: string, path: string, metadata: any): any {
     let directive = getLangDirective(source);
     if (directive == null && metadata.enforceLangPragma) {
       // eslint-disable-next-line no-console
@@ -215,8 +224,8 @@ export default class SweetLoader {
     return new SweetModule(
       path,
       compiler.compile(
-        stxl.map(s =>
-          // $FlowFixMe: flow doesn't know about reduce yet
+        stxl.map((s) =>
+          // $FlowFixMe[prop-missing]
           s.reduce(
             new ScopeReducer(
               [

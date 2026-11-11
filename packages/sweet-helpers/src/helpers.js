@@ -1,50 +1,66 @@
 'lang sweet.js';
 // @flow
 
-type IdentifierCode = 0
-type KeywordCode = 1
-type PunctuatorCode = 2
-type NumericLiteralCode = 3
-type StringLiteralCode = 4
-type TemplateElementCode = 5
-type TemplateCode = 6
-type RegExpCode = 7
+type IdentifierCode = 0;
+type KeywordCode = 1;
+type PunctuatorCode = 2;
+type NumericLiteralCode = 3;
+type StringLiteralCode = 4;
+type TemplateElementCode = 5;
+type TemplateCode = 6;
+type RegExpCode = 7;
 
-type Codes = IdentifierCode | KeywordCode | PunctuatorCode | NumericLiteralCode | StringLiteralCode | TemplateElementCode | TemplateCode | RegExpCode
+type Codes =
+  | IdentifierCode
+  | KeywordCode
+  | PunctuatorCode
+  | NumericLiteralCode
+  | StringLiteralCode
+  | TemplateElementCode
+  | TemplateCode
+  | RegExpCode;
 
 type IdentifierToken = {
-  typeCode: IdentifierCode;
-  value: string
-}
+  typeCode: IdentifierCode,
+  value: string,
+};
 type KeywordToken = {
-  typeCode: KeywordCode;
-  value: string;
-}
+  typeCode: KeywordCode,
+  value: string,
+};
 type PunctuatorToken = {
-  typeCode: PunctuatorCode;
-  value: string;
-}
+  typeCode: PunctuatorCode,
+  value: string,
+};
 type NumericLiteralToken = {
-  typeCode: NumericLiteralCode;
-  value: number;
-}
+  typeCode: NumericLiteralCode,
+  value: number,
+};
 type StringLiteralToken = {
-  typeCode: StringLiteralCode;
-  str: string
-}
+  typeCode: StringLiteralCode,
+  str: string,
+};
 type TemplateElementToken = {
-  typeCode: TemplateElementCode;
-  value: string;
-}
+  typeCode: TemplateElementCode,
+  value: string,
+};
 type TemplateToken = {
-  typeCode: TemplateCode;
-  items: Token[];
-}
+  typeCode: TemplateCode,
+  items: Token[],
+};
 type RegExpToken = {
-  typeCode: RegExpCode;
-  value: string;
-}
-type Token = IdentifierToken | KeywordToken | PunctuatorToken | NumericLiteralToken | StringLiteralToken | TemplateElementToken | TemplateToken | RegExpToken
+  typeCode: RegExpCode,
+  value: string,
+};
+type Token =
+  | IdentifierToken
+  | KeywordToken
+  | PunctuatorToken
+  | NumericLiteralToken
+  | StringLiteralToken
+  | TemplateElementToken
+  | TemplateToken
+  | RegExpToken;
 
 interface Syntax {
   token: Token;
@@ -53,20 +69,20 @@ interface Syntax {
   fromPunctuator(v: string): Syntax;
   fromNumber(n: number): Syntax;
   fromString(s: string): Syntax;
-  from(kind: string, x: any): Syntax
+  from(kind: string, x: any): Syntax;
 }
 
 type RawSyntax = {
-  type: 'RawSyntax';
-  value: Syntax;
-}
+  type: 'RawSyntax',
+  value: Syntax,
+};
 type RawDelimiter = {
-  type: 'RawDelimiter';
-  kind: 'braces' | 'parens' | 'brackets' | 'syntaxTemplate';
-  inner: Term[]
-}
+  type: 'RawDelimiter',
+  kind: 'braces' | 'parens' | 'brackets' | 'syntaxTemplate',
+  inner: Term[],
+};
 
-export type Term = RawSyntax | RawDelimiter
+export type Term = RawSyntax | RawDelimiter;
 
 const TypeCodes = {
   Identifier: 0,
@@ -88,15 +104,15 @@ export function unwrap(obj: ?Term): { value?: any } {
   if (obj.type === 'RawSyntax') {
     if (obj.value.token.typeCode === TypeCodes.StringLiteral) {
       return {
-        value: obj.value.token.str
+        value: obj.value.token.str,
       };
     } else if (obj.value.token.typeCode === TypeCodes.Template) {
       return {
-        value: obj.value.token.items
+        value: obj.value.token.items,
       };
     } else {
       return {
-        value: obj.value.token.value
+        value: obj.value.token.value,
       };
     }
   } else if (obj.type === 'RawDelimiter') {
@@ -107,86 +123,115 @@ export function unwrap(obj: ?Term): { value?: any } {
   return {};
 }
 
+// $FlowFixMe[signature-verification-failure]
 export function isIdentifier(obj: Term) {
+  // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.Identifier);
 }
 
+// $FlowFixMe[signature-verification-failure]
 export function fromIdentifier(obj: RawSyntax, x: string) {
   return obj.value.fromIdentifier(x);
 }
 
+// $FlowFixMe[signature-verification-failure]
 export function isKeyword(obj: Term) {
+  // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.Keyword);
 }
 
+// $FlowFixMe[signature-verification-failure]
 export function fromKeyword(obj: RawSyntax, x: string) {
   return obj.value.fromKeyword(x);
 }
 
+// $FlowFixMe[signature-verification-failure]
 export function isPunctuator(obj: Term) {
+  // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.Punctuator);
 }
 
+// $FlowFixMe[signature-verification-failure]
 export function fromPunctuator(obj: RawSyntax, x: string) {
   return obj.value.fromPunctuator(x);
 }
 
+// $FlowFixMe[signature-verification-failure]
 export function isNumericLiteral(obj: Term) {
+  // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.NumericLiteral);
 }
 
+// $FlowFixMe[signature-verification-failure]
 export function fromNumericLiteral(obj: RawSyntax, x: number) {
   return obj.value.fromNumber(x);
 }
 
+// $FlowFixMe[signature-verification-failure]
 export function isStringLiteral(obj: Term) {
+  // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.StringLiteral);
 }
 
+// $FlowFixMe[signature-verification-failure]
 export function fromStringLiteral(obj: RawSyntax, x: string) {
   return obj.value.fromString(x);
 }
 
+// $FlowFixMe[signature-verification-failure]
 export function isTemplateElement(obj: Term) {
+  // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.TemplateElement);
 }
 
+// $FlowFixMe[signature-verification-failure]
 export function isTemplate(obj: Term) {
+  // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.Template);
 }
 
+// $FlowFixMe[signature-verification-failure]
 export function isRegExp(obj: Term) {
+  // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.RegExp);
 }
 
+// $FlowFixMe[signature-verification-failure]
 export function isDelimiter(obj: Term) {
   return obj && obj.type === 'RawDelimiter';
 }
 
+// $FlowFixMe[signature-verification-failure]
 export function isParens(obj: Term) {
   return obj && obj.type === 'RawDelimiter' && obj.kind === 'parens';
 }
 
+// $FlowFixMe[signature-verification-failure]
 export function fromParens(obj: RawSyntax, x: Term[]) {
   return obj.value.from('parens', x);
 }
 
+// $FlowFixMe[signature-verification-failure]
 export function isBrackets(obj: Term) {
   return obj && obj.type === 'RawDelimiter' && obj.kind === 'brackets';
 }
 
+// $FlowFixMe[signature-verification-failure]
 export function fromBrackets(obj: RawSyntax, x: Term[]) {
   return obj.value.from('brackets', x);
 }
 
+// $FlowFixMe[signature-verification-failure]
 export function isBraces(obj: Term) {
   return obj && obj.type === 'RawDelimiter' && obj.kind === 'braces';
 }
 
+// $FlowFixMe[signature-verification-failure]
 export function fromBraces(obj: RawSyntax, x: Term[]) {
   return obj.value.from('braces', x);
 }
 
+// $FlowFixMe[signature-verification-failure]
 export function isSyntaxTemplate(obj: Term) {
   return obj && obj.type === 'RawDelimiter' && obj.kind === 'syntaxTemplate';
 }

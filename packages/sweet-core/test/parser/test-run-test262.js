@@ -722,10 +722,10 @@ let failTest = mkFailTester('fail', PARSER_TEST_DIR);
 // let earlyTest = mkFailTester('early', PARSER_TEST_DIR);
 let extras = mkTester('pass', EXTRA_TEST_DIR);
 
-pass.filter(f => !passExcluded.includes(f)).forEach(f => test(passTest, f));
+pass.filter((f) => !passExcluded.includes(f)).forEach((f) => test(passTest, f));
 
-fail.filter(f => !failExcluded.includes(f)).forEach(f => test(failTest, f));
+fail.filter((f) => !failExcluded.includes(f)).forEach((f) => test(failTest, f));
 
 // early.filter(f => !earlyExcluded.includes(f)).forEach(f => test(earlyTest, f));
 
-passExtra.forEach(f => test(extras, f));
+passExtra.forEach((f) => test(extras, f));

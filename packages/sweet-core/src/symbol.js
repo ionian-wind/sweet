@@ -3,7 +3,7 @@ let internedMap: Map<string, Symbol> = new Map();
 
 let counter = 0;
 
-export function gensym(name: string) {
+export function gensym(name: string): Symbol {
   let prefix = name == null ? 's_' : name + '_';
   let sym = new Symbol(prefix + counter);
   counter++;
@@ -16,7 +16,7 @@ class Symbol {
   constructor(name: string) {
     this.name = name;
   }
-  toString() {
+  toString(): any {
     return this.name;
   }
 }

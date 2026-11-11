@@ -1,5 +1,5 @@
 'lang sweet.js';
-// @flow
+// @noflow
 import { Either, Left } from './either';
 import { Maybe, Just, Nothing } from './maybe';
 
@@ -7,8 +7,8 @@ type Mark = {};
 
 interface Context<T> {
   next(): {
-    done: boolean;
-    value: T
+    done: boolean,
+    value: T,
   };
 
   mark(): Mark;
@@ -38,48 +38,52 @@ export class ImmutableContext<T> {
   rest(): ImmutableContext<T> {
     this.ctx.reset(this.mark);
     this.ctx.next();
-    return new ImmutableContext(this.ctx); 
+    return new ImmutableContext(this.ctx);
   }
 }
 
 export default class Parser<A, C> {
-  _runner: ImmutableContext<C> => Either<string, [A, ImmutableContext<C>]>;
+  _runner: (ImmutableContext<C>) => Either<string, [A, ImmutableContext<C>]>;
 
-  constructor(runner: ImmutableContext<C> => Either<string, [A, ImmutableContext<C>]>) {
+  constructor(
+    runner: (ImmutableContext<C>) => Either<string, [A, ImmutableContext<C>]>,
+  ) {
     this._runner = runner;
   }
-  
-  run(ctx: ImmutableContext<*> | Context<*>): Either<string, [A, ImmutableContext<*>]> {
+
+  run(
+    ctx: ImmutableContext<any> | Context<any>,
+  ): Either<string, [A, ImmutableContext<any>]> {
     if (!(ctx instanceof ImmutableContext)) {
       ctx = new ImmutableContext(ctx);
     }
     return this._runner(ctx);
   }
 
-  // $FlowFixMe: computed properties still not supported in flow
-  static ['fantasy-land/of'](a: A): Parser<A, *> {
+  static ['fantasy-land/of'](a: A): Parser<A, any> {
     return Parser.of(a);
   }
 
-  static of(a: A): Parser<A, *> {
-    return new Parser(ctx => Either.of([a, ctx]));
+  static of(a: A): Parser<A, any> {
+    return new Parser((ctx) => Either.of([a, ctx]));
   }
 
-  static failure(msg: string): Parser<*, *> {
-    return new Parser(ctx => { return new Left(msg); });
+  static failure(msg: string): Parser<any, any> {
+    return new Parser((ctx) => {
+      return new Left(msg);
+    });
   }
 
-  // $FlowFixMe: computed properties still not supported in flow
-  static ['fantasy-land/zero'](): Parser<*, *> {
+  static ['fantasy-land/zero'](): Parser<any, any> {
     return Parser.zero();
   }
 
-  static zero(): Parser<*, *> {
+  static zero(): Parser<any, any> {
     return Parser.failure('');
   }
 
-  static empty(): Parser<void, *> {
-    return new Parser(ctx => {
+  static empty(): Parser<void, any> {
+    return new Parser((ctx) => {
       let i = ctx.head();
       if (i instanceof Nothing) {
         return Either.of([void 0, ctx.rest()]);
@@ -89,8 +93,8 @@ export default class Parser<A, C> {
     });
   }
 
-  static item(): Parser<*, *> {
-    return new Parser(ctx => {
+  static item(): Parser<any, any> {
+    return new Parser((ctx) => {
       let i = ctx.head();
       if (i instanceof Just) {
         return Either.of([i.value, ctx.rest()]);
@@ -100,40 +104,44 @@ export default class Parser<A, C> {
     });
   }
 
-  static sat<T>(f: T => boolean, msg: string = 'Did not satisfy predicate'): Parser<T, T> {
-    return Parser
-      .item()
-      .chain(item => f(item) ? Parser.of(item) : Parser.failure(msg));
+  static sat<T>(
+    f: (T) => boolean,
+    msg: string = 'Did not satisfy predicate',
+  ): Parser<T, T> {
+    return Parser.item().chain((item) =>
+      f(item) ? Parser.of(item) : Parser.failure(msg),
+    );
   }
 
-  // $FlowFixMe: computed properties still not supported in flow
-  ['fantasy-land/ap']<B>(parser: Parser<A => B, C>): Parser<B, C> {
+  ['fantasy-land/ap']<B>(parser: Parser<(A) => B, C>): Parser<B, C> {
     return this.ap(parser);
   }
 
-  ap<B>(parser: Parser<A => B, C>): Parser<B, C> {
-    return new Parser(ctx => {
-      return this.run(ctx)
-        .chain(([a, ctx]) => parser.run(ctx).map(([f, ctx]) => [f(a), ctx]));
+  ap<B>(parser: Parser<(A) => B, C>): Parser<B, C> {
+    return new Parser((ctx) => {
+      return this.run(ctx).chain(([a, ctx]) =>
+        parser.run(ctx).map(([f, ctx]) => [f(a), ctx]),
+      );
     });
   }
 
-  // $FlowFixMe: computed properties still not supported in flow
-  ['fantasy-land/map'](f: A => B): Parser<B, C> {
+  // eslint-disable-next-line no-undef
+  ['fantasy-land/map'](f: (A) => B): Parser<B, C> {
     return this.map(f);
   }
 
-  map<B>(f: A => B): Parser<B, C> {
-    return new Parser(ctx => this.run(ctx).map(([aval, ctx]) => [f(aval), ctx]));
+  map<B>(f: (A) => B): Parser<B, C> {
+    return new Parser((ctx) =>
+      this.run(ctx).map(([aval, ctx]) => [f(aval), ctx]),
+    );
   }
 
-  // $FlowFixMe: computed properties still not supported in flow
   ['fantasy-land/alt'](other: Parser<A, C>): Parser<A, C> {
     return this.alt(other);
   }
 
   alt(other: Parser<A, C>): Parser<A, C> {
-    return new Parser(ctx => {
+    return new Parser((ctx) => {
       let r = this.run(ctx);
       if (r instanceof Left) {
         return other.run(ctx);
@@ -142,18 +150,15 @@ export default class Parser<A, C> {
     });
   }
 
-
-  // $FlowFixMe: computed properties still not supported in flow
-  ['fantasy-land/chain']<B>(f: A => Parser<B, *>): Parser<B, *> {
+  ['fantasy-land/chain']<B>(f: (A) => Parser<B, any>): Parser<B, any> {
     return this.chain(f);
   }
 
-  chain<B>(f: A => Parser<B, *>): Parser<B, *> {
-    return new Parser(ctx => 
+  chain<B>(f: (A) => Parser<B, any>): Parser<B, any> {
+    return new Parser((ctx) =>
       this.run(ctx)
         .map(([v, ctx]) => [f(v), ctx])
-        .chain(([parser, ctx]) => parser.run(ctx))
+        .chain(([parser, ctx]) => parser.run(ctx)),
     );
   }
 }
-

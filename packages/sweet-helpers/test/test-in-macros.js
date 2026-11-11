@@ -1,7 +1,7 @@
 import test from 'ava';
 import { compileAndEval } from './_helper';
 
-test('a mapped combinator should work inside a macro', t => {
+test('a mapped combinator should work inside a macro', (t) => {
   let output = compileAndEval(`
   'lang sweet.js';
   import { identifier } from '../combinators' for syntax;
@@ -19,7 +19,7 @@ test('a mapped combinator should work inside a macro', t => {
   t.is(output, true);
 });
 
-test('a with combinator should work inside a macro', t => {
+test('a with combinator should work inside a macro', (t) => {
   let output = compileAndEval(`
   'lang sweet.js';
   import { identifierWith } from '../combinators' for syntax;
@@ -38,7 +38,7 @@ test('a with combinator should work inside a macro', t => {
   t.is(output, true);
 });
 
-test('sequencing combinators should work inside a macro', t => {
+test('sequencing combinators should work inside a macro', (t) => {
   let output = compileAndEval(`
   'lang sweet.js';
   import * as C from '../combinators' for syntax;
@@ -59,7 +59,7 @@ test('sequencing combinators should work inside a macro', t => {
   t.is(output, true);
 });
 
-test('delimiter combinators should allow matching inside', t => {
+test('delimiter combinators should allow matching inside', (t) => {
   let output = compileAndEval(`
   'lang sweet.js';
   import * as C from '../combinators' for syntax;
@@ -82,8 +82,7 @@ test('delimiter combinators should allow matching inside', t => {
   t.is(output, true);
 });
 
-
-test('can match a class example', t => {
+test('can match a class example', (t) => {
   let output = compileAndEval(`
   'lang sweet.js';
   import * as C from '../combinators' for syntax;

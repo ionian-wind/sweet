@@ -12,16 +12,18 @@ const extractDeclaration = _.cond([
   [S.isExportDefault, _.prop('body')],
   [
     _.T,
-    term => {
+    (term) => {
       throw new Error(`Expecting an Export or ExportDefault but got ${term}`);
     },
   ],
 ]);
 
-const ExpSpec = x => ({
+// $FlowFixMe[missing-local-annot]
+const ExpSpec = (x) => ({
   exportedName: x,
 });
 
+// $FlowFixMe[recursive-definition]
 const extractDeclarationNames = _.cond([
   [S.isVariableDeclarator, ({ binding }) => List.of(binding.name)],
   [
@@ -32,6 +34,7 @@ const extractDeclarationNames = _.cond([
   [S.isClassDeclaration, ({ name }) => List.of(name.name)],
 ]);
 
+// $FlowFixMe[recursive-definition]
 const extractDeclarationSpecifiers = _.cond([
   [S.isVariableDeclarator, ({ binding }) => List.of(ExpSpec(binding.name))],
   [
@@ -65,6 +68,7 @@ function extractSpecifiers(term: any): List<ExportSpecifier> {
 
 function wrapStatement(declaration: Term) {
   if (S.isVariableDeclaration(declaration)) {
+    // $FlowFixMe[extra-arg]
     return new T.VariableDeclarationStatement({
       declaration,
     });
@@ -75,10 +79,13 @@ function wrapStatement(declaration: Term) {
 const memoSym = Symbol('memo');
 
 function makeVarDeclStmt(name: T.BindingIdentifier, expr: T.Expression) {
+  // $FlowFixMe[extra-arg]
   return new T.VariableDeclarationStatement({
+    // $FlowFixMe[extra-arg]
     declaration: new T.VariableDeclaration({
       kind: 'var',
       declarators: List.of(
+        // $FlowFixMe[extra-arg]
         new T.VariableDeclarator({
           binding: name,
           init: expr,
@@ -129,11 +136,14 @@ export default class SweetModule {
           let names = extractDeclarationNames(decl);
           body.push(stmt);
           // TODO: support ExportFrom
+          // $FlowFixMe[extra-arg]
           let exp = new T.ExportLocals({
             moduleSpecifier: null,
             namedExports: names.map(
-              name =>
+              (name) =>
+                // $FlowFixMe[extra-arg]
                 new T.ExportLocalSpecifier({
+                  // $FlowFixMe[extra-arg]
                   name: new T.IdentifierExpression({
                     name,
                   }),
@@ -147,16 +157,20 @@ export default class SweetModule {
             extractSpecifiers(exp),
           );
         } else if (item instanceof T.ExportLocals) {
+          // $FlowFixMe[extra-arg]
           let exp = new T.ExportLocals({
             namedExports: item.namedExports.map(({ name, exportedName }) => {
               if (name == null) {
+                // $FlowFixMe[extra-arg]
                 return new T.ExportLocalSpecifier({
+                  // $FlowFixMe[extra-arg]
                   name: new T.IdentifierExpression({
                     name: exportedName,
                   }),
                   exportedName,
                 });
               }
+              // $FlowFixMe[extra-arg]
               return new T.ExportLocalSpecifier({
                 name,
                 exportedName,
@@ -177,6 +191,7 @@ export default class SweetModule {
           if (S.isExportDefault(item)) {
             this.defaultExport = Syntax.fromIdentifier('_default');
             this.exportedNames = this.exportedNames.push(
+              // $FlowFixMe[incompatible-type]
               ExpSpec(this.defaultExport),
             );
           }
@@ -191,7 +206,6 @@ export default class SweetModule {
     this.directives = List(directives);
   }
 
-  // $FlowFixMe: flow doesn't support computed property keys yet
   [memoSym]() {
     let runtime = [],
       compiletime = [];
@@ -199,6 +213,7 @@ export default class SweetModule {
       if (S.isExportDeclaration(item)) {
         if (S.isExportDefault(item)) {
           let decl = extractDeclaration(item);
+          // $FlowFixMe[extra-arg]
           let def = new T.BindingIdentifier({
             name: this.defaultExport,
           });
@@ -208,6 +223,7 @@ export default class SweetModule {
             runtime.push(
               makeVarDeclStmt(
                 def,
+                // $FlowFixMe[extra-arg]
                 new T.IdentifierExpression({
                   name: decl.name.name,
                 }),
@@ -235,31 +251,31 @@ export default class SweetModule {
     this.compiletime = List(compiletime);
   }
 
-  runtimeItems() {
+  runtimeItems(): any {
     if (this.runtime == null) {
-      // $FlowFixMe: flow doesn't support computed property keys yet
       this[memoSym]();
     }
     return this.runtime;
   }
 
-  compiletimeItems() {
+  compiletimeItems(): any {
     if (this.compiletime == null) {
-      // $FlowFixMe: flow doesn't support computed property keys yet
       this[memoSym]();
     }
     return this.compiletime;
   }
 
-  parse() {
+  parse(): any {
+    // $FlowFixMe[extra-arg]
     return new T.Module({
-      items: (this.imports: any).concat(this.items),
+      // $FlowFixMe[incompatible-type]
+      items: this.imports.concat(this.items),
       directives: this.directives,
-      // $FlowFixMe: flow doesn't know about reduce yet
+      // $FlowFixMe[prop-missing]
     }).reduce(new SweetToShiftReducer(0));
   }
 
-  codegen() {
+  codegen(): any {
     return codegen(this.parse()).code;
   }
 }

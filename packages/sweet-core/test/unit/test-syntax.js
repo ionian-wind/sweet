@@ -113,7 +113,7 @@ test('should make an identifier syntax object with another identifier as the con
   expect(foo.resolve(0)).to.be(foo_1.resolve(0));
 });
 
-test('should make new syntax from instance methods', t => {
+test('should make new syntax from instance methods', (t) => {
   let base = Syntax.fromIdentifier('foo');
   let derived = base.from('identifier', 'bar');
 

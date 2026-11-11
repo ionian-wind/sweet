@@ -26,6 +26,6 @@ export function compileToCjs(t, inputModules, expected) {
 compileToCjs.title = (title, inputStore, expected) =>
   `${title}
 ${Array.from(Object.entries(inputStore))
-    .map(([modName, modSrc]) => `${modName}\n----\n${modSrc}\n----`)
-    .join('\n')}
+  .map(([modName, modSrc]) => `${modName}\n----\n${modSrc}\n----`)
+  .join('\n')}
 > ${expected}`;

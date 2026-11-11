@@ -4,7 +4,7 @@ export function expect(cond, message, offendingSyntax, rest) {
     if (rest) {
       ctx = rest
         .slice(0, 20)
-        .map(s => {
+        .map((s) => {
           let val = s.isDelimiter() ? '( ... )' : s.val();
           if (s === offendingSyntax) {
             return '__' + val + '__';

@@ -2,7 +2,7 @@
 
 var argv = require('yargs')
   .usage('Usage: sjs [options] files ...')
-  .demand(1)
+  .demandCommand(1)
   .alias('o', 'out-file')
   .alias('d', 'out-dir')
   .alias('b', 'no-babel')
@@ -21,8 +21,8 @@ var compile = require('@sweet-js/core').compile;
 var NodeLoader = require('@sweet-js/core/dist/node-loader').default;
 var semver = require('semver');
 
-if (!semver.satisfies(process.version, '>=5.0.0')) {
-  console.log('Sweet requires node >=5.0.0, you have: ' + process.version);
+if (!semver.satisfies(process.version, '>=18.0.0')) {
+  console.log('Sweet requires node >=18.0.0, you have: ' + process.version);
   process.exit(1);
 }
 

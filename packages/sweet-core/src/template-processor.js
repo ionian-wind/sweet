@@ -41,7 +41,6 @@ const mkDelimiter = (
 ) => {
   return new T.RawDelimiter({
     kind,
-    // $FlowFixMe: flow doesn't know arrays are actually lists
     inner: List.of(from.inner.first()).concat(inner).concat(from.inner.last()),
   });
 };
@@ -103,10 +102,10 @@ function setLineNumber(t: T.Term | List<T.Term>, lineNumber: number) {
     });
   } else if (t instanceof T.RawDelimiter) {
     return t.extend({
-      inner: t.inner.map(tt => setLineNumber(tt, lineNumber)),
+      inner: t.inner.map((tt) => setLineNumber(tt, lineNumber)),
     });
   } else if (List.isList(t)) {
-    return t.map(tt => setLineNumber(tt, lineNumber));
+    return t.map((tt) => setLineNumber(tt, lineNumber));
   }
   // TODO: need to handle line numbers for all AST nodes
   return t;

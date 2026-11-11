@@ -19,12 +19,13 @@ import ModuleVisitor, {
   isBoundToCompiletime,
 } from './module-visitor';
 
-// $FlowFixMe: flow doesn't know about the CloneReducer yet
+// $FlowFixMe[prop-missing]
 class RegisterBindingsReducer extends Term.CloneReducer {
   useScope: any;
   phase: number;
   bindings: any;
   skipDup: boolean;
+  // $FlowFixMe[value-as-type]
   env: Env;
 
   constructor(
@@ -32,6 +33,7 @@ class RegisterBindingsReducer extends Term.CloneReducer {
     phase: number,
     skipDup: boolean,
     bindings: any,
+    // $FlowFixMe[value-as-type]
     env: Env,
   ) {
     super();
@@ -42,6 +44,7 @@ class RegisterBindingsReducer extends Term.CloneReducer {
     this.env = env;
   }
 
+  // $FlowFixMe[missing-local-annot]
   reduceBindingIdentifier(t: Term, s: { name: Syntax }) {
     let newName = s.name.removeScope(this.useScope, this.phase);
     let newBinding = gensym(newName.val());
@@ -51,21 +54,23 @@ class RegisterBindingsReducer extends Term.CloneReducer {
       skipDup: this.skipDup,
     });
     this.env.set(newBinding.toString(), new VarBindingTransform(newName));
-    // $FlowFixMe: flow doesn't know about extend
+    // $FlowFixMe[prop-missing]
     return t.extend({
       name: newName,
     });
   }
 }
 
-// $FlowFixMe: flow doesn't know about the CloneReducer yet
+// $FlowFixMe[prop-missing]
 class RegisterSyntaxBindingsReducer extends Term.CloneReducer {
   useScope: any;
   phase: number;
   bindings: any;
+  // $FlowFixMe[value-as-type]
   env: Env;
   val: any;
 
+  // $FlowFixMe[value-as-type]
   constructor(useScope: any, phase: number, bindings: any, env: Env, val: any) {
     super();
     this.useScope = useScope;
@@ -75,6 +80,7 @@ class RegisterSyntaxBindingsReducer extends Term.CloneReducer {
     this.val = val;
   }
 
+  // $FlowFixMe[missing-local-annot]
   reduceBindingIdentifier(t: Term, s: { name: Syntax }) {
     let newName = s.name.removeScope(this.useScope, this.phase);
     let newBinding = gensym(newName.val());
@@ -85,7 +91,7 @@ class RegisterSyntaxBindingsReducer extends Term.CloneReducer {
     });
     let resolvedName = newName.resolve(this.phase);
     this.env.set(resolvedName, new CompiletimeTransform(this.val));
-    // $FlowFixMe: flow doesn't know about extend
+    // $FlowFixMe[prop-missing]
     return t.extend({
       name: newName,
     });
@@ -98,7 +104,7 @@ export default class TokenExpander extends ASTDispatcher {
     this.context = context;
   }
 
-  expand(stxl: List<Term>) {
+  expand(stxl: List<Term>): any {
     let result = [];
     if (stxl.size === 0) {
       return List(result);
@@ -113,20 +119,22 @@ export default class TokenExpander extends ASTDispatcher {
     return List(result);
   }
 
-  expandVariableDeclarationStatement(term: S.VariableDeclarationStatement) {
-    // $FlowFixMe: flow doesn't know about extend
+  expandVariableDeclarationStatement(
+    term: S.VariableDeclarationStatement,
+  ): any {
+    // $FlowFixMe[prop-missing]
     return term.extend({
       declaration: this.registerVariableDeclaration(term.declaration),
     });
   }
 
-  expandFunctionDeclaration(term: Term) {
+  expandFunctionDeclaration(term: Term): any {
     return this.registerFunctionOrClass(term);
   }
 
   // TODO: think about function expressions
 
-  registerImport(term: S.Import | S.ImportNamespace) {
+  registerImport(term: S.Import | S.ImportNamespace): any {
     let path = term.moduleSpecifier.val();
     let mod;
     let visitor = new ModuleVisitor(this.context);
@@ -172,13 +180,15 @@ export default class TokenExpander extends ASTDispatcher {
       }
     }
     if (term instanceof S.Import) {
+      // $FlowFixMe[incompatible-type]
       namedImports = term.namedImports.filter(
-        specifier =>
+        (specifier) =>
           !isBoundToCompiletime(specifier.binding.name, this.context.store),
       );
       if (defaultBinding == null && namedImports.size === 0) {
         return new S.EmptyStatement();
       }
+      // $FlowFixMe[extra-arg]
       return new S.Import({
         forSyntax: term.forSyntax,
         moduleSpecifier: term.moduleSpecifier,
@@ -186,6 +196,7 @@ export default class TokenExpander extends ASTDispatcher {
         namedImports,
       });
     } else if (term instanceof S.ImportNamespace) {
+      // $FlowFixMe[extra-arg]
       return new S.ImportNamespace({
         forSyntax: term.forSyntax,
         moduleSpecifier: term.moduleSpecifier,
@@ -197,15 +208,15 @@ export default class TokenExpander extends ASTDispatcher {
     return term;
   }
 
-  expandImport(term: S.Import) {
+  expandImport(term: S.Import): any {
     return this.registerImport(term);
   }
 
-  expandImportNamespace(term: S.ImportNamespace) {
+  expandImportNamespace(term: S.ImportNamespace): any {
     return this.registerImport(term);
   }
 
-  expandExport(term: any) {
+  expandExport(term: any): any {
     if (
       T.isFunctionDeclaration(term.declaration) ||
       T.isClassDeclaration(term.declaration)
@@ -221,7 +232,7 @@ export default class TokenExpander extends ASTDispatcher {
     return term;
   }
 
-  registerFunctionOrClass(term: any) {
+  registerFunctionOrClass(term: any): any {
     let red = new RegisterBindingsReducer(
       this.context.useScope,
       this.context.phase,
@@ -234,7 +245,7 @@ export default class TokenExpander extends ASTDispatcher {
     });
   }
 
-  registerVariableDeclaration(term: any) {
+  registerVariableDeclaration(term: any): any {
     if (
       term.kind === 'syntax' ||
       term.kind === 'syntaxrec' ||
@@ -250,7 +261,7 @@ export default class TokenExpander extends ASTDispatcher {
       this.context.env,
     );
     return term.extend({
-      declarators: term.declarators.map(decl => {
+      declarators: term.declarators.map((decl) => {
         return decl.extend({
           binding: decl.binding.reduce(red),
         });
@@ -258,7 +269,7 @@ export default class TokenExpander extends ASTDispatcher {
     });
   }
 
-  registerSyntaxDeclaration(term: any) {
+  registerSyntaxDeclaration(term: any): any {
     if (term.kind === 'syntax' || term.kind === 'operator') {
       // syntax id^{a, b} = <init>^{a, b}
       // ->
@@ -270,7 +281,7 @@ export default class TokenExpander extends ASTDispatcher {
         this.context.bindings,
       );
       term = term.extend({
-        declarators: term.declarators.map(decl => {
+        declarators: term.declarators.map((decl) => {
           let name = decl.binding.name;
           let nameAdded = name.addScope(
             scope,
@@ -298,7 +309,7 @@ export default class TokenExpander extends ASTDispatcher {
     // into the environment
     let compiletimeType = term.kind === 'operator' ? 'operator' : 'syntax';
     return term.extend({
-      declarators: term.declarators.map(decl => {
+      declarators: term.declarators.map((decl) => {
         // each compiletime value needs to be expanded with a fresh
         // environment and in the next higher phase
         let syntaxExpander = new TermExpander(

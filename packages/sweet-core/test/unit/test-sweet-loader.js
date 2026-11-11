@@ -5,7 +5,7 @@ import { evalWithOutput } from '../assertions';
 
 // SweetLoader unit tests
 
-test('locate pulls out the phase from the path', t => {
+test('locate pulls out the phase from the path', (t) => {
   let l = new SweetLoader();
 
   let addr = l.locate({ name: '/foo/bar:0' });
@@ -17,7 +17,7 @@ test('locate pulls out the phase from the path', t => {
   t.is(addr.phase, 0);
 });
 
-test('locate throws an error if phase is missing', t => {
+test('locate throws an error if phase is missing', (t) => {
   let l = new SweetLoader();
 
   t.throws(() => l.locate({ name: '/foo/bar' }));

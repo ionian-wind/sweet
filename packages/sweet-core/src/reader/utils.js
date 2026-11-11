@@ -3,6 +3,7 @@
 import { isEOS } from 'readtable';
 import { List } from 'immutable';
 
+// $FlowFixMe[untyped-type-import]
 import type { Readtable, CharStream } from 'readtable';
 
 import { code } from 'esutils';
@@ -39,7 +40,7 @@ export {
   isIdentifierPart,
 };
 
-export function getHexValue(rune: string) {
+export function getHexValue(rune: string): number {
   if ('0' <= rune && rune <= '9') {
     return rune.charCodeAt(0) - 48;
   }
@@ -52,6 +53,8 @@ export function getHexValue(rune: string) {
   return -1;
 }
 
+// $FlowFixMe[missing-this-annot]
+// $FlowFixMe[value-as-type]
 export function skipSingleLineComment(stream: CharStream): void {
   let idx = 0;
   let char = stream.peek(idx);
@@ -71,7 +74,9 @@ export function skipSingleLineComment(stream: CharStream): void {
   stream.readString(idx);
 }
 
-export function scanUnicode(stream: CharStream, start: number) {
+// $FlowFixMe[missing-this-annot]
+// $FlowFixMe[value-as-type]
+export function scanUnicode(stream: CharStream, start: number): number {
   const sPeek = stream.peek.bind(stream);
   let idx = start;
   let hexDigits = 0;
@@ -110,12 +115,14 @@ export function scanUnicode(stream: CharStream, start: number) {
   return hexDigits;
 }
 
+// $FlowFixMe[missing-this-annot]
 export function readStringEscape(
   str: string,
+  // $FlowFixMe[value-as-type]
   stream: CharStream,
   start: number,
   octal: ?string,
-) {
+): Array<?(0 | number | string)> {
   let idx = start + 1,
     char = stream.peek(idx),
     lineStart;
@@ -194,6 +201,8 @@ export function readStringEscape(
   return [str, idx, octal, lineStart];
 }
 
+// $FlowFixMe[missing-local-annot]
+// $FlowFixMe[missing-this-annot]
 function scanOctal(str, stream, char, start, octal) {
   let len = 1,
     idx = start;
@@ -220,6 +229,7 @@ function scanOctal(str, stream, char, start, octal) {
   return [str, idx, octal];
 }
 
+// $FlowFixMe[missing-local-annot]
 function scanHexEscape2(stream, idx) {
   let char = stream.peek(idx);
 
@@ -235,31 +245,40 @@ function scanHexEscape2(stream, idx) {
   return (r1 << 4) | r2;
 }
 
-export function insertSequence(coll: Object, seq: string) {
+export function insertSequence(coll: Object, seq: string): Object {
   const char = seq[0];
+  // $FlowFixMe[prop-missing]
   if (!coll[char]) {
+    // $FlowFixMe[prop-missing]
     coll[char] = {};
   }
   if (seq.length === 1) {
+    // $FlowFixMe[prop-missing]
     coll[char].isValue = true;
     return coll;
   } else {
+    // $FlowFixMe[prop-missing]
     coll[char] = insertSequence(coll[char], seq.slice(1));
     return coll;
   }
 }
 
-export const isTerminating = (table: Readtable) => (char: string): boolean =>
-  table.getMapping(char).mode === 'terminating';
+export const isTerminating =
+  // $FlowFixMe[value-as-type]
+  (table: Readtable): ((char: string) => boolean) =>
+    (char: string): boolean =>
+      table.getMapping(char).mode === 'terminating';
 
 // check for terminating doesn't work if it's at the start
 export function retrieveSequenceLength(
   table: Object,
+  // $FlowFixMe[value-as-type]
   stream: CharStream,
   idx: number,
 ): number {
   const char = stream.peek(idx);
   if (!table[char]) {
+    // $FlowFixMe[prop-missing]
     if (table.isValue) return idx;
     return -1;
   } else {
@@ -352,20 +371,22 @@ function isExprReturn(l: number, p: List<TokenTree>) {
 
 // List a -> Boolean
 function isTopPunctuator(p: List<TokenTree>) {
-  return popMaybe(p).map(punc => isPunctuator(punc)).getOrElse(false);
+  return popMaybe(p)
+    .map((punc) => isPunctuator(punc))
+    .getOrElse(false);
 }
 
 function isOperator(op: TokenTree) {
   if ((isPunctuator(op) || isKeyword(op)) && op.value != null) {
     const opVal = op.value; // the const is because flow doesn't know op.value isn't mutated
-    return allOps.some(o => o === opVal);
+    return allOps.some((o) => o === opVal);
   }
   return false;
 }
 
 function isTopOperator(p: List<TokenTree>) {
   return popMaybe(p)
-    .map(op => {
+    .map((op) => {
       return isOperator(op);
     })
     .getOrElse(false);
@@ -377,7 +398,7 @@ function isExprPrefixKeyword(kwd: TokenTree) {
 
 function isTopKeywordExprPrefix(p: List<TokenTree>) {
   return popMaybe(p)
-    .map(kwd => {
+    .map((kwd) => {
       return isExprPrefixKeyword(kwd);
     })
     .getOrElse(false);
@@ -385,7 +406,7 @@ function isTopKeywordExprPrefix(p: List<TokenTree>) {
 
 function isTopColon(p: List<TokenTree>) {
   return popMaybe(p)
-    .map(colon => {
+    .map((colon) => {
       if (isPunctuator(colon, ':')) {
         return true;
       }
@@ -394,7 +415,11 @@ function isTopColon(p: List<TokenTree>) {
     .getOrElse(false);
 }
 
-export function isExprPrefix(l: number, b: boolean, p: List<TokenTree>) {
+export function isExprPrefix(
+  l: number,
+  b: boolean,
+  p: List<TokenTree>,
+): boolean {
   if (p.size === 0) {
     // ... ({x: 42} /r/i)
     return b;
@@ -418,6 +443,7 @@ export function isExprPrefix(l: number, b: boolean, p: List<TokenTree>) {
   return false;
 }
 
+// $FlowFixMe[value-as-type]
 function popMaybe<T>(p: List<T>): Maybe<T> {
   if (p.size >= 1) {
     return Maybe.of(p.last());
@@ -432,7 +458,7 @@ function isTopStandaloneKeyword(prefix: List<TokenTree>) {
       if (isNonLiteralKeyword(kwd)) {
         return Maybe.maybe(
           true,
-          dot => !isPunctuator(dot, '.'),
+          (dot) => !isPunctuator(dot, '.'),
           popMaybe(rest),
         );
       }
@@ -444,14 +470,14 @@ function isTopStandaloneKeyword(prefix: List<TokenTree>) {
 function isTopParensWithKeyword(prefix: List<TokenTree>) {
   // P . t . t' . (T)  where t \not = "." and t' ∈ (Keyword \setminus LiteralKeyword)
   return popRestMaybe(prefix)
-    .chain(
-      ([paren, rest]) => (isParens(paren) ? popRestMaybe(rest) : Nothing()),
+    .chain(([paren, rest]) =>
+      isParens(paren) ? popRestMaybe(rest) : Nothing(),
     )
     .map(([kwd, rest]) => {
       if (isNonLiteralKeyword(kwd)) {
         return Maybe.maybe(
           true,
-          dot => !isPunctuator(dot, '.'),
+          (dot) => !isPunctuator(dot, '.'),
           popMaybe(rest),
         );
       }
@@ -460,6 +486,7 @@ function isTopParensWithKeyword(prefix: List<TokenTree>) {
     .getOrElse(false);
 }
 
+// $FlowFixMe[value-as-type]
 function popRestMaybe(p: List<TokenTree>): Maybe<[TokenTree, List<TokenTree>]> {
   if (p.size > 0) {
     let last = p.last();
@@ -552,7 +579,10 @@ function isTopFunction(prefix: List<TokenTree>) {
     .getOrElse(false);
 }
 
-export function isRegexPrefix(exprAllowed: boolean, prefix: List<TokenTree>) {
+export function isRegexPrefix(
+  exprAllowed: boolean,
+  prefix: List<TokenTree>,
+): any | boolean {
   if (prefix.isEmpty()) {
     // ε
     return true;
