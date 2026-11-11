@@ -1,0 +1,32 @@
+{
+  "name": "sweet.js",
+  "version": "3.0.15",
+  "description": "Deprecated package, use sweet-cli or sweet-core instead",
+  "main": "index.js",
+  "bin": {
+    "sjs": "sjs.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tim Disney",
+  "licenses": [
+    {
+      "type": "BSD",
+      "url": "http://github.com/sweet-js/sweet-shell/master/LICENSE.BSD"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sweet-js/sweet-shell.git"
+  },
+  "keywords": [
+    "macros",
+    "javascript"
+  ],
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "@sweet-js/cli": "3.0.13",
+    "@sweet-js/core": "3.0.13"
+  }
+}
