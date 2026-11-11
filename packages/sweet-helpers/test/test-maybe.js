@@ -40,3 +40,11 @@ test('Nothing short-circuits map, ap and chain', (t) => {
   t.true(nothing['fantasy-land/ap'](Maybe.of((x) => x)) instanceof Nothing);
   t.true(nothing['fantasy-land/chain']((x) => Maybe.of(x)) instanceof Nothing);
 });
+
+test('the Maybe base class requires concrete implementations', (t) => {
+  const maybe = new Maybe();
+
+  t.throws(() => maybe.map((x) => x));
+  t.throws(() => maybe.ap(maybe));
+  t.throws(() => maybe.chain((x) => x));
+});

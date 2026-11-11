@@ -116,3 +116,30 @@ test('fantasy-land aliases delegate to the core methods', (t) => {
     2,
   );
 });
+
+test('the Either base class requires concrete implementations', (t) => {
+  const either = new Either();
+
+  t.throws(() => either.map((x) => x));
+  t.throws(() => either.ap(either));
+  t.throws(() => either.chain((x) => x));
+  t.throws(() => either.extend((x) => x));
+  t.throws(() =>
+    either.bimap(
+      (l) => l,
+      (r) => r,
+    ),
+  );
+  t.throws(() =>
+    either.either(
+      (l) => l,
+      (r) => r,
+    ),
+  );
+  t.throws(() =>
+    either.foreach(
+      () => {},
+      () => {},
+    ),
+  );
+});

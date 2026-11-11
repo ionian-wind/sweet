@@ -125,8 +125,8 @@ tasks**.
 
 | Workspace | Build | Lint | Tests |
 | --------- | ----- | ---- | ----- |
-| `@sweet-js/core` | ✔ | ✔ | 284 passing (AVA 8) |
-| `@sweet-js/helpers` | ✔ | ✔ | 46 passing (AVA 8) |
+| `@sweet-js/core` | ✔ | ✔ | 294 passing (AVA 8) |
+| `@sweet-js/helpers` | ✔ | ✔ | 48 passing (AVA 8) |
 | `sweet-spec` | ✔ | — | 6 passing (generated terms) |
 | `sweet-spec-macro` | — | — | 8 passing (AVA 8) |
 | `@sweet-js/cli` | — | — | 7 passing (AVA 8) |
@@ -135,21 +135,22 @@ tasks**.
 | `sweet.js` | — | — | 3 passing (AVA 8) |
 | `@sweet-js/website` | — | — | No test script |
 
-Coverage is collected with c8 through AVA. `@sweet-js/core` enforces 90% statements
-and 85% branches, so the coverage task fails if either drops below those thresholds.
+Coverage is collected with c8 through AVA. Every measured package enforces at least
+87% statements, branches, and functions through c8 `check-coverage`; `@sweet-js/core`
+additionally enforces 90% statements and functions.
 
 | Workspace | Statements | Functions |
 | --------- | ---------- | --------- |
-| `@sweet-js/core` | 90.7% | 91.7% |
-| `@sweet-js/helpers` | 90.7% | 84.4% |
+| `@sweet-js/core` | 90.9% | 91.7% |
+| `@sweet-js/helpers` | 93.1% | 93.6% |
 | `@sweet-js/cli` | 91.1% | 100% |
 | `@sweet-js/babel-preset` | 100% | 100% |
 | `@sweet-js/eslint-config` | 100% | 100% |
 | `sweet.js` | 100% | 100% |
 | `sweet-spec` | excluded (generated `dist/term-spec.js`) | — |
-| **Overall** | **90.7%** | **90.7%** |
+| **Overall** | **91.1%** | **92.0%** |
 
-Overall measured source is **90.7% statements, 87.6% branches, and 90.7% functions**.
+Overall measured source is **91.1% statements, 88.2% branches, and 92.0% functions**.
 The generated `sweet-spec/dist/term-spec.js` artifact is excluded from coverage; its
 tests still run and cover construction, attribute validation, the term hierarchy, and
 cloning. `sweet-spec-macro` source is Sweet.js syntax consumed by the compiler, so it

@@ -1,5 +1,6 @@
 import test from 'ava';
-import MacroContext from '../../src/macro-context.js';
+import MacroContext, { wrapInTerms } from '../../src/macro-context.js';
+import read from '../../src/reader/token-reader.js';
 import Syntax from '../../src/syntax.js';
 import { makeEnforester } from '../assertions.js';
 import { List } from 'immutable';
@@ -69,4 +70,98 @@ test("an enforester should be able to access a macro context's syntax list", (t)
   let enf = makeEnforester('a');
   let ctx = new MacroContext(enf, Syntax.fromIdentifier('foo'), {});
   t.true(ctx._rest(enf) instanceof List);
+});
+
+test('a macro context rejects access from another enforester', (t) => {
+  let enf = makeEnforester('a');
+  let ctx = new MacroContext(enf, Syntax.fromIdentifier('foo'), {});
+
+  t.throws(() => ctx._rest(makeEnforester('b')), {
+    message: 'Unauthorized access!',
+  });
+});
+
+test('a macro context can contextify a delimiter', (t) => {
+  let enf = makeEnforester('a');
+  let ctx = new MacroContext(enf, Syntax.fromIdentifier('foo'), {});
+  let [delimiter] = wrapInTerms(read('(a)'));
+
+  t.true(ctx.contextify(delimiter) instanceof MacroContext);
+});
+
+test('a macro context rejects contextifying a non-delimiter', (t) => {
+  let ctx = new MacroContext(
+    makeEnforester('a'),
+    Syntax.fromIdentifier('foo'),
+    {},
+  );
+
+  t.throws(() => ctx.contextify({}), {
+    message: /Can only contextify a delimiter/,
+  });
+});
+
+test('a macro context reports the end of input when expanding', (t) => {
+  let ctx = new MacroContext(
+    makeEnforester(''),
+    Syntax.fromIdentifier('foo'),
+    {},
+  );
+
+  t.deepEqual(ctx.expand('expr'), { done: true, value: null });
+});
+
+test('a macro context rejects unknown expansion types', (t) => {
+  let ctx = new MacroContext(
+    makeEnforester('1'),
+    Syntax.fromIdentifier('foo'),
+    {},
+  );
+
+  t.throws(() => ctx.expand('UnknownType'), {
+    message: 'Unknown term type: UnknownType',
+  });
+});
+
+test('a macro context rejects invalid reset markers', (t) => {
+  let ctx = new MacroContext(
+    makeEnforester('a'),
+    Syntax.fromIdentifier('foo'),
+    {},
+  );
+
+  t.throws(() => ctx.reset('not-a-marker'), {
+    message: 'marker must be an instance of Marker',
+  });
+});
+
+test('a macro context rejects markers from another context', (t) => {
+  let ctx1 = new MacroContext(
+    makeEnforester('a'),
+    Syntax.fromIdentifier('foo'),
+    {},
+  );
+  let ctx2 = new MacroContext(
+    makeEnforester('a'),
+    Syntax.fromIdentifier('bar'),
+    {},
+  );
+
+  t.throws(() => ctx2.reset(ctx1.mark()), {
+    message: 'marker must originate from this context',
+  });
+});
+
+test('a macro context can mark the end of the input', (t) => {
+  let ctx = new MacroContext(
+    makeEnforester('a'),
+    Syntax.fromIdentifier('foo'),
+    {},
+  );
+  ctx.next();
+
+  let marker = ctx.mark();
+  ctx.reset(marker);
+
+  t.true(ctx.next().done);
 });
