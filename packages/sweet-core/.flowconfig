@@ -1,7 +1,7 @@
 [ignore]
 build/*
 dist/*
-.*/node_modules/.*/chalk/.*
+.*node_modules/.*chalk/.*
 
 [include]
 ../../node_modules

@@ -13,7 +13,7 @@ function compileAndEval(code) {
 test('can construct terms', t => {
   let output = compileAndEval(`
     #lang 'sweet.js';
-    import { declare } from '../src/spec.js';
+    import { declare } from './src/spec.js';
 
     declare export default class A {
       a: any;
@@ -36,7 +36,7 @@ test('can construct terms', t => {
 test('cannot construct terms missing attributes', t => {
   t.throws(() => compileAndEval(`
     #lang 'sweet.js';
-    import { declare } from '../src/spec.js';
+    import { declare } from './src/spec.js';
 
     declare export default class A {
       a: any;
@@ -46,7 +46,7 @@ test('cannot construct terms missing attributes', t => {
 
   t.throws(() => compileAndEval(`
     #lang 'sweet.js';
-    import { declare } from '../src/spec.js';
+    import { declare } from './src/spec.js';
 
     declare export default class A {
       a: base;
@@ -61,7 +61,7 @@ test('cannot construct terms missing attributes', t => {
 test('can clone reduce', t => {
   let output = compileAndEval(`
     #lang 'sweet.js';
-    import { declare } from '../src/spec.js';
+    import { declare } from './src/spec.js';
 
     declare export default class A {
       a: any;
@@ -79,7 +79,7 @@ test('can clone reduce', t => {
 test('a field can be another type', t => {
   let output = compileAndEval(`
     #lang 'sweet.js';
-    import { declare } from '../src/spec.js';
+    import { declare } from './src/spec.js';
 
     declare export default class A {
       a: any;
@@ -105,7 +105,7 @@ test('a field can be another type', t => {
 test('a field can be an array', t => {
   let output = compileAndEval(`
     #lang 'sweet.js';
-    import { declare } from '../src/spec.js';
+    import { declare } from './src/spec.js';
 
     declare export default class A {
       a: any[];
@@ -134,7 +134,7 @@ test('a field can be an array', t => {
 test('a field can be a union', t => {
   let output = compileAndEval(`
     #lang 'sweet.js';
-    import { declare } from '../src/spec.js';
+    import { declare } from './src/spec.js';
 
     declare export default class Term {}
     declare export class Left extends Term {
@@ -169,7 +169,7 @@ test('a field can be a union', t => {
 test('a field can be a list of unions', t => {
   let output = compileAndEval(`
     #lang 'sweet.js';
-    import { declare } from '../src/spec.js';
+    import { declare } from './src/spec.js';
 
     declare export default class Term {}
     declare export class Left extends Term {
@@ -206,7 +206,7 @@ test('a field can be a list of unions', t => {
 test('supports maybe types', t => {
   let output = compileAndEval(`
     #lang 'sweet.js';
-    import { declare } from '../src/spec.js';
+    import { declare } from './src/spec.js';
 
     declare export class Base {}
 

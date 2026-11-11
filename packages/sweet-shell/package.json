@@ -27,6 +27,6 @@
   "license": "BSD-2-Clause",
   "dependencies": {
     "@sweet-js/cli": "3.0.13",
-    "@sweet-js/core": "3.0.13"
+    "@sweet-js/core": "^3.0.13"
   }
 }
