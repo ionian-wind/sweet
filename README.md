@@ -146,11 +146,13 @@ and 85% branches, so the coverage task fails if either drops below those thresho
 | `@sweet-js/babel-preset` | 100% | 100% |
 | `@sweet-js/eslint-config` | 100% | 100% |
 | `sweet.js` | 100% | 100% |
-| `sweet-spec` | smoke-tested | — |
+| `sweet-spec` | excluded (generated `dist/term-spec.js`) | — |
+| **Overall** | **90.7%** | **90.7%** |
 
-`sweet-spec` is a generated 5.6k-statement artifact; its tests cover construction,
-attribute validation, the term hierarchy, and cloning rather than every generated
-method. `sweet-spec-macro` source is Sweet.js syntax consumed by the compiler, so it
+Overall measured source is **90.7% statements, 87.6% branches, and 90.7% functions**.
+The generated `sweet-spec/dist/term-spec.js` artifact is excluded from coverage; its
+tests still run and cover construction, attribute validation, the term hierarchy, and
+cloning. `sweet-spec-macro` source is Sweet.js syntax consumed by the compiler, so it
 is not instrumentable by Node's coverage tooling.
 
 ## Toolchain

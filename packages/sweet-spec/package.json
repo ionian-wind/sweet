@@ -40,7 +40,8 @@
     ],
     "exclude": [
       "test/**",
-      "build/**"
+      "build/**",
+      "dist/term-spec.js"
     ]
   }
 }
