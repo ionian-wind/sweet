@@ -537,27 +537,21 @@ export default class Syntax {
         }),
       });
     }
-    let oldScopeset: any = List();
+    let oldScopeset: List<any> = List();
     if (phase === ALL_PHASES) {
       oldScopeset = this.scopesets.all;
     } else {
-      oldScopeset = this.scopesets.phase.has(phase)
-        ? this.scopesets.phase.get(phase)
-        : List();
+      oldScopeset = this.scopesets.phase.get(phase) ?? List();
     }
-    let newScopeset: any;
+    let newScopeset: List<any>;
     if (options.flip) {
-      // $FlowFixMe[incompatible-use]
       let index = oldScopeset.indexOf(scope);
       if (index !== -1) {
-        // $FlowFixMe[incompatible-use]
         newScopeset = oldScopeset.remove(index);
       } else {
-        // $FlowFixMe[incompatible-use]
         newScopeset = oldScopeset.push(scope);
       }
     } else {
-      // $FlowFixMe[incompatible-use]
       newScopeset = oldScopeset.push(scope);
     }
     let newstx = {

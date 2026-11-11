@@ -10,7 +10,7 @@ export default function readStringLiteral(
   stream: CharStream,
 ): StringToken {
   let str = '',
-    octal = null,
+    octal: any = null,
     idx: number = 0,
     quote = stream.readString(),
     char = stream.peek(),
@@ -22,7 +22,6 @@ export default function readStringLiteral(
       if (lineStart != null) this.locationInfo.column += idx - lineStart;
       return new StringToken({ str, octal });
     } else if (char === '\\') {
-      // $FlowFixMe[definition-cycle]
       [str, idx, octal, lineStart] = readStringEscape.call(
         this,
         str,

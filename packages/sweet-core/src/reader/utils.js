@@ -120,7 +120,7 @@ export function readStringEscape(
   stream: CharStream,
   start: number,
   octal: ?string,
-): Array<?(0 | number | string)> {
+): [string, number, ?string, ?number] {
   let idx = start + 1,
     char = stream.peek(idx),
     lineStart;

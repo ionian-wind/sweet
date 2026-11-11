@@ -38,7 +38,7 @@ function readTemplateElement(
   let char = stream.peek(),
     idx = 0,
     value = '',
-    octal = null;
+    octal: any = null;
   const startLocation = { ...this.locationInfo, ...stream.sourceInfo };
   while (!isEOS(char)) {
     switch (char) {
@@ -70,7 +70,6 @@ function readTemplateElement(
       }
       case '\\': {
         let newVal;
-        // $FlowFixMe[definition-cycle]
         [newVal, idx, octal] = readStringEscape.call(
           this,
           '',
