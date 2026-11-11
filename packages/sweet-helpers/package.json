@@ -1,0 +1,57 @@
+{
+  "name": "@sweet-js/helpers",
+  "version": "4.0.1",
+  "description": "A helper library for writing Sweet macros",
+  "main": "helpers.js",
+  "scripts": {
+    "pretest": "flow && npm run build",
+    "test": "BABEL_ENV=test ava test",
+    "build": "babel --out-dir . src",
+    "prepare": "npm run build && for i in src/*.js; do cp \"$i\" \"./$(basename $i).flow\"; done;"
+  },
+  "files": [
+    "*.js",
+    "*.flow"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sweet-js/sweet-helpers.git"
+  },
+  "keywords": [
+    "macros"
+  ],
+  "author": "Tim Disney",
+  "licenses": [
+    {
+      "type": "BSD",
+      "url": "http://github.com/sweet-js/sweet-helpers/master/LICENSE.BSD"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/sweet-js/sweet-helpers/issues"
+  },
+  "homepage": "https://github.com/sweet-js/sweet-helpers#readme",
+  "devDependencies": {
+    "@sweet-js/core": "^3.0.13",
+    "ava": "^0.19.1",
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-eslint": "^7.2.3",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-register": "^6.24.1",
+    "eslint": "^4.2.0",
+    "eslint-plugin-flowtype": "^2.35.0",
+    "flow-bin": "^0.48.0"
+  },
+  "ava": {
+    "babel": "inherit",
+    "require": [
+      "babel-register"
+    ],
+    "files": [
+      "test/"
+    ]
+  }
+}
