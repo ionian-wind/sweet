@@ -11,13 +11,21 @@ Macros allow you to sweeten the syntax of JavaScript and craft the language youâ
 
 ## Installation and Getting Started
 
+Sweet requires Node.js `^22.20` or `>=24.12`.
+
 Install Sweet with npm:
 
 ```sh
 $ npm install -g @sweet-js/cli @sweet-js/helpers
 ```
 
-This globally installs the `sjs` binary, which is used to compile Sweet code.
+This globally installs the `sjs` binary, which compiles Sweet code. Install
+`@sweet-js/helpers` when your macros import the helper functions described later in
+this tutorial. You can also run the CLI without a global install:
+
+```sh
+$ npx @sweet-js/cli sweet_code.js
+```
 
 For example, say you'd like to sweeten JavaScript with a simple hello world macro.
 You can write it down as the following:
@@ -40,23 +48,16 @@ console.log('hello, world!')
 
 ## Babel Backend
 
-Note that Sweet uses [Babel](https://babeljs.io/) as a backend. After Sweet has done its work of finding and expanding macros, the resulting code is run through Babel.
+Sweet uses [Babel 8](https://babeljs.io/) as its output backend. After Sweet finds and
+expands macros, `sjs` runs the resulting code through the shared
+`@sweet-js/babel-preset`:
 
-By default Babel performs no transformations so you will need to configure it according to your needs. The easiest way to do this is via a [`.babelrc`](https://babeljs.io/docs/usage/babelrc/) file. A minimal configuration looks something like:
+- Flow syntax is stripped.
+- Modules stay ESM by default.
+- Output targets the current Node.js runtime.
 
-```js
-{
-    "presets": ["es2015"]
-}
-```
-
-Where you've installed the es2015 preset via npm:
-
-```
-npm install babel-preset-es2015
-```
-
-If you do not want to use Babel at all, pass the `--no-babel` flag to `sjs`.
+The transform is built into the compiler; there is no separate `.babelrc` step. To
+emit Sweet's raw output without the Babel pass, use `sjs --no-babel` (or `sjs -b`).
 
 # Sweet Hello
 
@@ -74,13 +75,13 @@ hi
 
 The first three lines make up the macro definition. The `syntax` keyword is a bit like `let` in that it creates a new variable in the current block scope. Rather than create a variable for a runtime value, `syntax` creates a new variable for a _compiletime value_. In this case, `hi` is the variable bound to the compiletime function defined on the first three lines.
 
-In this example, `syntax` sets the variable to a function, but the variable can be set to any JavaScript value. Currently, this point is rather academic since Sweet does not provide a way to actually _use_ anything other than a compiletime function. However, this feature will be added eventually.
+In this example, `syntax` sets the variable to a function, but the variable can hold any JavaScript value. When the value is a function, Sweet treats it as a syntax transformer.
 
 Once a macro has been defined, it can be invoked. On line three above the macro is invoked simply by writing `hi`.
 
 When the Sweet compiler sees the `hi` identifier bound to the compiletime function, the function is invoked and its return value is used to replace the invoking occurrence of `hi`. In this case, that means that `hi` is replaced with `console.log('hello, world!')`.
 
-Compiletime functions defined by `syntax` must return an array of syntax objects. You can easily create these with a _syntax template_. Syntax templates are template literals with a `\#` tag, which create a List (see the [immutable.js docs](https://facebook.github.io/immutable-js/docs/#/List) for its API)
+Compiletime functions defined by `syntax` return syntax objects. You can easily create these with a _syntax template_. Syntax templates are template literals with a `\#` tag, which create a List (see the [Immutable.js docs](https://immutable-js.com/docs/latest/List/) for its API)
 of syntax objects.
 
 A _syntax object_ is  Sweet's internal representation of syntax. Syntax objects are somewhat like tokens from traditional compilers except that delimiters cause syntax objects to nest. This nesting gives Sweet more structure to work with during compilation. If you are coming from Lisp or Scheme, you can think of them a bit like s-expressions.
@@ -265,7 +266,7 @@ Droid.prototype.rollWithIt = function(it) {
 
 # Sweet Modules
 
-Now that you've created your sweet macros you probably want to share them! Sweet supports this via ES2015 modules:
+Now that you've created your sweet macros you probably want to share them! Sweet supports this via ES modules:
 
 ```js
 'lang sweet.js';
@@ -275,7 +276,7 @@ export syntax class = function (ctx) {
 ```
 
 ```js
-import { class } from './es2015-macros';
+import { class } from './es2015-macros.js';
 
 class Droid {
   constructor(name, color) {
@@ -290,6 +291,9 @@ class Droid {
 ```
 
 The `'lang sweet.js'` directive lets Sweet know that a module exports macros, so you need it in any module that has an `export syntax` in it. This directive allows Sweet to not bother doing a lot of unnecessary expansion work in modules that do not export syntax bindings. Eventually, this directive will be used for other things such as defining a base language.
+
+Sweet modules are ES modules. Use explicit `.js` extensions in import specifiers so
+the same source works with Node's ESM resolver and the Sweet loader.
 
 ## Modules and Phasing
 
@@ -355,6 +359,7 @@ fetch("/foo.json").then(resp => {
 });
 ```
 
-The associativity can be either `left` or `right` for binary operators and `prefix` or `postfix` for unary operators. The precedence is a number that specifies how tightly the operator should bind. The builtin operators range from a precedence of 0 to 20 and are defined [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence).
+The associativity can be either `left` or `right` for binary operators and `prefix` or `postfix` for unary operators. The precedence is a number that specifies how tightly the operator should bind. Sweet's built-in operators use precedences from 0 to 14; the table lives in
+[`src/operators.js`](https://github.com/sweet-js/sweet-core/blob/master/packages/sweet-core/src/operators.js).
 
 The operator definition must return an expression.

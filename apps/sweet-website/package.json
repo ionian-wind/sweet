@@ -1,6 +1,6 @@
 {
   "name": "@sweet-js/website",
-  "description": "Website for sweet.js",
+  "description": "Website and documentation for Sweet.js",
   "version": "1.0.0",
   "author": "Tim Disney",
   "licenses": [
@@ -10,10 +10,8 @@
     }
   ],
   "scripts": {
-    "docs": "asciidoctor doc/1.0/tutorial.adoc & asciidoctor doc/1.0/reference.adoc"
-  },
-  "devDependencies": {
-    "@asciidoctor/cli": "4.0.0"
+    "docs": "bundle exec jekyll build",
+    "docs:serve": "bundle exec jekyll serve"
   },
   "repository": {
     "type": "git",

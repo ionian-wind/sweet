@@ -12,7 +12,7 @@ Sweet brings the hygienic macros of languages like Scheme and Rust to JavaScript
 
 ## Getting started
 
-Install the command line app:
+Sweet requires Node.js `^22.20` or `>=24.12`. Install the command line app:
 
 ```
 $ npm install -g @sweet-js/cli
@@ -34,8 +34,15 @@ $ sjs my_sweet_code.js
 console.log('hello, world!')
 ```
 
+The CLI is also available through `npx` without a global install:
+
+```
+$ npx @sweet-js/cli my_sweet_code.js
+```
+
 ## Next steps
 
 - **Learning**: read the [tutorial](doc/tutorial.html) or check out the [reference](doc/reference.html).
-- **Questions**: feel free to open an [issue](https://github.com/sweet-js/sweet-core/issues) on GitHub with any questions you might have. Folks in the [gitter](https://gitter.im/sweet-js/sweet.js) room are also very nice.
+- **Embedding**: use [`@sweet-js/core`](https://www.npmjs.com/package/@sweet-js/core) to compile Sweet from Node.
+- **Questions**: feel free to open an [issue](https://github.com/sweet-js/sweet-core/issues) on GitHub with any questions you might have.
 - **Contributing**: from documentation, website upkeep, bug fixes, and features we'd love your help! See the [contributing guide](https://github.com/sweet-js/sweet-core/blob/master/CONTRIBUTING.md) for pointers on how to get involved.

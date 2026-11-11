@@ -10,9 +10,19 @@ This is the reference document for Sweet.js. For a gentle explanation of Sweet's
 
 # Command Line API
 
-- `--out-file <file>`: write result to file
-- `--out-dir <dir>`: write result to directory
-- `--no-babel`: do not use babel backend
+```
+sjs [options] <files...>
+```
+
+- `-o, --out-file <file>`: write the result to a file
+- `-d, --out-dir <dir>`: write each result into a directory
+- `-b, --no-babel`: skip the Babel backend and emit Sweet's raw output
+- `-h, --help`: show usage
+- `--version`: show the CLI version
+
+At least one input file is required. The CLI requires Node.js `^22.20` or
+`>=24.12`; see [Getting started](tutorial.html#installation-and-getting-started) for
+install options.
 
 # Binding Forms
 
@@ -33,6 +43,17 @@ syntaxrec <name> = <init>
 ```
 
 Identical to the `syntax` form except that `<name>` is also bound inside of `<init>`. This enables recursive macro definitions.
+
+## operator
+
+```
+operator <op> <associativity> <precedence> = <init>
+```
+
+Defines a custom operator. Associativity is `left` or `right` for binary operators, and
+`prefix` or `postfix` for unary operators. `<init>` receives the already-expanded
+operands and must return an expression. See the [tutorial](tutorial.html#sweet-operators)
+for an example.
 
 # Syntax Transformer
 
@@ -57,12 +78,19 @@ TransformerContext = {
     done: boolean,
     value: Syntax
   }
+  contextify: (Syntax) -> TransformerContext
   mark: () -> Marker
   reset: (Marker?) -> undefined
+  [Symbol.iterator]: () -> TransformerContext
 }
 ```
 
-Each call to `next` returns the syntax object following the transformer call.
+Each call to `next` returns the syntax object following the transformer call. When the
+input is exhausted, `next` returns `{ done: true, value: null }`. A transformer context
+is iterable, so `for-of` loops work directly over the remaining syntax.
+
+`contextify(delimiter)` creates a nested transformer context from a delimiter syntax
+object. This is how a macro processes the syntax inside `(...)`, `[...]`, or `{...}`.
 
 A call to `expand` initiates expansion at the current state of the iterator and matches the specified grammar production. Matching is "greedy" so `expand('expr')` with the syntax `1 + 2` matches the entire binary expression rather than just `1`. The following productions are accepted by `expand`:
 
@@ -107,9 +135,12 @@ A call to `expand` initiates expansion at the current state of the iterator and 
 - `BinaryExpression`
 - `StaticMemberExpression`
 - `ComputedMemberExpression`
-- `AssignmentExpression`
 - `CompoundAssignmentExpression`
 - `ConditionalExpression`
+
+`expand` returns `{ done: true, value: null }` when no syntax remains, and throws for
+an unknown production name. The accepted production list mirrors the switch in
+[`src/macro-context.js`](https://github.com/sweet-js/sweet-core/blob/master/packages/sweet-core/src/macro-context.js).
 
 The `name()` method returns the syntax object of the macro name at the macro invocation site. This is useful because it allows a macro transformer to get access to the lexical context at the invocation site.
 
@@ -223,21 +254,21 @@ Be careful which syntax object you use to create a new syntax object via `fromId
 
 You may be tempted to reuse the syntax object provided by `ctx.name()` but resist that feeling! The `ctx.name()` syntax object comes from the macro call-site and so any syntax objects created from it will carry the lexical context of the call-site. Sometimes this is what you want, but most of the time this breaks hygiene!
 
-## fromNumber
+## fromNumericLiteral
 
 ```js
-fromNumber(other: Syntax, n: number): Syntax
+fromNumericLiteral(other: Syntax, n: number): Syntax
 ```
 
 Create a new numeric literal syntax object with the value `n` using the lexical context from `other`.
 
 ```js
-import { fromNumber } from '@sweet-js/helpers' for syntax;
+import { fromNumericLiteral } from '@sweet-js/helpers' for syntax;
 
 syntax m = ctx => {
   let dummy = #`dummy`.get(0);
 
-  return #`${fromNumber(dummy, 1)}`;
+  return #`${fromNumericLiteral(dummy, 1)}`;
 };
 m
 ```
@@ -300,6 +331,8 @@ fromKeyword(other: Syntax, kwd: string): Syntax
 Create a new keyword syntax object with the value `kwd` using the lexical context from `other`.
 
 ```js
+import { fromKeyword } from '@sweet-js/helpers' for syntax;
+
 syntax m = ctx => {
   let dummy = #`dummy`.get(0);
   return #`${fromKeyword(dummy, 'let')} x = 1`;
@@ -345,6 +378,8 @@ fromBrackets(other: Syntax, inner: List<Syntax>): Syntax
 Creates a bracket delimiter with inner syntax objects `inner` using the lexical context from `other`.
 
 ```js
+import { fromBrackets } from '@sweet-js/helpers' for syntax;
+
 syntax m = ctx => {
   let dummy = #`dummy`.get(0);
   let elements = #`1, 2, 3`;
@@ -363,7 +398,7 @@ m
 fromParens(other: Syntax, inner: List<Syntax>): Syntax
 ```
 
-creates a paren delimiter with inner syntax objects `inner` using the lexical context from `other`.
+Creates a paren delimiter with inner syntax objects `inner` using the lexical context from `other`.
 
 ```js
 import { fromParens } from '@sweet-js/helpers' for syntax;
@@ -382,7 +417,7 @@ m
 
 ## isIdentifier
 
-``js
+```js
 isIdentifier(s: Syntax): boolean
 ```
 
@@ -418,7 +453,7 @@ Returns true if the syntax object is a keyword.
 isPunctuator(s: Syntax): boolean
 ```
 
-Returns true if the syntax object is a puncuator.
+Returns true if the syntax object is a punctuator.
 
 ## isTemplate
 
@@ -427,6 +462,30 @@ isTemplate(s: Syntax): boolean
 ```
 
 Returns true if the syntax object is a template literal.
+
+## isTemplateElement
+
+```js
+isTemplateElement(s: Syntax): boolean
+```
+
+Returns true if the syntax object is a piece of template literal text.
+
+## isRegExp
+
+```js
+isRegExp(s: Syntax): boolean
+```
+
+Returns true if the syntax object is a regular expression literal.
+
+## isDelimiter
+
+```js
+isDelimiter(s: Syntax): boolean
+```
+
+Returns true if the syntax object is any delimiter (parentheses, brackets, or braces).
 
 ## isSyntaxTemplate
 
@@ -463,7 +522,8 @@ Returns true if the syntax object is a braces delimiter (e.g. `{ ... }`).
 
 # Syntax Templates
 
-Syntax templates construct a list of syntax objects from a literal representation using backtick. They are similar to ES2015 templates but with the special sweet.js specific `#` template tag.
+Syntax templates construct a `List` of syntax objects from a template literal. They use
+the Sweet-specific `#` template tag.
 
 Syntax templates support interpolations just like normal templates via `${...}`:
 
@@ -474,4 +534,6 @@ syntax m = function (ctx) {
 m 42
 ```
 
-The expressions inside an interpolation must evaluate to a syntax object, an array, a list, or an transformer context.
+The expressions inside an interpolation must evaluate to a syntax object, an array, a
+list, an iterable transformer context, or a scalar value. `null` and `undefined` are
+rejected.

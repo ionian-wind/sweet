@@ -101,6 +101,7 @@ npm run build        # turbo run build
 npm test             # turbo run test
 npm run lint         # turbo run lint
 npm run coverage     # turbo run coverage (c8 + AVA)
+npm run docs -w @sweet-js/website  # build the Jekyll docs site
 npm run clean        # turbo run clean
 npm run graph        # write the dependency graph to graph.html
 ```
@@ -167,7 +168,7 @@ is not instrumentable by Node's coverage tooling.
 | Formatting | Prettier 3.9 through `@sweet-js/prettier-config` |
 | Types | Flow 0.339, configured as one project at the repository root |
 | CLI | yargs 18.2.0 and semver 7.8.6 |
-| Docs | `@asciidoctor/cli` 4 |
+| Docs | Markdown rendered by Jekyll (`apps/sweet-website`) |
 
 All tooling majors are now current; no major upgrades are intentionally blocked.
 
@@ -214,8 +215,9 @@ toolchain does not run unmodified on Node 24. The following fixes were applied:
   needs `sweet-spec` to compile anything), the generated
   `packages/sweet-spec/dist/term-spec.js` is committed as a bootstrap artifact; the
   build regenerates it and Babel emits the final `dist`.
-- **CLI/website** — the CLI was converted to ESM and upgraded to yargs 18.2 (latest);
-  asciidoctor tooling was replaced with `@asciidoctor/cli` 4.
+- **CLI/website** — the CLI was converted to ESM and upgraded to yargs 18.2 (latest).
+  The website docs are now Markdown rendered by Jekyll; the old AsciiDoc pipeline was
+  removed.
 
 No registry `sweet.js@2` dependency remains. The workspace package named `sweet.js` is
 only the local 3.0.15 compatibility wrapper around `@sweet-js/core`/`cli`.

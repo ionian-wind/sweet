@@ -4,13 +4,19 @@ Thanks for contributing! So happy you are here!
 
 ## Pull Request Process
 
-1. If you are adding new syntax or making changes to the API include appropriate
-   updates to the [documentation](https://github.com/sweet-js/sweet.js/tree/master/doc/1.0).
-   The documentation is written using [AsciiDoc](http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/)
-   and generated via `npm run docs`.
-   Only include changes to the `.adoc` files in the PR, not the generated `.html` files.
-1. Do not include built source files generated via `npm run dist` in the PR.
-1. Make sure you code passes linting (`npm run lint`).
+1. If you are adding new syntax or changing the API, update the Markdown docs in
+   [`doc/`](doc): `tutorial.md` and `reference.md`.
+1. The site is built with Jekyll. To preview it:
+
+   ```sh
+   cd apps/sweet-website
+   bundle install
+   npm run docs:serve
+   ```
+
+   `npm run docs` produces a static build.
+1. Do not commit generated `_site/` output or other build artifacts.
+1. Run the repository checks from the root with `npm test` and `npm run lint`.
 
 ## Contributor Covenant Code of Conduct
 

@@ -2,7 +2,7 @@
 
 This is the command line package for [sweet.js](https://github.com/sweet-js/sweet.js).
 
-For more information about Sweet in general and to read the documentation, see the [website](http://sweetjs.org).
+For more information about Sweet in general and to read the documentation, see the [website](https://www.sweetjs.org).
 
 # Getting started
 

@@ -1,6 +1,10 @@
 % Sweet.js Documentation
 %
 
+> **Historical documentation.** This document describes Sweet.js 0.7 and is kept for
+> archival reference. For the current compiler, read the [tutorial](../tutorial.html)
+> and [reference](../reference.html).
+
 # Introduction
 
 Install the sweet.js compiler via npm:
@@ -1389,7 +1393,7 @@ to_str(1 foo "bar")
 
 You can use `sjs --num-expands <number>` to walk through macro expansion one step at a time. This is particularly helpful when writing recursive macros.
 
-The [editor](http://sweetjs.org/browser/editor.html) also supports stepping.
+The [editor](https://www.sweetjs.org/browser/editor.html) also supports stepping.
 
 ### Understanding Case Macros
 
