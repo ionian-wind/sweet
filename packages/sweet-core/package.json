@@ -100,6 +100,11 @@
       "test/**",
       "dist/**",
       "build/**"
-    ]
+    ],
+    "check-coverage": true,
+    "statements": 90,
+    "branches": 85,
+    "lines": 90,
+    "functions": 90
   }
 }

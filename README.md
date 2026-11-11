@@ -125,7 +125,7 @@ tasks**.
 
 | Workspace | Build | Lint | Tests |
 | --------- | ----- | ---- | ----- |
-| `@sweet-js/core` | ✔ | ✔ | 216 passing (AVA 8) |
+| `@sweet-js/core` | ✔ | ✔ | 284 passing (AVA 8) |
 | `@sweet-js/helpers` | ✔ | ✔ | 46 passing (AVA 8) |
 | `sweet-spec` | ✔ | — | 6 passing (generated terms) |
 | `sweet-spec-macro` | — | — | 8 passing (AVA 8) |
@@ -135,11 +135,12 @@ tasks**.
 | `sweet.js` | — | — | 3 passing (AVA 8) |
 | `@sweet-js/website` | — | — | No test script |
 
-Coverage is collected with c8 through AVA:
+Coverage is collected with c8 through AVA. `@sweet-js/core` enforces 90% statements
+and 85% branches, so the coverage task fails if either drops below those thresholds.
 
 | Workspace | Statements | Functions |
 | --------- | ---------- | --------- |
-| `@sweet-js/core` | 88.4% | 87.0% |
+| `@sweet-js/core` | 90.7% | 91.7% |
 | `@sweet-js/helpers` | 90.7% | 84.4% |
 | `@sweet-js/cli` | 91.1% | 100% |
 | `@sweet-js/babel-preset` | 100% | 100% |
