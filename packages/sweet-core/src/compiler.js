@@ -14,7 +14,7 @@ export default class Compiler {
 
   compile(stxl) {
     let tokenExpander = new TokenExpander(
-      _.merge(this.context, {
+      _.mergeRight(this.context, {
         phase: this.phase,
         env: this.env,
         store: this.store,
@@ -22,7 +22,7 @@ export default class Compiler {
       }),
     );
     let termExpander = new TermExpander(
-      _.merge(this.context, {
+      _.mergeRight(this.context, {
         phase: this.phase,
         env: this.env,
         store: this.store,

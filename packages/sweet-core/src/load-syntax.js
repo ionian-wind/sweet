@@ -2,7 +2,7 @@ import * as S from 'sweet-spec';
 import * as _ from 'ramda';
 import { List } from 'immutable';
 import Syntax from './syntax';
-import codegen, { FormattedCodeGen } from 'shift-codegen';
+import { codeGen as codegen, FormattedCodeGen } from 'shift-codegen';
 import SweetToShiftReducer from './sweet-to-shift-reducer';
 import TermExpander from './term-expander';
 import Env from './env';
@@ -13,7 +13,7 @@ export function expandCompiletime(term, context) {
   // each compiletime value needs to be expanded with a fresh
   // environment and in the next higher phase
   let syntaxExpander = new TermExpander(
-    _.merge(context, {
+    _.mergeRight(context, {
       phase: context.phase + 1,
       env: new Env(),
       store: context.store,

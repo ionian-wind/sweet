@@ -1,4 +1,4 @@
-import shiftCodegen, { FormattedCodeGen } from 'shift-codegen';
+import { codeGen as shiftCodegen, FormattedCodeGen } from 'shift-codegen';
 
 export default function codegen(modTerm) {
   return {

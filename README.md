@@ -40,7 +40,8 @@ It:
 - links the packages through npm workspaces (`@sweet-js/core`, `sweet-spec`, etc.);
 - provides unified `build`, `test`, `lint`, and `clean` tasks via Turbo;
 - modernizes the build/test/lint toolchain (Babel 7, AVA 5, ESLint 9, Prettier 3,
-  Flow 0.339) while keeping the compiler's runtime dependencies unchanged;
+  Flow 0.339) and upgrades the compiler's runtime dependencies (Immutable 5,
+  Ramda 0.32, shift-codegen 8);
 - shares Babel, ESLint, and Prettier configuration through local tooling packages.
 
 ## Repository layout
@@ -88,7 +89,7 @@ local to this monorepo and are listed under
 
 ## Requirements
 
-- Node.js >= 18 (developed and verified on Node 24)
+- Node.js >= 20.19 (developed and verified on Node 24)
 - npm >= 10 (the workspace uses npm workspaces)
 
 ## Commands
@@ -137,12 +138,12 @@ tasks**.
 | Lint | ESLint 9.39 flat config through `@sweet-js/eslint-config` |
 | Formatting | Prettier 3.9 through `@sweet-js/prettier-config` |
 | Types | Flow 0.339, configured as one project at the repository root |
-| CLI | yargs 17.7.2 and semver 7.8.6 |
+| CLI | yargs 18.2.0 and semver 7.8.6 |
 | Docs | `@asciidoctor/cli` 4 |
 
-Tooling majors stop where the next major becomes incompatible: Babel 8 and yargs 18
-are ESM-only, AVA 6+ dropped `@babel/register` support, and
-`@babel/eslint-parser` does not support ESLint 10 yet.
+Tooling majors stop where the next major becomes incompatible: Babel 8 is ESM-only,
+AVA 6+ dropped `@babel/register` support, and `@babel/eslint-parser` does not support
+ESLint 10 yet.
 
 ## Compatibility fixes and migration notes
 
@@ -170,14 +171,20 @@ toolchain does not run unmodified on Node 24. The following fixes were applied:
   recorded as coded `$FlowFixMe[...]` suppressions, and
   `sweet-helpers/src/parser.js` is marked `@noflow` because modern Flow crashes on its
   generic method signatures.
+- **Runtime dependencies** — upgraded `immutable` 3.8 → 5.1, `ramda` 0.22 → 0.32,
+  `ramda-fantasy` 0.6 → 0.8, and `shift-codegen` 5 → 8. Ramda's removed `merge` and
+  `contains` helpers were replaced with `mergeRight` and `includes`, and
+  shift-codegen 8 is imported through its named `codeGen` export. The unused
+  `shift-reducer` and `semver` dependencies were removed from core.
 - **`sweet-spec` build** — keeps the legacy `sjs` 2.2.1 compiler for macro expansion
-  (the specification is written in Sweet.js syntax) but uses Babel 7 to emit `dist`.
-- **CLI/website** — yargs upgraded to 17.7.2 (latest CommonJS release) and asciidoctor
-  tooling replaced with `@asciidoctor/cli` 4.
+  (the specification is written in Sweet.js 2 syntax) but uses Babel 7 to emit `dist`.
+- **CLI/website** — the CLI was converted to ESM and upgraded to yargs 18.2 (latest);
+  asciidoctor tooling was replaced with `@asciidoctor/cli` 4.
 
-The compiler's runtime dependencies (`immutable@3`, `shift-codegen`, `shift-reducer`,
-`ramda@0.22`, `sweet.js@2.2.1`) were intentionally kept: moving those majors would
-change compiler behavior and require a separate port.
+Two dependencies intentionally remain on legacy majors because newer versions cannot
+consume the archived code: `sweet.js@2.2.1` (build-time compiler for the spec) and
+published `sweet-spec@4.0.0` (core/helpers match that release; the local master is the
+`4.1.0` TypeScript-era revision).
 
 ## Dependency alignment and pinning
 
@@ -186,9 +193,9 @@ dependencies use the same version across all workspaces. This makes installs
 reproducible alongside `package-lock.json`; `.npmrc` sets `save-exact=true` so newly
 added dependencies are pinned too.
 
-Notable versions: `@babel/core` 7.29.13, `ava` 5.3.1, `eslint` 9.39.5,
-`prettier` 3.9.10, `flow-bin` 0.339.0, `yargs` 17.7.2, `semver` 7.8.6, and
-`@sweet-js/core` 3.0.13.
+Notable versions: `@babel/core` 7.29.13, `immutable` 5.1.10, `ramda` 0.32.0,
+`shift-codegen` 8.1.0, `ava` 5.3.1, `eslint` 9.39.5, `prettier` 3.9.10,
+`flow-bin` 0.339.0, `yargs` 18.2.0, `semver` 7.8.6, and `@sweet-js/core` 3.0.13.
 
 ## AI assistance
 

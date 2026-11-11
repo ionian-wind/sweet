@@ -109,6 +109,7 @@ export default class TokenExpander extends ASTDispatcher {
     if (stxl.size === 0) {
       return List(result);
     }
+    // $FlowFixMe[underconstrained-implicit-instantiation]
     let prev = List();
     let enf = new Enforester(stxl, prev, this.context);
 
@@ -173,6 +174,7 @@ export default class TokenExpander extends ASTDispatcher {
       this.context.isEntrypoint,
     );
     let defaultBinding = null;
+    // $FlowFixMe[underconstrained-implicit-instantiation]
     let namedImports = List();
     if (term.defaultBinding != null) {
       if (!isBoundToCompiletime(term.defaultBinding.name, this.context.store)) {
@@ -313,7 +315,7 @@ export default class TokenExpander extends ASTDispatcher {
         // each compiletime value needs to be expanded with a fresh
         // environment and in the next higher phase
         let syntaxExpander = new TermExpander(
-          _.merge(this.context, {
+          _.mergeRight(this.context, {
             phase: this.context.phase + 1,
             env: new Env(),
             store: this.context.store,
@@ -323,7 +325,7 @@ export default class TokenExpander extends ASTDispatcher {
         let init = syntaxExpander.expand(decl.init);
         let val = evalCompiletimeValue(
           init,
-          _.merge(this.context, {
+          _.mergeRight(this.context, {
             phase: this.context.phase + 1,
           }),
         );

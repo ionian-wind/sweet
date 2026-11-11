@@ -215,7 +215,7 @@ export default class SweetLoader {
       0,
       new Env(),
       this.freshStore(),
-      _.merge(this.context, {
+      _.mergeRight(this.context, {
         currentScope: [outScope, inScope],
         cwd: path,
         isEntrypoint: metadata.isEntrypoint,

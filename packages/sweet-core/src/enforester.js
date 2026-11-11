@@ -324,6 +324,7 @@ export class Enforester {
   enforestImportDeclaration(): any {
     let lookahead = this.peek();
     let defaultBinding = null;
+    // $FlowFixMe[underconstrained-implicit-instantiation]
     let namedImports = List();
     let forSyntax = false;
 
@@ -1293,6 +1294,7 @@ export class Enforester {
       kind = 'operator';
     }
 
+    // $FlowFixMe[underconstrained-implicit-instantiation]
     let decls = List();
 
     while (true) {
@@ -1421,6 +1423,7 @@ export class Enforester {
       // if nothing changed, maybe we just need to pop the expr stack
       if (term === EXPR_LOOP_NO_CHANGE && this.opCtx.stack.size > 0) {
         this.term = this.opCtx.combine(this.term);
+        // $FlowFixMe[incompatible-use]
         let { prec, combine } = this.opCtx.stack.last();
         this.opCtx.prec = prec;
         this.opCtx.combine = combine;
@@ -1871,6 +1874,7 @@ export class Enforester {
     if (this.isParens(this.peek())) {
       args = this.matchParens();
     } else {
+      // $FlowFixMe[underconstrained-implicit-instantiation]
       args = List();
     }
     // $FlowFixMe[extra-arg]
@@ -2137,6 +2141,7 @@ export class Enforester {
   enforestObjectExpression(): any {
     let obj = this.matchCurlies();
 
+    // $FlowFixMe[underconstrained-implicit-instantiation]
     let properties = List();
 
     let enf = new Enforester(obj, List(), this.context);
@@ -2473,6 +2478,7 @@ export class Enforester {
     // first, pop the operator stack
     let test = this.opCtx.combine(this.term);
     if (this.opCtx.stack.size > 0) {
+      // $FlowFixMe[incompatible-use]
       let { prec, combine } = this.opCtx.stack.last();
       this.opCtx.stack = this.opCtx.stack.pop();
       this.opCtx.prec = prec;
@@ -2540,6 +2546,7 @@ export class Enforester {
     } else {
       let term = this.opCtx.combine(leftTerm);
       // this.rest does not change
+      // $FlowFixMe[incompatible-use]
       let { prec, combine } = this.opCtx.stack.last();
       this.opCtx.stack = this.opCtx.stack.pop();
       this.opCtx.prec = prec;

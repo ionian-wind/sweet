@@ -9,7 +9,7 @@ import { collectBindings } from './hygiene-utils';
 import SweetModule from './sweet-module';
 import { List } from 'immutable';
 import SweetToShiftReducer from './sweet-to-shift-reducer';
-import codegen, { FormattedCodeGen } from 'shift-codegen';
+import { codeGen as codegen, FormattedCodeGen } from 'shift-codegen';
 import Syntax from './syntax';
 
 import type { Context } from './sweet-loader';
@@ -171,7 +171,7 @@ export default class {
     term.declarators.forEach((decl) => {
       let val = evalCompiletimeValue(
         decl.init,
-        _.merge(this.context, {
+        _.mergeRight(this.context, {
           phase: phase + 1,
           store,
         }),

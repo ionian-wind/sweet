@@ -554,7 +554,7 @@ export default class Syntax {
       ? this.token.map((s) => s.addScope(scope, bindings, phase, options))
       : this.token;
     if (this.match('template')) {
-      token = _.merge(token, {
+      token = _.mergeRight(token, {
         items: token.items.map((it) => {
           if (it instanceof Syntax && it.match('delimiter')) {
             return it.addScope(scope, bindings, phase, options);
@@ -573,13 +573,17 @@ export default class Syntax {
     }
     let newScopeset;
     if (options.flip) {
+      // $FlowFixMe[incompatible-use]
       let index = oldScopeset.indexOf(scope);
       if (index !== -1) {
+        // $FlowFixMe[incompatible-use]
         newScopeset = oldScopeset.remove(index);
       } else {
+        // $FlowFixMe[incompatible-use]
         newScopeset = oldScopeset.push(scope);
       }
     } else {
+      // $FlowFixMe[incompatible-use]
       newScopeset = oldScopeset.push(scope);
     }
     let newstx = {
@@ -614,11 +618,13 @@ export default class Syntax {
       },
     };
 
+    // $FlowFixMe[incompatible-use]
     let phaseIndex = phaseScopeset.indexOf(scope);
     let allIndex = allScopeset.indexOf(scope);
     if (phaseIndex !== -1) {
       newstx.scopesets.phase = this.scopesets.phase.set(
         phase,
+        // $FlowFixMe[incompatible-use]
         phaseScopeset.remove(phaseIndex),
       );
     } else if (allIndex !== -1) {

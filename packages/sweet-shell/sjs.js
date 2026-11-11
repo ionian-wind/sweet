@@ -1,2 +1,6 @@
 #!/usr/bin/env node
-require('@sweet-js/cli/bin/sjs');
+
+import('@sweet-js/cli/bin/sjs.js').catch((error) => {
+  console.error(error);
+  process.exit(1);
+});

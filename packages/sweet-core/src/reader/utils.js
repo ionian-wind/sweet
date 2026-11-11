@@ -345,7 +345,7 @@ const unaryOps = [
 const allOps = assignOps.concat(binaryOps).concat(unaryOps);
 
 function isNonLiteralKeyword(t: TokenTree) {
-  return isKeyword(t) && t.value && !R.contains(t.value, literalKeywords);
+  return isKeyword(t) && t.value && !R.includes(t.value, literalKeywords);
 }
 const exprPrefixKeywords = [
   'instanceof',
