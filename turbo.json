@@ -22,6 +22,10 @@
       "dependsOn": ["^build", "sweet-spec#build"],
       "outputs": []
     },
+    "coverage": {
+      "dependsOn": ["^build", "sweet-spec#build"],
+      "outputs": ["coverage/**"]
+    },
     "clean": {
       "cache": false
     }

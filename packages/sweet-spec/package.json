@@ -10,7 +10,8 @@
     "build:flow": "sh gen-flow.sh",
     "build": "npm run build:sweet && npm run build:babel:esm && npm run build:flow",
     "publish": "npm run build",
-    "test": "echo \"No tests in sweet-spec\""
+    "test": "ava",
+    "coverage": "c8 ava"
   },
   "author": "Tim Disney",
   "license": "BSD-2-Clause",
@@ -19,11 +20,27 @@
     "@sweet-js/babel-preset": "0.0.0",
     "sweet-spec-macro": "3.0.0",
     "@sweet-js/cli": "3.0.13",
-    "@sweet-js/core": "3.0.13"
+    "@sweet-js/core": "3.0.13",
+    "ava": "8.4.0"
   },
   "exports": {
     ".": "./dist/term-spec.js",
     "./package.json": "./package.json"
   },
-  "type": "module"
+  "type": "module",
+  "ava": {
+    "files": [
+      "test/*.js"
+    ],
+    "timeout": "2m"
+  },
+  "c8": {
+    "reporter": [
+      "text-summary"
+    ],
+    "exclude": [
+      "test/**",
+      "build/**"
+    ]
+  }
 }

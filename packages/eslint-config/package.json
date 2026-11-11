@@ -20,5 +20,26 @@
     "@babel/core": "8.1.0",
     "eslint": "10.14.0",
     "prettier": "3.9.10"
+  },
+  "scripts": {
+    "test": "ava",
+    "coverage": "c8 ava"
+  },
+  "devDependencies": {
+    "ava": "8.4.0"
+  },
+  "ava": {
+    "files": [
+      "test/*.js"
+    ],
+    "timeout": "2m"
+  },
+  "c8": {
+    "reporter": [
+      "text-summary"
+    ],
+    "exclude": [
+      "test/**"
+    ]
   }
 }

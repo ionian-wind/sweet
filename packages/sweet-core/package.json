@@ -26,7 +26,8 @@
     "test:262": "ava test/parser/test-run-test262.js",
     "test:ci": "npm run pretest && ava && ava test/parser/test-*.js",
     "test": "ava",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "coverage": "c8 ava"
   },
   "files": [
     "dist",
@@ -89,5 +90,16 @@
     "./dist/*": "./dist/*.js",
     "./helpers.js": "./helpers.js",
     "./package.json": "./package.json"
+  },
+  "c8": {
+    "reporter": [
+      "text-summary"
+    ],
+    "exclude": [
+      "ava.setup.mjs",
+      "test/**",
+      "dist/**",
+      "build/**"
+    ]
   }
 }

@@ -9,7 +9,8 @@
     "build": "babel --no-babelrc --config-file ./babel.build.json --out-dir . src",
     "prepack": "npm run build && for i in src/*.js; do cp \"$i\" \"./$(basename $i).flow\"; done;",
     "lint": "eslint src test && flow",
-    "format": "prettier --write \"src/**/*.js\" \"test/**/*.js\""
+    "format": "prettier --write \"src/**/*.js\" \"test/**/*.js\"",
+    "coverage": "c8 ava"
   },
   "files": [
     "*.js",
@@ -53,5 +54,16 @@
       "./ava.setup.mjs"
     ],
     "timeout": "2m"
+  },
+  "c8": {
+    "reporter": [
+      "text-summary"
+    ],
+    "exclude": [
+      "ava.setup.mjs",
+      "test/**",
+      "dist/**",
+      "build/**"
+    ]
   }
 }

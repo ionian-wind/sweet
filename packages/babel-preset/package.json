@@ -11,5 +11,27 @@
   "peerDependencies": {
     "@babel/core": "8.1.0"
   },
-  "type": "module"
+  "type": "module",
+  "scripts": {
+    "test": "ava",
+    "coverage": "c8 ava"
+  },
+  "devDependencies": {
+    "@babel/core": "8.1.0",
+    "ava": "8.4.0"
+  },
+  "ava": {
+    "files": [
+      "test/*.js"
+    ],
+    "timeout": "2m"
+  },
+  "c8": {
+    "reporter": [
+      "text-summary"
+    ],
+    "exclude": [
+      "test/**"
+    ]
+  }
 }

@@ -30,5 +30,26 @@
     "parser"
   ],
   "license": "BSD-2-Clause",
-  "type": "module"
+  "type": "module",
+  "scripts": {
+    "test": "ava",
+    "coverage": "c8 ava"
+  },
+  "devDependencies": {
+    "ava": "8.4.0"
+  },
+  "ava": {
+    "files": [
+      "test/*.js"
+    ],
+    "timeout": "2m"
+  },
+  "c8": {
+    "reporter": [
+      "text-summary"
+    ],
+    "exclude": [
+      "test/**"
+    ]
+  }
 }

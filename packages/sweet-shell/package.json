@@ -7,7 +7,8 @@
     "sjs": "sjs.js"
   },
   "scripts": {
-    "test": "echo \"No tests: sweet.js is a deprecated wrapper package\""
+    "test": "ava",
+    "coverage": "c8 ava"
   },
   "author": "Tim Disney",
   "licenses": [
@@ -35,5 +36,22 @@
     "./node-loader.js": "./node-loader.js",
     "./helpers.js": "./helpers.js",
     "./package.json": "./package.json"
+  },
+  "devDependencies": {
+    "ava": "8.4.0"
+  },
+  "ava": {
+    "files": [
+      "test/*.js"
+    ],
+    "timeout": "2m"
+  },
+  "c8": {
+    "reporter": [
+      "text-summary"
+    ],
+    "exclude": [
+      "test/**"
+    ]
   }
 }

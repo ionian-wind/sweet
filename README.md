@@ -100,6 +100,7 @@ npm install          # install all workspace dependencies
 npm run build        # turbo run build
 npm test             # turbo run test
 npm run lint         # turbo run lint
+npm run coverage     # turbo run coverage (c8 + AVA)
 npm run clean        # turbo run clean
 npm run graph        # write the dependency graph to graph.html
 ```
@@ -119,16 +120,37 @@ npx turbo run test --continue
 
 ## Current status
 
-`npm run build`, `npm run lint`, and `npm test` all pass on Node 24 — **10/10 Turbo
+`npm run build`, `npm run lint`, and `npm test` all pass on Node 24 — **13/13 Turbo
 tasks**.
 
 | Workspace | Build | Lint | Tests |
 | --------- | ----- | ---- | ----- |
-| `@sweet-js/core` | ✔ | ✔ | 210 passing (AVA 8) |
-| `@sweet-js/helpers` | ✔ | ✔ | 24 passing (AVA 8) |
-| `sweet-spec` | ✔ | — | No upstream tests |
+| `@sweet-js/core` | ✔ | ✔ | 216 passing (AVA 8) |
+| `@sweet-js/helpers` | ✔ | ✔ | 46 passing (AVA 8) |
+| `sweet-spec` | ✔ | — | 6 passing (generated terms) |
 | `sweet-spec-macro` | — | — | 8 passing (AVA 8) |
-| `@sweet-js/cli`, `sweet.js`, `@sweet-js/website` | — | — | No test scripts |
+| `@sweet-js/cli` | — | — | 7 passing (AVA 8) |
+| `@sweet-js/babel-preset` | — | — | 5 passing (AVA 8) |
+| `@sweet-js/eslint-config` | — | — | 4 passing (AVA 8) |
+| `sweet.js` | — | — | 3 passing (AVA 8) |
+| `@sweet-js/website` | — | — | No test script |
+
+Coverage is collected with c8 through AVA:
+
+| Workspace | Statements | Functions |
+| --------- | ---------- | --------- |
+| `@sweet-js/core` | 88.4% | 87.0% |
+| `@sweet-js/helpers` | 90.7% | 84.4% |
+| `@sweet-js/cli` | 91.1% | 100% |
+| `@sweet-js/babel-preset` | 100% | 100% |
+| `@sweet-js/eslint-config` | 100% | 100% |
+| `sweet.js` | 100% | 100% |
+| `sweet-spec` | smoke-tested | — |
+
+`sweet-spec` is a generated 5.6k-statement artifact; its tests cover construction,
+attribute validation, the term hierarchy, and cloning rather than every generated
+method. `sweet-spec-macro` source is Sweet.js syntax consumed by the compiler, so it
+is not instrumentable by Node's coverage tooling.
 
 ## Toolchain
 
@@ -136,6 +158,7 @@ tasks**.
 | ---- | ------- |
 | Babel | `@babel/core` / `@babel/cli` 8.1 through `@sweet-js/babel-preset` |
 | Tests | AVA 8.4 with an ESM Flow loader (`@sweet-js/test-loader`) |
+| Coverage | c8 12 over AVA (`npm run coverage`) |
 | Lint | ESLint 10.14 flat config through `@sweet-js/eslint-config` |
 | Formatting | Prettier 3.9 through `@sweet-js/prettier-config` |
 | Types | Flow 0.339, configured as one project at the repository root |
