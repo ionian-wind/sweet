@@ -10,12 +10,16 @@ import { compile } from '@sweet-js/core';
 import NodeLoader from '@sweet-js/core/dist/node-loader';
 
 const argv = yargs(hideBin(process.argv))
+  .parserConfiguration({ 'boolean-negation': false })
   .usage('Usage: sjs [options] files ...')
   .demandCommand(1)
   .alias('o', 'out-file')
   .alias('d', 'out-dir')
-  .alias('b', 'no-babel')
-  .describe('b', 'do not use babel backend')
+  .option('no-babel', {
+    alias: 'b',
+    type: 'boolean',
+    describe: 'do not use babel backend',
+  })
   .describe('o', 'write output to file')
   .describe('d', 'write output to directory')
   .nargs('out-file', 1)
