@@ -36,20 +36,21 @@
   "devDependencies": {
     "@babel/cli": "8.1.0",
     "@babel/core": "8.1.0",
-    "@babel/register": "8.0.6",
     "@sweet-js/babel-preset": "0.0.0",
     "@sweet-js/core": "3.0.13",
     "@sweet-js/eslint-config": "0.0.0",
-    "ava": "5.3.1",
+    "ava": "8.4.0",
     "eslint": "10.14.0",
-    "flow-bin": "0.339.0"
+    "flow-bin": "0.339.0",
+    "@sweet-js/test-loader": "0.0.0"
   },
   "ava": {
     "files": [
       "test/**/*.js"
     ],
-    "require": [
-      "@babel/register"
+    "nodeArguments": [
+      "--import",
+      "./ava.setup.mjs"
     ]
   }
 }

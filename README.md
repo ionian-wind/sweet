@@ -39,7 +39,7 @@ It:
 - imports all seven original repositories with their full git history;
 - links the packages through npm workspaces (`@sweet-js/core`, `sweet-spec`, etc.);
 - provides unified `build`, `test`, `lint`, and `clean` tasks via Turbo;
-- modernizes the build/test/lint toolchain (Babel 8, AVA 5, ESLint 10, Prettier 3,
+- modernizes the build/test/lint toolchain (Babel 8, AVA 8, ESLint 10, Prettier 3,
   Flow 0.339) and upgrades the compiler's runtime dependencies (Immutable 5,
   Ramda 0.32, shift-codegen 8);
 - shares Babel, ESLint, and Prettier configuration through local tooling packages.
@@ -58,6 +58,7 @@ It:
 | `packages/babel-preset`     | `@sweet-js/babel-preset` | Shared Babel 8 preset (preset-env + Flow)   |
 | `packages/eslint-config`    | `@sweet-js/eslint-config` | Shared ESLint 10 flat config              |
 | `packages/prettier-config`  | `@sweet-js/prettier-config` | Shared Prettier config                 |
+| `packages/test-loader`      | `@sweet-js/test-loader`     | ESM Babel loader used by AVA 8         |
 
 ## Source of the original code
 
@@ -89,7 +90,7 @@ local to this monorepo and are listed under
 
 ## Requirements
 
-- Node.js `^22.18` or `>=24.11` (Babel 8 requires it; verified on Node 24)
+- Node.js `^22.20` or `>=24.12` (Babel 8 / AVA 8; verified on Node 24)
 - npm >= 10 (the workspace uses npm workspaces)
 
 ## Commands
@@ -123,10 +124,10 @@ tasks**.
 
 | Workspace | Build | Lint | Tests |
 | --------- | ----- | ---- | ----- |
-| `@sweet-js/core` | ✔ | ✔ | 208 passing (AVA 5) |
-| `@sweet-js/helpers` | ✔ | ✔ | 24 passing (AVA 5) |
+| `@sweet-js/core` | ✔ | ✔ | 210 passing (AVA 8) |
+| `@sweet-js/helpers` | ✔ | ✔ | 24 passing (AVA 8) |
 | `sweet-spec` | ✔ | — | No upstream tests |
-| `sweet-spec-macro` | — | — | 8 passing (AVA 5) |
+| `sweet-spec-macro` | — | — | 8 passing (AVA 8) |
 | `@sweet-js/cli`, `sweet.js`, `@sweet-js/website` | — | — | No test scripts |
 
 ## Toolchain
@@ -134,15 +135,14 @@ tasks**.
 | Area | Tooling |
 | ---- | ------- |
 | Babel | `@babel/core` / `@babel/cli` 8.1 through `@sweet-js/babel-preset` |
-| Tests | AVA 5.3.1 with `@babel/register` |
+| Tests | AVA 8.4 with an ESM Flow loader (`@sweet-js/test-loader`) |
 | Lint | ESLint 10.14 flat config through `@sweet-js/eslint-config` |
 | Formatting | Prettier 3.9 through `@sweet-js/prettier-config` |
 | Types | Flow 0.339, configured as one project at the repository root |
 | CLI | yargs 18.2.0 and semver 7.8.6 |
 | Docs | `@asciidoctor/cli` 4 |
 
-Tooling majors stop where the next major becomes incompatible: AVA 6+ dropped
-`@babel/register` support.
+All tooling majors are now current; no major upgrades are intentionally blocked.
 
 ## Compatibility fixes and migration notes
 
@@ -162,9 +162,9 @@ toolchain does not run unmodified on Node 24. The following fixes were applied:
   `@babel/preset-flow`, ESM-only packages). Core's runtime macro compiler now uses
   `transformSync`; the helpers ESM build targets Node 8 so class fields are lowered for
   Sweet's enforester.
-- **Tests** — migrated from ava 0.19 to AVA 5.3.1 using `@babel/register`. Duplicate
-  test titles were made unique, snapshot files were regenerated, and the two tests
-  without suites (`sweet-spec`, `sweet-shell`) keep no-op scripts.
+- **Tests** — migrated from ava 0.19 to AVA 8.4. Tests now run as ESM through a small
+  shared loader (`@sweet-js/test-loader`) that strips Flow and resolves extensionless
+  imports. Duplicate titles were made unique and snapshots regenerated.
 - **Lint/formatting** — migrated from ESLint 4 + Prettier 1 to ESLint 10 flat config and
   Prettier 3, shared through the local tooling packages.
 - **Flow** — migrated from 0.45 to 0.339. The package-local configs were replaced by a
@@ -197,7 +197,7 @@ reproducible alongside `package-lock.json`; `.npmrc` sets `save-exact=true` so n
 added dependencies are pinned too.
 
 Notable versions: `@babel/core` 8.1.0, `immutable` 5.1.10, `ramda` 0.32.0,
-`shift-codegen` 8.1.0, `ava` 5.3.1, `eslint` 10.14.0, `prettier` 3.9.10,
+`shift-codegen` 8.1.0, `ava` 8.4.0, `eslint` 10.14.0, `prettier` 3.9.10,
 `flow-bin` 0.339.0, `yargs` 18.2.0, `semver` 7.8.6, and `@sweet-js/core` 3.0.13.
 
 ## AI assistance
@@ -205,7 +205,7 @@ Notable versions: `@babel/core` 8.1.0, `immutable` 5.1.10, `ramda` 0.32.0,
 The monorepo integration was built with the help of an AI coding agent (OpenCode,
 running DeepSeek V4.1 Flash). The agent scaffolded the Turbo/npm workspace, imported
 the original repositories, implemented the compatibility fixes, pinned dependencies,
-migrated the toolchain to Babel 8 / AVA 5 / ESLint 10 / Prettier 3 / Flow 0.339, and
+migrated the toolchain to Babel 8 / AVA 8 / ESLint 10 / Prettier 3 / Flow 0.339, and
 wrote this documentation.
 
 The original Sweet.js source code and git history were written by the Sweet.js

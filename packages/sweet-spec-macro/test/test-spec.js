@@ -1,6 +1,7 @@
 import test from 'ava';
 import { compile } from '@sweet-js/core';
-import NodeLoader from '@sweet-js/core/dist/node-loader';
+import NodeLoaderModule from '@sweet-js/core/dist/node-loader';
+const NodeLoader = NodeLoaderModule.default || NodeLoaderModule;
 import { transformSync } from '@babel/core';
 import { join } from 'node:path';
 
@@ -20,7 +21,7 @@ class EntrypointNodeLoader extends NodeLoader {
 
 function compileAndEval(code) {
   let output;
-  let loader = new EntrypointNodeLoader(code, join(__dirname, '..'), {});
+  let loader = new EntrypointNodeLoader(code, join(import.meta.dirname, '..'), {});
   let res = transformSync(compile('*entrypoint*', loader).code, {
     configFile: false,
     babelrc: false,

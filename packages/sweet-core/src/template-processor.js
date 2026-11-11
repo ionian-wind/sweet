@@ -1,5 +1,5 @@
 import { List } from 'immutable';
-import _ from 'ramda';
+import * as _ from 'ramda';
 import { assert } from './errors';
 import * as T from 'sweet-spec';
 import Syntax from './syntax';

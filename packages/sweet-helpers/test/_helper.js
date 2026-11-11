@@ -1,6 +1,7 @@
 import { ImmutableContext } from '../src/parser';
 import { compile } from '@sweet-js/core';
-import NodeLoader from '@sweet-js/core/dist/node-loader';
+import NodeLoaderModule from '@sweet-js/core/dist/node-loader';
+const NodeLoader = NodeLoaderModule.default || NodeLoaderModule;
 import { transformSync } from '@babel/core';
 
 export class MockContext {
@@ -48,7 +49,7 @@ class EntrypointNodeLoader extends NodeLoader {
 export function compileAndEval(code) {
   // eslint-disable-next-line no-unassigned-vars
   let output;
-  let loader = new EntrypointNodeLoader(code, __dirname);
+  let loader = new EntrypointNodeLoader(code, import.meta.dirname);
   let res = transformSync(compile('*entrypoint*', loader).code, {
     configFile: false,
     babelrc: false,

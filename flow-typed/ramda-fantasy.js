@@ -1,4 +1,5 @@
 declare module 'ramda-fantasy' {
+  declare export default any;
   declare export class Maybe<T> {
     static of: (...args: Array<any>) => any;
     static empty: (...args: Array<any>) => any;

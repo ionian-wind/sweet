@@ -10,17 +10,18 @@
   "license": "BSD-2-Clause",
   "devDependencies": {
     "@babel/core": "8.1.0",
-    "@babel/register": "8.0.6",
     "@sweet-js/babel-preset": "0.0.0",
-    "ava": "5.3.1",
-    "@sweet-js/core": "3.0.13"
+    "ava": "8.4.0",
+    "@sweet-js/core": "3.0.13",
+    "@sweet-js/test-loader": "0.0.0"
   },
   "ava": {
     "files": [
       "test/*.js"
     ],
-    "require": [
-      "@babel/register"
+    "nodeArguments": [
+      "--import",
+      "./ava.setup.mjs"
     ]
   }
 }

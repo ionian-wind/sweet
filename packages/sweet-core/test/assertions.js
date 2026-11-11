@@ -18,7 +18,7 @@ export function getAst(code) {
   const store = new Map();
   store.set('main.js', code);
 
-  const loader = new StoreLoader(__dirname, store);
+  const loader = new StoreLoader(import.meta.dirname, store);
   return parse('main.js', loader);
 }
 
@@ -43,7 +43,7 @@ export function testParseFailure() {
 }
 
 export function testEval(store, cb) {
-  let loader = new StoreLoader(__dirname, store);
+  let loader = new StoreLoader(import.meta.dirname, store);
   let result = compile('main.js', loader).code;
 
   // eslint-disable-next-line no-unassigned-vars

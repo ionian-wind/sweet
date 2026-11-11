@@ -1,0 +1,14 @@
+{
+  "name": "@sweet-js/test-loader",
+  "version": "0.0.0",
+  "private": true,
+  "description": "ESM loader that strips Flow types for AVA 8",
+  "type": "module",
+  "exports": {
+    "./register": "./register.mjs"
+  },
+  "dependencies": {
+    "@babel/core": "8.1.0",
+    "@babel/preset-flow": "8.0.1"
+  }
+}

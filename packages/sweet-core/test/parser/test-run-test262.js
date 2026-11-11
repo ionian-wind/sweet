@@ -683,7 +683,7 @@ function mkTester(subdir, testDir) {
   function f(t, fname) {
     let result = compile(
       `./${testDir}/${subdir}/${fname}`,
-      new NodeLoader(__dirname),
+      new NodeLoader(import.meta.dirname),
     );
     t.not(result, null);
   }
@@ -702,7 +702,10 @@ ${src}
 function mkFailTester(subdir, testDir) {
   function f(t, fname) {
     t.throws(() =>
-      compile(`./${testDir}/${subdir}/${fname}`, new NodeLoader(__dirname)),
+      compile(
+        `./${testDir}/${subdir}/${fname}`,
+        new NodeLoader(import.meta.dirname),
+      ),
     );
   }
   f.title = (title, fname, expected) => {

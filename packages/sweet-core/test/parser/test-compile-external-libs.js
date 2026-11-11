@@ -4,7 +4,7 @@ import NodeLoader from '../../src/node-loader';
 
 function compileLib(t, input) {
   // just want to assert no errors were thrown and we got back *something*
-  let result = compile(input, new NodeLoader(__dirname));
+  let result = compile(input, new NodeLoader(import.meta.dirname));
   t.not(result.code, '');
 }
 compileLib.title = (title, input) => `Compiling: ${input}`;
