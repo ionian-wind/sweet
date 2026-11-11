@@ -1,5 +1,4 @@
 // @flow
-// $FlowFixMe[untyped-type-import]
 import type { CharStream } from 'readtable';
 
 import { isEOS } from 'readtable';
@@ -7,7 +6,6 @@ import { skipSingleLineComment } from './utils';
 import { EmptyToken } from '../tokens';
 
 // $FlowFixMe[missing-this-annot]
-// $FlowFixMe[value-as-type]
 export default function readComment(stream: CharStream): typeof EmptyToken {
   let char = stream.peek();
 
@@ -36,7 +34,6 @@ export default function readComment(stream: CharStream): typeof EmptyToken {
 }
 
 // $FlowFixMe[missing-this-annot]
-// $FlowFixMe[value-as-type]
 function skipMultiLineComment(stream: CharStream): void {
   let idx = 2;
   let char = stream.peek(idx);

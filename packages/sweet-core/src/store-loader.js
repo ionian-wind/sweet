@@ -1,6 +1,5 @@
 // @flow
 import SweetLoader from './sweet-loader';
-// $FlowFixMe[cannot-resolve-module]
 import vm from 'vm';
 import Store from './store';
 
@@ -30,7 +29,7 @@ export default class extends SweetLoader {
     return new Store(vm.createContext());
   }
 
-  // $FlowFixMe[value-as-type]
+  // $FlowFixMe[incompatible-type]
   eval(source: string, store: Store): any {
     return vm.runInContext(source, store.getBackingObject());
   }

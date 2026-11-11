@@ -1,9 +1,6 @@
 // @flow
 import { evalCompiletimeValue } from './load-syntax';
 import * as _ from 'ramda';
-// $FlowFixMe[cannot-resolve-module]
-// $FlowFixMe[cannot-resolve-module]
-// $FlowFixMe[cannot-resolve-module]
 import * as T from 'sweet-spec';
 import * as S from './sweet-spec-utils';
 import { gensym } from './symbol';
@@ -17,8 +14,10 @@ import Syntax from './syntax';
 
 import type { Context } from './sweet-loader';
 
-// $FlowFixMe[unsupported-syntax]
-export function isBoundToCompiletime(name: Syntax, store: Map<*, *>): boolean {
+export function isBoundToCompiletime(
+  name: Syntax,
+  store: Map<any, any>,
+): boolean {
   let resolvedName = name.resolve(0);
   if (store.has(resolvedName)) {
     return store.get(resolvedName) instanceof CompiletimeTransform;
@@ -155,11 +154,9 @@ export default class {
         this.registerFunctionOrClass(term, phase, store);
       }
     }
-    // $FlowFixMe[extra-arg]
     let parsed = new T.Module({
       directives: List(),
       items,
-      // $FlowFixMe[prop-missing]
     }).reduce(new SweetToShiftReducer(phase));
 
     let gen = codegen(parsed, new FormattedCodeGen());

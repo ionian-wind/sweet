@@ -1,5 +1,4 @@
 // @flow
-// $FlowFixMe[untyped-type-import]
 import type { CharStream } from 'readtable';
 
 import { readStringEscape, isLineTerminator } from './utils';
@@ -7,7 +6,6 @@ import { isEOS } from 'readtable';
 import { StringToken } from '../tokens';
 
 // $FlowFixMe[missing-this-annot]
-// $FlowFixMe[value-as-type]
 export default function readStringLiteral(stream: CharStream): StringToken {
   let str = '',
     octal = null,

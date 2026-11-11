@@ -6,9 +6,6 @@ import { List } from 'immutable';
 import Compiler from './compiler';
 import { ALL_PHASES } from './syntax';
 import BindingMap from './binding-map.js';
-// $FlowFixMe[cannot-resolve-module]
-// $FlowFixMe[cannot-resolve-module]
-// $FlowFixMe[cannot-resolve-module]
 import Term from 'sweet-spec';
 import SweetModule from './sweet-module';
 import * as _ from 'ramda';
@@ -27,7 +24,6 @@ export type Context = {
   loader: any,
   transform: any,
   phase: number,
-  // $FlowFixMe[value-as-type]
   store: Store,
   invokedRegistry: Multimap<string, number>,
 };
@@ -228,7 +224,6 @@ export default class SweetLoader {
       path,
       compiler.compile(
         stxl.map((s) =>
-          // $FlowFixMe[prop-missing]
           s.reduce(
             new ScopeReducer(
               [

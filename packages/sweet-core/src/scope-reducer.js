@@ -1,13 +1,9 @@
 // @flow
-// $FlowFixMe[cannot-resolve-module]
-// $FlowFixMe[cannot-resolve-module]
-// $FlowFixMe[cannot-resolve-module]
 import Term, * as S from 'sweet-spec';
 import type Syntax from './syntax';
 import type { SymbolClass } from './symbol';
 import type BindingMap from './binding-map';
 
-// $FlowFixMe[prop-missing]
 export default class extends Term.CloneReducer {
   scopes: Array<{ scope: SymbolClass, phase: number | {}, flip: boolean }>;
   bindings: BindingMap;
@@ -30,14 +26,12 @@ export default class extends Term.CloneReducer {
   }
 
   reduceBindingIdentifier(t: Term, s: { name: Syntax }): any {
-    // $FlowFixMe[extra-arg]
     return new S.BindingIdentifier({
       name: this.applyScopes(s.name),
     });
   }
 
   reduceIdentifierExpression(t: Term, s: { name: Syntax }): any {
-    // $FlowFixMe[extra-arg]
     return new S.IdentifierExpression({
       name: this.applyScopes(s.name),
     });
@@ -49,13 +43,11 @@ export default class extends Term.CloneReducer {
     if (s.value.isTemplate() && s.value.items) {
       s.value.token.items = s.value.token.items.map((t) => {
         if (t instanceof Term) {
-          // $FlowFixMe[prop-missing]
           return t.reduce(this);
         }
         return t;
       });
     }
-    // $FlowFixMe[extra-arg]
     return new S.RawSyntax({
       value: this.applyScopes(s.value),
     });

@@ -20,7 +20,6 @@ type Context = {
 };
 
 export function getSlice(
-  // $FlowFixMe[value-as-type]
   stream: CharStream,
   startLocation: StartLocation,
 ): Slice {
@@ -59,10 +58,10 @@ class ReadError extends Error {
   }
 }
 
+// $FlowFixMe[incompatible-variance]
 class TokenReader extends Reader {
   locationInfo: LocationInfo;
   context: ?Context;
-  // $FlowFixMe[value-as-type]
   constructor(stream: CharStream, context?: Context) {
     super();
     this.context = context;
@@ -94,8 +93,8 @@ class TokenReader extends Reader {
       : this.createError('Unexpected end of input');
   }
 
+  // $FlowFixMe[incompatible-type]
   // $FlowFixMe[missing-local-annot]
-  // $FlowFixMe[value-as-type]
   readToken(stream: CharStream, ...rest: Array<any>) {
     // $FlowFixMe[prop-missing]
     // $FlowFixMe[unsafe-object-assign]
@@ -104,6 +103,7 @@ class TokenReader extends Reader {
       this.locationInfo,
       stream.sourceInfo,
     );
+    // $FlowFixMe[prop-missing]
     const result = super.read(stream, ...rest);
 
     if (
@@ -121,9 +121,9 @@ class TokenReader extends Reader {
     return result;
   }
 
+  // $FlowFixMe[incompatible-type]
   readUntil(
     close: ?Function | ?string,
-    // $FlowFixMe[value-as-type]
     stream: CharStream,
     prefix: List<any>,
     exprAllowed: boolean,
@@ -150,7 +150,6 @@ class TokenReader extends Reader {
 }
 
 export default function read(
-  // $FlowFixMe[value-as-type]
   source: string | CharStream,
   context?: Context,
 ): List<any> {

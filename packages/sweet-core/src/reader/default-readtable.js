@@ -28,12 +28,10 @@ import {
   isDecimalDigit,
 } from './utils';
 
-// $FlowFixMe[untyped-type-import]
 import type { CharStream } from 'readtable';
 
 // use https://github.com/mathiasbynens/regenerate to generate the Unicode code points when implementing modes
 
-// $FlowFixMe[value-as-type]
 function eatWhitespace(stream: CharStream) {
   stream.readString();
   return EmptyToken;

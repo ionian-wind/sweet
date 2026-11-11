@@ -1,8 +1,5 @@
 // @flow
 
-// $FlowFixMe[cannot-resolve-module]
-// $FlowFixMe[cannot-resolve-module]
-// $FlowFixMe[cannot-resolve-module]
 import * as T from 'sweet-spec';
 import * as _ from 'ramda';
 

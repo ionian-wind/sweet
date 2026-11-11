@@ -1,3 +1,4 @@
+// @flow
 import {
   FunctionDeclTransform,
   VariableDeclTransform,
@@ -31,6 +32,8 @@ import {
 } from './transforms';
 
 export default class Env {
+  map: Map<string, any>;
+
   constructor() {
     this.map = new Map();
     this.map.set('function', FunctionDeclTransform);
@@ -64,15 +67,15 @@ export default class Env {
     this.map.set('await', AwaitTransform);
   }
 
-  has(key) {
+  has(key: any): any {
     return this.map.has(key);
   }
 
-  get(key) {
+  get(key: any): any {
     return this.map.get(key);
   }
 
-  set(key, val) {
+  set(key: any, val: any): any {
     return this.map.set(key, val);
   }
 }

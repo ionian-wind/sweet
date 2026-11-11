@@ -11,88 +11,86 @@ function unsafeProp(prop: string, obj: any): any {
   return obj[prop];
 }
 
-// $FlowFixMe[signature-verification-failure]
-export const identifier = Parser.sat(H.isIdentifier, 'identifier');
-// $FlowFixMe[signature-verification-failure]
-export const identifierWith = (pred: (string) => boolean) =>
+export const identifier: Parser<Term, Term> = Parser.sat(
+  H.isIdentifier,
+  'identifier',
+);
+export const identifierWith = (pred: (string) => boolean): Parser<any, any> =>
   Parser.sat(
     (obj) => H.isIdentifier(obj) && pred(unsafeProp('value', H.unwrap(obj))),
     'identifier',
   );
-// $FlowFixMe[signature-verification-failure]
-export const keyword = Parser.sat(H.isKeyword, 'keyword');
-// $FlowFixMe[signature-verification-failure]
-export const keywordWith = (pred: (string) => boolean) =>
+export const keyword: Parser<Term, Term> = Parser.sat(H.isKeyword, 'keyword');
+export const keywordWith = (pred: (string) => boolean): Parser<any, any> =>
   Parser.sat(
     (obj) => H.isKeyword(obj) && pred(unsafeProp('value', H.unwrap(obj))),
     'keyword',
   );
-// $FlowFixMe[signature-verification-failure]
-export const punctuator = Parser.sat(H.isPunctuator, 'punctuator');
-// $FlowFixMe[signature-verification-failure]
-export const punctuatorWith = (pred: (string) => boolean) =>
+export const punctuator: Parser<Term, Term> = Parser.sat(
+  H.isPunctuator,
+  'punctuator',
+);
+export const punctuatorWith = (pred: (string) => boolean): Parser<any, any> =>
   Parser.sat(
     (obj) => H.isPunctuator(obj) && pred(unsafeProp('value', H.unwrap(obj))),
     'punctuator',
   );
-// $FlowFixMe[signature-verification-failure]
-export const numeric = Parser.sat(H.isNumericLiteral, 'numeric');
-// $FlowFixMe[signature-verification-failure]
-export const numericWith = (pred: (number) => boolean) =>
+export const numeric: Parser<Term, Term> = Parser.sat(
+  H.isNumericLiteral,
+  'numeric',
+);
+export const numericWith = (pred: (number) => boolean): Parser<any, any> =>
   Parser.sat(
     (obj) =>
       H.isNumericLiteral(obj) && pred(unsafeProp('value', H.unwrap(obj))),
     'numeric',
   );
-// $FlowFixMe[signature-verification-failure]
-export const string = Parser.sat(H.isStringLiteral, 'string');
-// $FlowFixMe[signature-verification-failure]
-export const stringWith = (pred: (string) => boolean) =>
+export const string: Parser<Term, Term> = Parser.sat(
+  H.isStringLiteral,
+  'string',
+);
+export const stringWith = (pred: (string) => boolean): Parser<any, any> =>
   Parser.sat(
     (obj) => H.isStringLiteral(obj) && pred(unsafeProp('value', H.unwrap(obj))),
     'string',
   );
-// $FlowFixMe[signature-verification-failure]
-export const templateElement = Parser.sat(
+export const templateElement: Parser<Term, Term> = Parser.sat(
   H.isTemplateElement,
   'templateElement',
 );
-// $FlowFixMe[signature-verification-failure]
-export const templateElementWith = (pred: (Term) => boolean) =>
+export const templateElementWith = (
+  pred: (Term) => boolean,
+): Parser<any, any> =>
   Parser.sat(
     (obj) =>
       H.isTemplateElement(obj) && pred(unsafeProp('value', H.unwrap(obj))),
     'templateElement',
   );
-// $FlowFixMe[signature-verification-failure]
-export const template = Parser.sat(H.isTemplate, 'template');
-// $FlowFixMe[signature-verification-failure]
-export const templateWith = (pred: (Term) => boolean) =>
+export const template: Parser<Term, Term> = Parser.sat(
+  H.isTemplate,
+  'template',
+);
+export const templateWith = (pred: (Term) => boolean): Parser<any, any> =>
   Parser.sat(
     (obj) => H.isTemplate(obj) && pred(unsafeProp('value', H.unwrap(obj))),
     'template',
   );
-// $FlowFixMe[signature-verification-failure]
-export const regex = Parser.sat(H.isRegExp, 'regex');
-// $FlowFixMe[signature-verification-failure]
-export const regexWith = (pred: (Term) => boolean) =>
+export const regex: Parser<Term, Term> = Parser.sat(H.isRegExp, 'regex');
+export const regexWith = (pred: (Term) => boolean): Parser<any, any> =>
   Parser.sat(
     (obj) => H.isRegExp(obj) && pred(unsafeProp('value', H.unwrap(obj))),
     'regex',
   );
-// $FlowFixMe[signature-verification-failure]
-export const braces = Parser.sat(H.isBraces, 'braces');
-// $FlowFixMe[signature-verification-failure]
-export const brackets = Parser.sat(H.isBrackets, 'brackets');
-// $FlowFixMe[signature-verification-failure]
-export const parens = Parser.sat(H.isParens, 'parens');
+export const braces: Parser<Term, Term> = Parser.sat(H.isBraces, 'braces');
+export const brackets: Parser<Term, Term> = Parser.sat(
+  H.isBrackets,
+  'brackets',
+);
+export const parens: Parser<Term, Term> = Parser.sat(H.isParens, 'parens');
 
-// $FlowFixMe[value-as-type]
 function runParserInner(
-  // $FlowFixMe[value-as-type]
   p: Parser<any, Term>,
   pred: (Term) => boolean,
-  // $FlowFixMe[value-as-type]
 ): Parser<any, Term> {
   return new Parser((ctx) => {
     let i = ctx.head();
@@ -110,50 +108,35 @@ function runParserInner(
   });
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function delimiterInner(p: Parser<any, Term>) {
+export function delimiterInner(p: Parser<any, Term>): Parser<any, Term> {
   return runParserInner(p, H.isDelimiter);
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function bracesInner(p: Parser<any, Term>) {
+export function bracesInner(p: Parser<any, Term>): Parser<any, Term> {
   return runParserInner(p, H.isBraces);
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function bracketsInner(p: Parser<any, Term>) {
+export function bracketsInner(p: Parser<any, Term>): Parser<any, Term> {
   return runParserInner(p, H.isBrackets);
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function parensInner(p: Parser<any, Term>) {
+export function parensInner(p: Parser<any, Term>): Parser<any, Term> {
   return runParserInner(p, H.isParens);
 }
 
-// $FlowFixMe[value-as-type]
 export function many<A>(p: Parser<A, any>): Parser<A[], any> {
-  // $FlowFixMe[underconstrained-implicit-instantiation]
-  return (
-    p
-      // $FlowFixMe[underconstrained-implicit-instantiation]
-      .chain((x) => many(p).chain((xs) => Parser.of(xs.concat(x))))
-      .alt(Parser.of([]))
-  );
+  return p
+    .chain((x) => many(p).chain((xs) => Parser.of(xs.concat(x))))
+    .alt(Parser.of([]));
 }
 
-// $FlowFixMe[value-as-type]
 export function many1<A>(p: Parser<A, any>): Parser<A[], any> {
-  // $FlowFixMe[underconstrained-implicit-instantiation]
   return p.chain((x) => many(p).chain((xs) => Parser.of(xs.concat(x))));
 }
 
-// $FlowFixMe[value-as-type]
 export function sepBy1<A, B>(
-  // $FlowFixMe[value-as-type]
   p: Parser<A, any>,
-  // $FlowFixMe[value-as-type]
   sep: Parser<B, any>,
-  // $FlowFixMe[value-as-type]
 ): Parser<A[], any> {
   return p.chain((x) =>
     many1(sep.chain(() => p.chain((y) => Parser.of(y)))).chain((xs) =>
@@ -162,53 +145,38 @@ export function sepBy1<A, B>(
   );
 }
 
-// $FlowFixMe[value-as-type]
 export function sepBy<A, B>(
   p: Parser<A, any>,
   sep: Parser<B, any>,
-  // $FlowFixMe[value-as-type]
 ): Parser<A[], any> {
-  // $FlowFixMe[underconstrained-implicit-instantiation]
   return sepBy1(p, sep).alt(Parser.of([]));
 }
 
-// $FlowFixMe[value-as-type]
 export function lift2<A, B, C>(
   f: (A, B) => C,
-  // $FlowFixMe[value-as-type]
 ): (a: Parser<A, any>, b: Parser<B, any>) => Parser<C, any> {
   return (a, b) => a.chain((va) => b.chain((vb) => Parser.of(f(va, vb))));
 }
 
 export function sequence<A>(...parsers: Parser<A, any>[]): Parser<A[], any> {
-  // $FlowFixMe[value-as-type]
   let init: Parser<A[], any> = Parser.of([]);
-  // $FlowFixMe[missing-local-annot]
   let f: (Parser<A[], any>, Parser<A, any>) => Parser<A[], any> = lift2(
-    // $FlowFixMe[missing-local-annot]
     (a, b) => a.concat(b),
   );
   return parsers.reduce(f, init);
 }
 
-// $FlowFixMe[value-as-type]
 export function disj<A>(
-  // $FlowFixMe[value-as-type]
   a: Parser<A, any>,
   b: Parser<A, any>,
   msg: string = 'failed disjunction',
-  // $FlowFixMe[value-as-type]
 ): Parser<A, any> {
   return a.alt(b).alt(Parser.failure(msg));
 }
 
-// $FlowFixMe[value-as-type]
 export function infixl<A>(
-  // $FlowFixMe[value-as-type]
   p: Parser<A, any>,
-  // $FlowFixMe[value-as-type]
   op: Parser<(A, A) => A, any>,
-  // $FlowFixMe[value-as-type]
 ): Parser<A, any> {
   // $FlowFixMe[missing-local-annot]
   // $FlowFixMe[recursive-definition]
@@ -218,18 +186,12 @@ export function infixl<A>(
   return p.chain(rest);
 }
 
-// $FlowFixMe[value-as-type]
 export function infixr<A>(
-  // $FlowFixMe[value-as-type]
   p: Parser<A, any>,
-  // $FlowFixMe[value-as-type]
   op: Parser<(A, A) => A, any>,
-  // $FlowFixMe[value-as-type]
 ): Parser<A, any> {
-  // $FlowFixMe[underconstrained-implicit-instantiation]
   return p.chain((x) =>
     op
-      // $FlowFixMe[underconstrained-implicit-instantiation]
       .chain((f) => infixr(p, op).chain((y) => Parser.of(f(x, y))))
       .alt(Parser.of(x)),
   );

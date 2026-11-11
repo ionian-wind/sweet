@@ -3,7 +3,6 @@
 import { scanUnicode } from './utils';
 
 import { isEOS, getCurrentReadtable } from 'readtable';
-// $FlowFixMe[untyped-type-import]
 import type { CharStream } from 'readtable';
 
 import { IdentifierToken } from '../tokens';
@@ -19,7 +18,6 @@ const startsEscape = (code) => {
 };
 
 // $FlowFixMe[missing-this-annot]
-// $FlowFixMe[value-as-type]
 export default function readIdentifier(stream: CharStream): IdentifierToken {
   terminates = isTerminating(getCurrentReadtable());
   let char = stream.peek();

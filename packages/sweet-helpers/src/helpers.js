@@ -123,115 +123,94 @@ export function unwrap(obj: ?Term): { value?: any } {
   return {};
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function isIdentifier(obj: Term) {
+export function isIdentifier(obj: Term): boolean {
   // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.Identifier);
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function fromIdentifier(obj: RawSyntax, x: string) {
+export function fromIdentifier(obj: RawSyntax, x: string): Syntax {
   return obj.value.fromIdentifier(x);
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function isKeyword(obj: Term) {
+export function isKeyword(obj: Term): boolean {
   // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.Keyword);
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function fromKeyword(obj: RawSyntax, x: string) {
+export function fromKeyword(obj: RawSyntax, x: string): Syntax {
   return obj.value.fromKeyword(x);
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function isPunctuator(obj: Term) {
+export function isPunctuator(obj: Term): boolean {
   // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.Punctuator);
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function fromPunctuator(obj: RawSyntax, x: string) {
+export function fromPunctuator(obj: RawSyntax, x: string): Syntax {
   return obj.value.fromPunctuator(x);
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function isNumericLiteral(obj: Term) {
+export function isNumericLiteral(obj: Term): boolean {
   // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.NumericLiteral);
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function fromNumericLiteral(obj: RawSyntax, x: number) {
+export function fromNumericLiteral(obj: RawSyntax, x: number): Syntax {
   return obj.value.fromNumber(x);
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function isStringLiteral(obj: Term) {
+export function isStringLiteral(obj: Term): boolean {
   // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.StringLiteral);
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function fromStringLiteral(obj: RawSyntax, x: string) {
+export function fromStringLiteral(obj: RawSyntax, x: string): Syntax {
   return obj.value.fromString(x);
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function isTemplateElement(obj: Term) {
+export function isTemplateElement(obj: Term): boolean {
   // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.TemplateElement);
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function isTemplate(obj: Term) {
+export function isTemplate(obj: Term): boolean {
   // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.Template);
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function isRegExp(obj: Term) {
+export function isRegExp(obj: Term): boolean {
   // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.RegExp);
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function isDelimiter(obj: Term) {
+export function isDelimiter(obj: Term): boolean {
   return obj && obj.type === 'RawDelimiter';
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function isParens(obj: Term) {
+export function isParens(obj: Term): false | boolean {
   return obj && obj.type === 'RawDelimiter' && obj.kind === 'parens';
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function fromParens(obj: RawSyntax, x: Term[]) {
+export function fromParens(obj: RawSyntax, x: Term[]): Syntax {
   return obj.value.from('parens', x);
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function isBrackets(obj: Term) {
+export function isBrackets(obj: Term): false | boolean {
   return obj && obj.type === 'RawDelimiter' && obj.kind === 'brackets';
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function fromBrackets(obj: RawSyntax, x: Term[]) {
+export function fromBrackets(obj: RawSyntax, x: Term[]): Syntax {
   return obj.value.from('brackets', x);
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function isBraces(obj: Term) {
+export function isBraces(obj: Term): false | boolean {
   return obj && obj.type === 'RawDelimiter' && obj.kind === 'braces';
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function fromBraces(obj: RawSyntax, x: Term[]) {
+export function fromBraces(obj: RawSyntax, x: Term[]): Syntax {
   return obj.value.from('braces', x);
 }
 
-// $FlowFixMe[signature-verification-failure]
-export function isSyntaxTemplate(obj: Term) {
+export function isSyntaxTemplate(obj: Term): false | boolean {
   return obj && obj.type === 'RawDelimiter' && obj.kind === 'syntaxTemplate';
 }

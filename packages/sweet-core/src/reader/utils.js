@@ -3,7 +3,6 @@
 import { isEOS } from 'readtable';
 import { List } from 'immutable';
 
-// $FlowFixMe[untyped-type-import]
 import type { Readtable, CharStream } from 'readtable';
 
 import { code } from 'esutils';
@@ -54,7 +53,6 @@ export function getHexValue(rune: string): number {
 }
 
 // $FlowFixMe[missing-this-annot]
-// $FlowFixMe[value-as-type]
 export function skipSingleLineComment(stream: CharStream): void {
   let idx = 0;
   let char = stream.peek(idx);
@@ -75,7 +73,6 @@ export function skipSingleLineComment(stream: CharStream): void {
 }
 
 // $FlowFixMe[missing-this-annot]
-// $FlowFixMe[value-as-type]
 export function scanUnicode(stream: CharStream, start: number): number {
   const sPeek = stream.peek.bind(stream);
   let idx = start;
@@ -118,7 +115,6 @@ export function scanUnicode(stream: CharStream, start: number): number {
 // $FlowFixMe[missing-this-annot]
 export function readStringEscape(
   str: string,
-  // $FlowFixMe[value-as-type]
   stream: CharStream,
   start: number,
   octal: ?string,
@@ -245,40 +241,36 @@ function scanHexEscape2(stream, idx) {
   return (r1 << 4) | r2;
 }
 
-export function insertSequence(coll: Object, seq: string): Object {
+export function insertSequence(
+  coll: { [string]: any },
+  seq: string,
+): { [string]: any } {
   const char = seq[0];
-  // $FlowFixMe[prop-missing]
   if (!coll[char]) {
-    // $FlowFixMe[prop-missing]
     coll[char] = {};
   }
   if (seq.length === 1) {
-    // $FlowFixMe[prop-missing]
     coll[char].isValue = true;
     return coll;
   } else {
-    // $FlowFixMe[prop-missing]
     coll[char] = insertSequence(coll[char], seq.slice(1));
     return coll;
   }
 }
 
 export const isTerminating =
-  // $FlowFixMe[value-as-type]
   (table: Readtable): ((char: string) => boolean) =>
-    (char: string): boolean =>
-      table.getMapping(char).mode === 'terminating';
+  (char: string): boolean =>
+    table.getMapping(char).mode === 'terminating';
 
 // check for terminating doesn't work if it's at the start
 export function retrieveSequenceLength(
-  table: Object,
-  // $FlowFixMe[value-as-type]
+  table: { [string]: any },
   stream: CharStream,
   idx: number,
 ): number {
   const char = stream.peek(idx);
   if (!table[char]) {
-    // $FlowFixMe[prop-missing]
     if (table.isValue) return idx;
     return -1;
   } else {
@@ -443,7 +435,6 @@ export function isExprPrefix(
   return false;
 }
 
-// $FlowFixMe[value-as-type]
 function popMaybe<T>(p: List<T>): Maybe<T> {
   if (p.size >= 1) {
     return Maybe.of(p.last());
@@ -486,7 +477,6 @@ function isTopParensWithKeyword(prefix: List<TokenTree>) {
     .getOrElse(false);
 }
 
-// $FlowFixMe[value-as-type]
 function popRestMaybe(p: List<TokenTree>): Maybe<[TokenTree, List<TokenTree>]> {
   if (p.size > 0) {
     let last = p.last();

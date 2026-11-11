@@ -4,9 +4,6 @@ import {
   isStaticMemberExpression,
   isComputedMemberExpression,
 } from './terms';
-// $FlowFixMe[cannot-resolve-module]
-// $FlowFixMe[cannot-resolve-module]
-// $FlowFixMe[cannot-resolve-module]
 import Term, * as T from 'sweet-spec';
 import { Maybe } from 'ramda-fantasy';
 import ScopeReducer from './scope-reducer';
@@ -100,8 +97,7 @@ export class Enforester {
   opCtx: {
     prec: number,
     combine: (x: any) => any,
-    // $FlowFixMe[unsupported-syntax]
-    stack: List<*>,
+    stack: List<any>,
   };
 
   constructor(stxl: List<Term>, prev: List<Term>, context: any) {
@@ -185,27 +181,21 @@ export class Enforester {
 
     if (this.isPunctuator(lookahead, '*')) {
       this.advance();
-      // $FlowFixMe[extra-arg]
       return new T.ExportAllFrom({
         moduleSpecifier: this.enforestFromClause(),
       });
     } else if (this.isBraces(lookahead)) {
       let namedExports = this.enforestExportClause();
       if (this.isIdentifier(this.peek(), 'from')) {
-        // $FlowFixMe[extra-arg]
         return new T.ExportFrom({
-          // $FlowFixMe[extra-arg]
           namedExports: namedExports.map((s) => new T.ExportFromSpecifier(s)),
           moduleSpecifier: this.enforestFromClause(),
         });
       }
-      // $FlowFixMe[extra-arg]
       return new T.ExportLocals({
         namedExports: namedExports.map(
           (s) =>
-            // $FlowFixMe[extra-arg]
             new T.ExportLocalSpecifier({
-              // $FlowFixMe[extra-arg]
               name: new T.IdentifierExpression({
                 name: s.name,
               }),
@@ -214,14 +204,12 @@ export class Enforester {
         ),
       });
     } else if (this.isClassTransform(lookahead)) {
-      // $FlowFixMe[extra-arg]
       return new T.Export({
         declaration: this.enforestClass({
           isExpr: false,
         }),
       });
     } else if (this.isFnDeclTransform(lookahead)) {
-      // $FlowFixMe[extra-arg]
       return new T.Export({
         declaration: this.enforestFunction({
           isExpr: false,
@@ -233,7 +221,6 @@ export class Enforester {
       this.lineNumberEq(lookahead, this.peek(1))
     ) {
       this.advance();
-      // $FlowFixMe[extra-arg]
       return new T.Export({
         declaration: this.enforestFunction({
           isExpr: false,
@@ -248,7 +235,6 @@ export class Enforester {
       }
 
       if (this.isFnDeclTransform(this.peek())) {
-        // $FlowFixMe[extra-arg]
         return new T.ExportDefault({
           body: this.enforestFunction({
             isExpr: false,
@@ -261,7 +247,6 @@ export class Enforester {
         this.lineNumberEq(lookahead, this.peek(1))
       ) {
         this.advance();
-        // $FlowFixMe[extra-arg]
         return new T.ExportDefault({
           body: this.enforestFunction({
             isExpr: false,
@@ -270,7 +255,6 @@ export class Enforester {
           }),
         });
       } else if (this.isClassTransform(this.peek())) {
-        // $FlowFixMe[extra-arg]
         return new T.ExportDefault({
           body: this.enforestClass({
             isExpr: false,
@@ -280,7 +264,6 @@ export class Enforester {
       } else {
         let body = this.enforestExpressionLoop();
         this.consumeSemicolon();
-        // $FlowFixMe[extra-arg]
         return new T.ExportDefault({
           body,
         });
@@ -293,7 +276,6 @@ export class Enforester {
       this.isSyntaxDeclTransform(lookahead) ||
       this.isOperatorDeclTransform(lookahead)
     ) {
-      // $FlowFixMe[extra-arg]
       return new T.Export({
         declaration: this.enforestVariableDeclaration(),
       });
@@ -334,7 +316,6 @@ export class Enforester {
     if (this.isStringLiteral(lookahead)) {
       let moduleSpecifier = this.advance();
       this.consumeSemicolon();
-      // $FlowFixMe[extra-arg]
       return new T.Import({
         defaultBinding,
         namedImports,
@@ -356,7 +337,6 @@ export class Enforester {
           forSyntax = true;
         }
 
-        // $FlowFixMe[extra-arg]
         return new T.Import({
           defaultBinding,
           moduleSpecifier,
@@ -379,7 +359,6 @@ export class Enforester {
         forSyntax = true;
       }
 
-      // $FlowFixMe[extra-arg]
       return new T.Import({
         defaultBinding,
         forSyntax,
@@ -397,7 +376,6 @@ export class Enforester {
         this.advance();
         forSyntax = true;
       }
-      // $FlowFixMe[extra-arg]
       return new T.ImportNamespace({
         defaultBinding,
         forSyntax,
@@ -434,10 +412,8 @@ export class Enforester {
     ) {
       name = this.matchRawSyntax();
       if (!this.isIdentifier(this.peek(), 'as')) {
-        // $FlowFixMe[extra-arg]
         return new T.ImportSpecifier({
           name: null,
-          // $FlowFixMe[extra-arg]
           binding: new T.BindingIdentifier({
             name: name,
           }),
@@ -448,7 +424,6 @@ export class Enforester {
     } else {
       throw this.createError(lookahead, 'unexpected token in import specifier');
     }
-    // $FlowFixMe[extra-arg]
     return new T.ImportSpecifier({
       name,
       binding: this.enforestBindingIdentifier(),
@@ -587,7 +562,6 @@ export class Enforester {
         this.isSyntaxDeclTransform(lookahead) ||
         this.isOperatorDeclTransform(lookahead))
     ) {
-      // $FlowFixMe[extra-arg]
       let stmt = new T.VariableDeclarationStatement({
         declaration: this.enforestVariableDeclaration(),
       });
@@ -601,7 +575,6 @@ export class Enforester {
 
     if (this.term === null && this.isPunctuator(lookahead, ';')) {
       this.advance();
-      // $FlowFixMe[extra-arg]
       return new T.EmptyStatement({});
     }
 
@@ -613,7 +586,6 @@ export class Enforester {
     this.matchPunctuator(':');
     let stmt = this.enforestStatement();
 
-    // $FlowFixMe[extra-arg]
     return new T.LabeledStatement({
       label: label,
       body: stmt,
@@ -626,7 +598,6 @@ export class Enforester {
     let label = null;
     if (this.rest.size === 0 || this.isPunctuator(lookahead, ';')) {
       this.consumeSemicolon();
-      // $FlowFixMe[extra-arg]
       return new T.BreakStatement({
         label,
       });
@@ -640,7 +611,6 @@ export class Enforester {
     }
     this.consumeSemicolon();
 
-    // $FlowFixMe[extra-arg]
     return new T.BreakStatement({
       label,
     });
@@ -654,14 +624,12 @@ export class Enforester {
       if (this.isKeyword(this.peek(), 'finally')) {
         this.advance();
         let finalizer = this.enforestBlock();
-        // $FlowFixMe[extra-arg]
         return new T.TryFinallyStatement({
           body,
           catchClause,
           finalizer,
         });
       }
-      // $FlowFixMe[extra-arg]
       return new T.TryCatchStatement({
         body,
         catchClause,
@@ -670,7 +638,6 @@ export class Enforester {
     if (this.isKeyword(this.peek(), 'finally')) {
       this.advance();
       let finalizer = this.enforestBlock();
-      // $FlowFixMe[extra-arg]
       return new T.TryFinallyStatement({
         body,
         catchClause: null,
@@ -686,7 +653,6 @@ export class Enforester {
     let enf = new Enforester(bindingParens, List(), this.context);
     let binding = enf.enforestBindingTarget();
     let body = this.enforestBlock();
-    // $FlowFixMe[extra-arg]
     return new T.CatchClause({
       binding,
       body,
@@ -697,7 +663,6 @@ export class Enforester {
     this.matchKeyword('throw');
     let expression = this.enforestExpression();
     this.consumeSemicolon();
-    // $FlowFixMe[extra-arg]
     return new T.ThrowStatement({
       expression,
     });
@@ -709,7 +674,6 @@ export class Enforester {
     let enf = new Enforester(objParens, List(), this.context);
     let object = enf.enforestExpression();
     let body = this.enforestStatement();
-    // $FlowFixMe[extra-arg]
     return new T.WithStatement({
       object,
       body,
@@ -719,7 +683,6 @@ export class Enforester {
   enforestDebuggerStatement(): any {
     this.matchKeyword('debugger');
 
-    // $FlowFixMe[extra-arg]
     return new T.DebuggerStatement({});
   }
 
@@ -731,7 +694,6 @@ export class Enforester {
     let enf = new Enforester(testBody, List(), this.context);
     let test = enf.enforestExpression();
     this.consumeSemicolon();
-    // $FlowFixMe[extra-arg]
     return new T.DoWhileStatement({
       body,
       test,
@@ -744,7 +706,6 @@ export class Enforester {
     let label = null;
     if (this.rest.size === 0 || this.isPunctuator(lookahead, ';')) {
       this.consumeSemicolon();
-      // $FlowFixMe[extra-arg]
       return new T.ContinueStatement({
         label,
       });
@@ -760,7 +721,6 @@ export class Enforester {
     }
     this.consumeSemicolon();
 
-    // $FlowFixMe[extra-arg]
     return new T.ContinueStatement({
       label,
     });
@@ -774,7 +734,6 @@ export class Enforester {
     let body = this.matchCurlies();
 
     if (body.size === 0) {
-      // $FlowFixMe[extra-arg]
       return new T.SwitchStatement({
         discriminant: discriminant,
         cases: List(),
@@ -786,7 +745,6 @@ export class Enforester {
     if (enf.isKeyword(lookahead, 'default')) {
       let defaultCase = enf.enforestSwitchDefault();
       let postDefaultCases = enf.enforestSwitchCases();
-      // $FlowFixMe[extra-arg]
       return new T.SwitchStatementWithDefault({
         discriminant,
         preDefaultCases: cases,
@@ -794,7 +752,6 @@ export class Enforester {
         postDefaultCases,
       });
     }
-    // $FlowFixMe[extra-arg]
     return new T.SwitchStatement({
       discriminant,
       cases,
@@ -811,7 +768,6 @@ export class Enforester {
 
   enforestSwitchCase(): any {
     this.matchKeyword('case');
-    // $FlowFixMe[extra-arg]
     return new T.SwitchCase({
       test: this.enforestExpression(),
       consequent: this.enforestSwitchCaseBody(),
@@ -837,7 +793,6 @@ export class Enforester {
 
   enforestSwitchDefault(): any {
     this.matchKeyword('default');
-    // $FlowFixMe[extra-arg]
     return new T.SwitchDefault({
       consequent: this.enforestSwitchCaseBody(),
     });
@@ -859,7 +814,6 @@ export class Enforester {
       if (enf.rest.size !== 0) {
         right = enf.enforestExpression();
       }
-      // $FlowFixMe[extra-arg]
       return new T.ForStatement({
         init: null,
         test: test,
@@ -894,7 +848,6 @@ export class Enforester {
             right = enf.enforestExpression();
             cnst = T.ForOfStatement;
           }
-          // $FlowFixMe[extra-arg]
           return new cnst({
             left: init,
             right,
@@ -924,7 +877,6 @@ export class Enforester {
             cnst = T.ForOfStatement;
           }
           right = enf.enforestExpression();
-          // $FlowFixMe[extra-arg]
           return new cnst({
             left: left,
             right,
@@ -942,7 +894,6 @@ export class Enforester {
         }
         update = enf.enforestExpression();
       }
-      // $FlowFixMe[extra-arg]
       return new T.ForStatement({
         init,
         test,
@@ -967,7 +918,6 @@ export class Enforester {
       this.advance();
       alternate = this.enforestStatement();
     }
-    // $FlowFixMe[extra-arg]
     return new T.IfStatement({
       test,
       consequent,
@@ -986,7 +936,6 @@ export class Enforester {
     }
     let body = this.enforestStatement();
 
-    // $FlowFixMe[extra-arg]
     return new T.WhileStatement({
       test,
       body,
@@ -994,14 +943,12 @@ export class Enforester {
   }
 
   enforestBlockStatement(): any {
-    // $FlowFixMe[extra-arg]
     return new T.BlockStatement({
       block: this.enforestBlock(),
     });
   }
 
   enforestBlock(): any {
-    // $FlowFixMe[extra-arg]
     return new T.Block({
       statements: this.matchCurlies(),
     });
@@ -1022,7 +969,6 @@ export class Enforester {
       name = this.enforestBindingIdentifier();
     } else if (!isExpr) {
       if (inDefault) {
-        // $FlowFixMe[extra-arg]
         name = new T.BindingIdentifier({
           name: Syntax.fromIdentifier('_default', kw),
         });
@@ -1047,11 +993,8 @@ export class Enforester {
       let isStatic = false;
       let { methodOrKey, kind } = enf.enforestMethodDefinition();
       if (
-        // $FlowFixMe[invalid-compare]
         kind === 'identifier' &&
-        // $FlowFixMe[invalid-compare]
         methodOrKey instanceof T.StaticPropertyName &&
-        // $FlowFixMe[invalid-compare]
         methodOrKey.value.val() === 'static'
       ) {
         isStatic = true;
@@ -1059,7 +1002,6 @@ export class Enforester {
       }
       if (kind === 'method') {
         elements.push(
-          // $FlowFixMe[extra-arg]
           new T.ClassElement({
             isStatic,
             method: methodOrKey,
@@ -1072,7 +1014,6 @@ export class Enforester {
         );
       }
     }
-    // $FlowFixMe[extra-arg]
     return new (isExpr ? T.ClassExpression : T.ClassDeclaration)({
       name,
       super: supr,
@@ -1117,7 +1058,6 @@ export class Enforester {
       enf.consumeComma();
     }
 
-    // $FlowFixMe[extra-arg]
     return new T.ObjectBinding({
       properties: List(properties),
     });
@@ -1135,17 +1075,14 @@ export class Enforester {
         if (this.isAssign(this.peek())) {
           this.advance();
           let expr = this.enforestExpressionLoop();
-          // $FlowFixMe[extra-arg]
           return new T.BindingPropertyProperty({
             name,
-            // $FlowFixMe[extra-arg]
             binding: new T.BindingWithDefault({
               binding,
               init: expr,
             }),
           });
         }
-        // $FlowFixMe[extra-arg]
         return new T.BindingPropertyProperty({
           name,
           binding,
@@ -1154,7 +1091,6 @@ export class Enforester {
     }
     this.matchPunctuator(':');
     binding = this.enforestBindingElement();
-    // $FlowFixMe[extra-arg]
     return new T.BindingPropertyProperty({
       name,
       binding,
@@ -1194,7 +1130,6 @@ export class Enforester {
         enf.consumeComma();
       }
     }
-    // $FlowFixMe[extra-arg]
     return new T.ArrayBinding({
       elements: List(elements),
       rest,
@@ -1207,7 +1142,6 @@ export class Enforester {
     if (this.isAssign(this.peek())) {
       this.advance();
       let init = this.enforestExpressionLoop();
-      // $FlowFixMe[extra-arg]
       binding = new T.BindingWithDefault({
         binding,
         init,
@@ -1227,7 +1161,6 @@ export class Enforester {
     } else {
       name = this.enforestIdentifier();
     }
-    // $FlowFixMe[extra-arg]
     return new T.BindingIdentifier({
       name,
     });
@@ -1258,7 +1191,6 @@ export class Enforester {
       this.rest.size === 0 ||
       (lookahead && !this.lineNumberEq(kw, lookahead))
     ) {
-      // $FlowFixMe[extra-arg]
       return new T.ReturnStatement({
         expression: null,
       });
@@ -1276,7 +1208,6 @@ export class Enforester {
     }
 
     this.consumeSemicolon();
-    // $FlowFixMe[extra-arg]
     return new T.ReturnStatement({
       expression: term,
     });
@@ -1322,7 +1253,6 @@ export class Enforester {
       }
     }
 
-    // $FlowFixMe[extra-arg]
     return new T.VariableDeclaration({
       kind: kind,
       declarators: decls,
@@ -1364,7 +1294,6 @@ export class Enforester {
     }
 
     if (isOperator) {
-      // $FlowFixMe[extra-arg]
       return new T.OperatorDeclarator({
         binding: id,
         init,
@@ -1372,7 +1301,6 @@ export class Enforester {
         assoc,
       });
     }
-    // $FlowFixMe[extra-arg]
     return new T.VariableDeclarator({
       binding: id,
       init: init,
@@ -1387,7 +1315,6 @@ export class Enforester {
     }
     this.consumeSemicolon();
 
-    // $FlowFixMe[extra-arg]
     return new T.ExpressionStatement({
       expression: expr,
     });
@@ -1403,7 +1330,6 @@ export class Enforester {
         }
         let operator = this.matchRawSyntax();
         let right = this.enforestExpressionLoop();
-        // $FlowFixMe[extra-arg]
         left = new T.BinaryExpression({
           left,
           operator: operator.val(),
@@ -1457,7 +1383,6 @@ export class Enforester {
         (exName) => exName.exportedName.val() === name.val(),
       );
       this.rest = this.rest.unshift(
-        // $FlowFixMe[extra-arg]
         new T.RawSyntax({
           value: Syntax.fromIdentifier(name.val(), exportedName.exportedName),
         }),
@@ -1519,7 +1444,6 @@ export class Enforester {
 
     // ($x:expr)
     if (this.term === null && this.isParens(lookahead)) {
-      // $FlowFixMe[extra-arg]
       return new T.ParenthesizedExpression({
         inner: this.matchParens(),
       });
@@ -1623,13 +1547,11 @@ export class Enforester {
       this.rest = enf.rest;
 
       if (op.val() === '=') {
-        // $FlowFixMe[extra-arg]
         return new T.AssignmentExpression({
           binding,
           expression: init,
         });
       } else {
-        // $FlowFixMe[extra-arg]
         return new T.CompoundAssignmentExpression({
           binding,
           operator: op.val(),
@@ -1717,7 +1639,6 @@ export class Enforester {
 
     if (this.isSuperTransform(lookahead)) {
       this.advance();
-      // $FlowFixMe[extra-arg]
       this.term = new T.Super({});
     } else if (this.isNewTransform(lookahead)) {
       this.term = this.enforestNewExpression();
@@ -1758,7 +1679,6 @@ export class Enforester {
         this.term = this.enforestTemplateLiteral();
       } else if (this.isIdentifier(lookahead)) {
         if (this.term) break;
-        // $FlowFixMe[extra-arg]
         this.term = new T.IdentifierExpression({
           name: this.enforestIdentifier(),
         });
@@ -1770,14 +1690,12 @@ export class Enforester {
   }
 
   enforestBooleanLiteral(): any {
-    // $FlowFixMe[extra-arg]
     return new T.LiteralBooleanExpression({
       value: this.matchRawSyntax().val() === 'true',
     });
   }
 
   enforestTemplateLiteral(): any {
-    // $FlowFixMe[extra-arg]
     return new T.TemplateExpression({
       tag: this.term,
       elements: this.enforestTemplateElements(),
@@ -1785,7 +1703,6 @@ export class Enforester {
   }
 
   enforestStringLiteral(): any {
-    // $FlowFixMe[extra-arg]
     return new T.LiteralStringExpression({
       value: this.matchRawSyntax().val(),
     });
@@ -1794,17 +1711,14 @@ export class Enforester {
   enforestNumericLiteral(): any {
     let num = this.matchRawSyntax();
     if (num.val() === 1 / 0) {
-      // $FlowFixMe[extra-arg]
       return new T.LiteralInfinityExpression({});
     }
-    // $FlowFixMe[extra-arg]
     return new T.LiteralNumericExpression({
       value: num.val(),
     });
   }
 
   enforestIdentifierExpression(): any {
-    // $FlowFixMe[extra-arg]
     return new T.IdentifierExpression({
       name: this.matchRawSyntax(),
     });
@@ -1816,7 +1730,6 @@ export class Enforester {
     let lastSlash = reStx.token.value.lastIndexOf('/');
     let pattern = reStx.token.value.slice(1, lastSlash);
     let flags = reStx.token.value.slice(lastSlash + 1);
-    // $FlowFixMe[extra-arg]
     return new T.LiteralRegExpExpression({
       pattern,
       global: flags.includes('g'),
@@ -1829,12 +1742,10 @@ export class Enforester {
 
   enforestNullLiteral(): any {
     this.advance();
-    // $FlowFixMe[extra-arg]
     return new T.LiteralNullExpression({});
   }
 
   enforestThisExpression(): any {
-    // $FlowFixMe[extra-arg]
     return new T.ThisExpression({
       stx: this.matchRawSyntax(),
     });
@@ -1846,7 +1757,6 @@ export class Enforester {
       let arg;
       if (this.isPunctuator(this.peek(), '...')) {
         this.advance();
-        // $FlowFixMe[extra-arg]
         arg = new T.SpreadElement({
           expression: this.enforestExpressionLoop(),
         });
@@ -1869,7 +1779,6 @@ export class Enforester {
     ) {
       this.advance();
       this.advance();
-      // $FlowFixMe[extra-arg]
       return new T.NewTargetExpression({});
     }
 
@@ -1883,7 +1792,6 @@ export class Enforester {
       // $FlowFixMe[underconstrained-implicit-instantiation]
       args = List();
     }
-    // $FlowFixMe[extra-arg]
     return new T.NewExpression({
       callee,
       arguments: args,
@@ -1892,7 +1800,6 @@ export class Enforester {
 
   enforestComputedMemberExpression(): any {
     let enf = new Enforester(this.matchSquares(), List(), this.context);
-    // $FlowFixMe[extra-arg]
     return new T.ComputedMemberExpression({
       object: this.term,
       expression: enf.enforestExpression(),
@@ -1902,7 +1809,6 @@ export class Enforester {
   transformDestructuring(term: any): any {
     switch (term.type) {
       case 'IdentifierExpression':
-        // $FlowFixMe[extra-arg]
         return new T.AssignmentTargetIdentifier({
           name: term.name,
         });
@@ -1913,22 +1819,18 @@ export class Enforester {
         return this.transformDestructuring(expr);
       }
       case 'DataProperty':
-        // $FlowFixMe[extra-arg]
         return new T.AssignmentTargetPropertyProperty({
           name: term.name,
           binding: this.transformDestructuringWithDefault(term.expression),
         });
       case 'ShorthandProperty':
-        // $FlowFixMe[extra-arg]
         return new T.AssignmentTargetPropertyIdentifier({
-          // $FlowFixMe[extra-arg]
           binding: new T.AssignmentTargetIdentifier({
             name: term.name,
           }),
           init: null,
         });
       case 'ObjectExpression':
-        // $FlowFixMe[extra-arg]
         return new T.ObjectAssignmentTarget({
           properties: term.properties.map((t) =>
             this.transformDestructuring(t),
@@ -1937,7 +1839,6 @@ export class Enforester {
       case 'ArrayExpression': {
         let last = term.elements.last();
         if (last != null && last.type === 'SpreadElement') {
-          // $FlowFixMe[extra-arg]
           return new T.ArrayAssignmentTarget({
             elements: term.elements
               .slice(0, -1)
@@ -1945,7 +1846,6 @@ export class Enforester {
             rest: this.transformDestructuringWithDefault(last.expression),
           });
         } else {
-          // $FlowFixMe[extra-arg]
           return new T.ArrayAssignmentTarget({
             elements: term.elements.map(
               (t) => t && this.transformDestructuringWithDefault(t),
@@ -1955,30 +1855,25 @@ export class Enforester {
         }
       }
       case 'StaticPropertyName':
-        // $FlowFixMe[extra-arg]
         return new T.AssignmentTargetIdentifier({
           name: term.value,
         });
       case 'ComputedMemberExpression':
-        // $FlowFixMe[extra-arg]
         return new T.ComputedMemberAssignmentTarget({
           object: term.object,
           expression: term.expression,
         });
       case 'StaticMemberExpression':
-        // $FlowFixMe[extra-arg]
         return new T.StaticMemberAssignmentTarget({
           object: term.object,
           property: term.property,
         });
       case 'BindingPropertyIdentifier':
-        // $FlowFixMe[extra-arg]
         return new T.AssignmentTargetPropertyIdentifier({
           binding: this.transformDestructuring(term.binding),
           init: term.init,
         });
       case 'BindingIdentifier':
-        // $FlowFixMe[extra-arg]
         return new T.AssignmentTargetIdentifier({
           name: term.name,
         });
@@ -2002,7 +1897,6 @@ export class Enforester {
   transformDestructuringWithDefault(term: any): any {
     switch (term.type) {
       case 'AssignmentExpression':
-        // $FlowFixMe[extra-arg]
         return new T.AssignmentTargetWithDefault({
           binding: this.transformDestructuring(term.binding),
           init: term.expression,
@@ -2013,7 +1907,6 @@ export class Enforester {
 
   enforestCallExpression(): any {
     let paren = this.matchParens();
-    // $FlowFixMe[extra-arg]
     return new T.CallExpressionE({
       callee: this.term,
       arguments: paren,
@@ -2034,7 +1927,6 @@ export class Enforester {
     let body;
     if (this.isBraces(this.peek())) {
       body = this.matchCurlies();
-      // $FlowFixMe[extra-arg]
       return new T.ArrowExpressionE({
         isAsync,
         params,
@@ -2047,7 +1939,6 @@ export class Enforester {
       body = enf.enforestExpressionLoop();
       this.context.allowAwait = originalAwait;
       this.rest = enf.rest;
-      // $FlowFixMe[extra-arg]
       return new T.ArrowExpression({
         isAsync,
         params,
@@ -2064,7 +1955,6 @@ export class Enforester {
       this.rest.size === 0 ||
       (lookahead && !this.lineNumberEq(kwd, lookahead))
     ) {
-      // $FlowFixMe[extra-arg]
       return new T.YieldExpression({
         expression: null,
       });
@@ -2076,7 +1966,6 @@ export class Enforester {
       }
       let expr = this.enforestExpression();
       return new (isGenerator ? T.YieldGeneratorExpression : T.YieldExpression)(
-        // $FlowFixMe[extra-arg]
         {
           expression: expr,
         },
@@ -2085,7 +1974,6 @@ export class Enforester {
   }
 
   enforestSyntaxTemplate(): any {
-    // $FlowFixMe[extra-arg]
     return new T.SyntaxTemplate({
       template: this.matchRawDelimiter(),
     });
@@ -2096,7 +1984,6 @@ export class Enforester {
     this.advance();
     let property = this.matchRawSyntax();
 
-    // $FlowFixMe[extra-arg]
     return new T.StaticMemberExpression({
       object: object,
       property: property,
@@ -2128,7 +2015,6 @@ export class Enforester {
           throw enf.createError(enf.peek(), 'unexpected token');
         }
         if (isSpread) {
-          // $FlowFixMe[extra-arg]
           expression = new T.SpreadElement({
             expression,
           });
@@ -2138,7 +2024,6 @@ export class Enforester {
       elements.push(expression);
     }
 
-    // $FlowFixMe[extra-arg]
     return new T.ArrayExpression({
       elements: List(elements),
     });
@@ -2173,7 +2058,6 @@ export class Enforester {
       lastProp = prop;
     }
 
-    // $FlowFixMe[extra-arg]
     return new T.ObjectExpression({
       properties: properties,
     });
@@ -2189,13 +2073,11 @@ export class Enforester {
         if (this.isAssign(this.peek())) {
           this.advance();
           let init = this.enforestExpressionLoop();
-          // $FlowFixMe[extra-arg]
           return new T.BindingPropertyIdentifier({
             init,
             binding: this.transformDestructuring(methodOrKey),
           });
         } else if (!this.isPunctuator(this.peek(), ':')) {
-          // $FlowFixMe[extra-arg]
           return new T.ShorthandProperty({
             name: methodOrKey.value,
           });
@@ -2205,7 +2087,6 @@ export class Enforester {
     this.matchPunctuator(':');
     let expr = this.enforestExpressionLoop();
 
-    // $FlowFixMe[extra-arg]
     return new T.DataProperty({
       name: methodOrKey,
       expression: expr,
@@ -2238,7 +2119,6 @@ export class Enforester {
       this.matchParens();
       let body = this.matchCurlies();
       return {
-        // $FlowFixMe[extra-arg]
         methodOrKey: new T.Getter({
           name,
           body,
@@ -2255,7 +2135,6 @@ export class Enforester {
       let param = enf.enforestBindingElement();
       let body = this.matchCurlies();
       return {
-        // $FlowFixMe[extra-arg]
         methodOrKey: new T.Setter({
           name,
           param,
@@ -2272,7 +2151,6 @@ export class Enforester {
 
       let body = this.matchCurlies();
       return {
-        // $FlowFixMe[extra-arg]
         methodOrKey: new T.Method({
           isAsync,
           isGenerator,
@@ -2297,7 +2175,6 @@ export class Enforester {
 
     if (this.isStringLiteral(lookahead) || this.isNumericLiteral(lookahead)) {
       return {
-        // $FlowFixMe[extra-arg]
         name: new T.StaticPropertyName({
           value: this.matchRawSyntax(),
         }),
@@ -2307,7 +2184,6 @@ export class Enforester {
       let enf = new Enforester(this.matchSquares(), List(), this.context);
       let expr = enf.enforestExpressionLoop();
       return {
-        // $FlowFixMe[extra-arg]
         name: new T.ComputedPropertyName({
           expression: expr,
         }),
@@ -2316,11 +2192,9 @@ export class Enforester {
     }
     let name = this.matchRawSyntax();
     return {
-      // $FlowFixMe[extra-arg]
       name: new T.StaticPropertyName({
         value: name,
       }),
-      // $FlowFixMe[extra-arg]
       binding: new T.BindingIdentifier({
         name,
       }),
@@ -2353,7 +2227,6 @@ export class Enforester {
     if (!this.isParens(lookahead)) {
       name = this.enforestBindingIdentifier();
     } else if (inDefault) {
-      // $FlowFixMe[extra-arg]
       name = new T.BindingIdentifier({
         name: Syntax.fromIdentifier('*default*', fnKeyword),
       });
@@ -2366,7 +2239,6 @@ export class Enforester {
     let enf = new Enforester(params, List(), this.context);
     let formalParams = enf.enforestFormalParameters();
 
-    // $FlowFixMe[extra-arg]
     return new (isExpr ? T.FunctionExpressionE : T.FunctionDeclarationE)({
       name,
       isAsync,
@@ -2389,7 +2261,6 @@ export class Enforester {
       items.push(this.enforestParam());
       this.consumeComma();
     }
-    // $FlowFixMe[extra-arg]
     return new T.FormalParameters({
       items: List(items),
       rest,
@@ -2416,7 +2287,6 @@ export class Enforester {
       let enf = new Enforester(result, List(), this.context);
       return enf.enforestExpressionLoop();
     }
-    // $FlowFixMe[extra-arg]
     return new T.UpdateExpression({
       isPrefix: false,
       operator: operator.val(),
@@ -2453,14 +2323,12 @@ export class Enforester {
       // $FlowFixMe[missing-local-annot]
       combine = (rightTerm) => {
         if (operator.val() === '++' || operator.val() === '--') {
-          // $FlowFixMe[extra-arg]
           return new T.UpdateExpression({
             operator: operator.val(),
             operand: this.transformDestructuring(rightTerm),
             isPrefix: true,
           });
         } else {
-          // $FlowFixMe[extra-arg]
           return new T.UnaryExpression({
             operator: operator.val(),
             operand: rightTerm,
@@ -2498,7 +2366,6 @@ export class Enforester {
     enf = new Enforester(enf.rest, List(), this.context);
     let alternate = enf.enforestExpressionLoop();
     this.rest = enf.rest;
-    // $FlowFixMe[extra-arg]
     return new T.ConditionalExpression({
       test,
       consequent,
@@ -2530,7 +2397,6 @@ export class Enforester {
       assoc = getOperatorAssoc(opStx.value.val());
       // $FlowFixMe[missing-local-annot]
       combine = (left, right) =>
-        // $FlowFixMe[extra-arg]
         new T.BinaryExpression({
           left,
           right,
@@ -2572,7 +2438,6 @@ export class Enforester {
         );
         return enf.enforest('expression');
       }
-      // $FlowFixMe[extra-arg]
       return new T.TemplateElement({
         rawValue: it.value.token.slice.text,
       });
@@ -2633,15 +2498,11 @@ export class Enforester {
           },
         ],
         this.context.bindings,
-        // $FlowFixMe[extra-arg]
-        true,
       );
       result = result.map((terms) => {
         if (terms instanceof Syntax) {
-          // $FlowFixMe[extra-arg]
           return new T.RawSyntax({
             value: terms,
-            // $FlowFixMe[prop-missing]
           }).reduce(scopeReducer);
         } else if (!(terms instanceof Term)) {
           throw this.createError(
@@ -2649,7 +2510,6 @@ export class Enforester {
             'macro must return syntax objects or terms but got: ' + terms,
           );
         }
-        // $FlowFixMe[prop-missing]
         return terms.reduce(scopeReducer);
       });
 
@@ -2664,7 +2524,6 @@ export class Enforester {
     // TODO: needs to be a list of scopes I think
     this.context.useScope = useSiteScope;
     args = args.map((arg) => {
-      // $FlowFixMe[prop-missing]
       return arg.reduce(
         new ScopeReducer(
           [
@@ -2700,10 +2559,8 @@ export class Enforester {
     );
     result = result.map((terms) => {
       if (terms instanceof Syntax) {
-        // $FlowFixMe[extra-arg]
         return new T.RawSyntax({
           value: terms,
-          // $FlowFixMe[prop-missing]
         }).reduce(scopeReducer);
       } else if (!(terms instanceof Term)) {
         throw this.createError(
@@ -2711,7 +2568,6 @@ export class Enforester {
           'macro must return syntax objects or terms but got: ' + terms,
         );
       }
-      // $FlowFixMe[prop-missing]
       return terms.reduce(scopeReducer);
     });
     let enf = new Enforester(result, List(), this.context);

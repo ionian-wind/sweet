@@ -1,5 +1,5 @@
 'lang sweet.js';
-// @noflow
+// @flow
 import { Either, Left } from './either';
 import { Maybe, Just, Nothing } from './maybe';
 
@@ -60,11 +60,11 @@ export default class Parser<A, C> {
     return this._runner(ctx);
   }
 
-  static ['fantasy-land/of'](a: A): Parser<A, any> {
+  static ['fantasy-land/of']<V>(a: V): Parser<V, any> {
     return Parser.of(a);
   }
 
-  static of(a: A): Parser<A, any> {
+  static of<V>(a: V): Parser<V, any> {
     return new Parser((ctx) => Either.of([a, ctx]));
   }
 
@@ -126,7 +126,7 @@ export default class Parser<A, C> {
   }
 
   // eslint-disable-next-line no-undef
-  ['fantasy-land/map'](f: (A) => B): Parser<B, C> {
+  ['fantasy-land/map']<B>(f: (A) => B): Parser<B, C> {
     return this.map(f);
   }
 

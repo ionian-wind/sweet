@@ -3,30 +3,23 @@
 /* eslint-disable no-undef */
 
 export class Either<L, R> {
-  // $FlowFixMe[cannot-resolve-name]
-  static ['fantasy-land/of'](v: R): Either<L, R> {
+  static ['fantasy-land/of']<V>(v: V): Either<any, V> {
     return Either.of(v);
   }
 
-  // $FlowFixMe[cannot-resolve-name]
-  static of(v: R): Either<L, R> {
+  static of<V>(v: V): Either<any, V> {
     return new Right(v);
   }
 
-  // $FlowFixMe[missing-local-annot]
-  // $FlowFixMe[signature-verification-failure]
-  static isLeft(e: Either<any, any>) {
+  static isLeft(e: Either<any, any>): boolean {
     return e instanceof Left;
   }
 
-  // $FlowFixMe[missing-local-annot]
-  // $FlowFixMe[signature-verification-failure]
-  static isRight(e: Either<any, any>) {
+  static isRight(e: Either<any, any>): boolean {
     return e instanceof Right;
   }
 
-  // $FlowFixMe[cannot-resolve-name]
-  ['fantasy-land/map']<C>(f: (T) => C): Either<L, C> {
+  ['fantasy-land/map']<C>(f: (R) => C): Either<L, C> {
     return this.map(f);
   }
 

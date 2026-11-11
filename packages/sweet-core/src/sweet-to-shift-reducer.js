@@ -1,7 +1,4 @@
 // @flow
-// $FlowFixMe[cannot-resolve-module]
-// $FlowFixMe[cannot-resolve-module]
-// $FlowFixMe[cannot-resolve-module]
 import Term, * as S from 'sweet-spec';
 import { complement } from 'ramda';
 import { List } from 'immutable';
@@ -12,7 +9,6 @@ import type Syntax from './syntax.js';
 
 const notEmptyStatement = complement(isEmptyStatement);
 
-// $FlowFixMe[prop-missing]
 export default class extends Term.CloneReducer {
   phase: number;
 
@@ -25,7 +21,6 @@ export default class extends Term.CloneReducer {
     t: Term,
     s: { directives: List<string>, items: List<any> },
   ): any {
-    // $FlowFixMe[extra-arg]
     return new S.Module({
       directives: s.directives
         .filter((d) => !d.startsWith('lang'))
@@ -36,28 +31,24 @@ export default class extends Term.CloneReducer {
   }
 
   reduceIdentifierExpression(t: Term, s: { name: Syntax }): any {
-    // $FlowFixMe[extra-arg]
     return new S.IdentifierExpression({
       name: s.name.resolve(this.phase),
     });
   }
 
   reduceStaticPropertyName(t: Term, s: { value: Syntax }): any {
-    // $FlowFixMe[extra-arg]
     return new S.StaticPropertyName({
       value: s.value.val().toString(),
     });
   }
 
   reduceBindingIdentifier(t: Term, s: { name: Syntax }): any {
-    // $FlowFixMe[extra-arg]
     return new S.BindingIdentifier({
       name: s.name.resolve(this.phase),
     });
   }
 
   reduceAssignmentTargetIdentifier(t: Term, s: { name: Syntax }): any {
-    // $FlowFixMe[extra-arg]
     return new S.AssignmentTargetIdentifier({
       name: s.name.resolve(this.phase),
     });
@@ -67,7 +58,6 @@ export default class extends Term.CloneReducer {
     t: Term,
     s: { object: any, property: Syntax },
   ): any {
-    // $FlowFixMe[extra-arg]
     return new S.StaticMemberExpression({
       object: s.object,
       property: s.property.val(),
@@ -78,7 +68,6 @@ export default class extends Term.CloneReducer {
     t: Term,
     s: { object: any, property: Syntax },
   ): any {
-    // $FlowFixMe[extra-arg]
     return new S.StaticMemberAssignmentTarget({
       object: s.object,
       property: s.property.val(),
@@ -89,7 +78,6 @@ export default class extends Term.CloneReducer {
     t: Term,
     s: { statements: List<any>, directives: List<any> },
   ): any {
-    // $FlowFixMe[extra-arg]
     return new S.FunctionBody({
       directives: s.directives.toArray(),
       statements: s.statements.toArray().filter(notEmptyStatement),
@@ -104,7 +92,6 @@ export default class extends Term.CloneReducer {
     ) {
       return new S.EmptyStatement();
     }
-    // $FlowFixMe[extra-arg]
     return new S.VariableDeclarationStatement({
       declaration: s.declaration,
     });
@@ -114,7 +101,6 @@ export default class extends Term.CloneReducer {
     t: Term,
     s: { kind: any, declarators: List<any> },
   ): any {
-    // $FlowFixMe[extra-arg]
     return new S.VariableDeclaration({
       kind: s.kind,
       declarators: s.declarators.toArray(),
@@ -122,7 +108,6 @@ export default class extends Term.CloneReducer {
   }
 
   reduceCallExpression(t: Term, s: { callee: any, arguments: List<any> }): any {
-    // $FlowFixMe[extra-arg]
     return new S.CallExpression({
       callee: s.callee,
       arguments: s.arguments.toArray(),
@@ -130,23 +115,16 @@ export default class extends Term.CloneReducer {
   }
 
   reduceArrayExpression(t: Term, s: { elements: List<any> }): any {
-    // $FlowFixMe[extra-arg]
     return new S.ArrayExpression({
       elements: s.elements.toArray(),
     });
   }
 
   reduceImportNamespace(
-    // $FlowFixMe[value-as-type]
     t: Term,
-    // $FlowFixMe[value-as-type]
-    // $FlowFixMe[value-as-type]
     s: {
-      // $FlowFixMe[value-as-type]
-      // $FlowFixMe[value-as-type]
       defaultBinding: S.BindingIdentifier,
       moduleSpecifier: Syntax,
-      // $FlowFixMe[value-as-type]
       namespaceBinding: S.BindingIdentifier,
     },
   ): any {
@@ -154,15 +132,12 @@ export default class extends Term.CloneReducer {
     if (s.forSyntax) {
       return new S.EmptyStatement();
     }
-    // $FlowFixMe[value-as-type]
     return t;
   }
 
-  // $FlowFixMe[value-as-type]
   reduceImport(
     t: Term,
     s: {
-      // $FlowFixMe[value-as-type]
       defaultBinding: S.BindingIdentifier,
       moduleSpecifier: Syntax,
       namedImports: List<any>,
@@ -172,7 +147,6 @@ export default class extends Term.CloneReducer {
     if (s.forSyntax) {
       return new S.EmptyStatement();
     }
-    // $FlowFixMe[extra-arg]
     return new S.Import({
       forSyntax: false,
       defaultBinding: s.defaultBinding,
@@ -182,7 +156,6 @@ export default class extends Term.CloneReducer {
   }
 
   reduceBlock(t: Term, s: { statements: List<any> }): any {
-    // $FlowFixMe[extra-arg]
     return new S.Block({
       statements: s.statements.toArray().filter(notEmptyStatement),
     });
@@ -192,7 +165,6 @@ export default class extends Term.CloneReducer {
     t: Term,
     s: { name: any, exportedName?: Syntax },
   ): any {
-    // $FlowFixMe[extra-arg]
     return new S.ExportFromSpecifier({
       name: s.name.resolve(0),
       exportedName: s.exportedName == null ? null : s.exportedName.val(),
@@ -203,36 +175,27 @@ export default class extends Term.CloneReducer {
     t: Term,
     s: { name: any, exportedName?: Syntax },
   ): any {
-    // $FlowFixMe[extra-arg]
-    // $FlowFixMe[value-as-type]
     return new S.ExportLocalSpecifier({
       name: s.name,
       exportedName: s.exportedName == null ? null : s.exportedName.val(),
     });
-    // $FlowFixMe[value-as-type]
   }
 
   reduceExportFrom(
     t: Term,
-    // $FlowFixMe[value-as-type]
     s: { moduleSpecifier?: Syntax, namedExports: List<S.ExportFromSpecifier> },
   ): any {
-    // $FlowFixMe[value-as-type]
-    // $FlowFixMe[extra-arg]
     return new S.ExportFrom({
       moduleSpecifier:
         s.moduleSpecifier != null ? s.moduleSpecifier.val() : null,
       namedExports: s.namedExports.toArray(),
-      // $FlowFixMe[value-as-type]
     });
   }
 
   reduceExportLocals(
     t: Term,
-    // $FlowFixMe[value-as-type]
     s: { moduleSpecifier?: Syntax, namedExports: List<S.ExportLocalSpecifier> },
   ): any {
-    // $FlowFixMe[extra-arg]
     return new S.ExportLocals({
       moduleSpecifier:
         s.moduleSpecifier != null ? s.moduleSpecifier.val() : null,

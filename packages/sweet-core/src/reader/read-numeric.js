@@ -5,7 +5,6 @@ import { code } from 'esutils';
 import { isTerminating, getHexValue } from './utils';
 import { NumericToken } from '../tokens';
 
-// $FlowFixMe[untyped-type-import]
 import type { CharStream } from 'readtable';
 
 const {
@@ -16,7 +15,6 @@ const {
 let terminates;
 
 // $FlowFixMe[missing-this-annot]
-// $FlowFixMe[value-as-type]
 export default function readNumericLiteral(stream: CharStream): NumericToken {
   terminates = isTerminating(getCurrentReadtable());
   let idx = 0,

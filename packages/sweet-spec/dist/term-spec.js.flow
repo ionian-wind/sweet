@@ -2,51 +2,79 @@
 
 import { declare } from 'sweet-spec-macro';
 
-declare export default class Term {}
+declare export default class Term {
+  constructor(attrs?: any, type?: string): void;
+  static CloneReducer: any;
+  type: string;
+  loc: any;
+  reduce(reducer: any): any;
+  extend(attrs?: any): any;
+  _reduceState(reducer: any, state?: any): any;
+  _cloneAttrs(): any;
+}
 
 /* **** SyntaxTerms **** */
 
-declare export class SyntaxTerm extends Term {}
+declare export class SyntaxTerm extends Term {
+  constructor(attrs?: any, type?: string): void;
+}
 declare export class RawDelimiter extends SyntaxTerm {
+  constructor(attrs?: any, type?: string): void;
   kind: any; // 'parens' | 'square' | 'curly'
   inner: Term[];
 }
 declare export class RawSyntax extends SyntaxTerm {
+  constructor(attrs?: any, type?: string): void;
   value: any; // Syntax
 }
 
 /* ***** Term Kinds ***** */
 
-declare export class Statement extends Term {}
+declare export class Statement extends Term {
+  constructor(attrs?: any, type?: string): void;
+}
 declare export class IterationStatement extends Statement {
+  constructor(attrs?: any, type?: string): void;
   body: Statement;
 }
 
-declare export class Expression extends Term {}
+declare export class Expression extends Term {
+  constructor(attrs?: any, type?: string): void;
+}
 declare export class MemberExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   object: Expression | Super;
 }
 
-declare export class PropertyName extends Term {}
-declare export class ObjectProperty extends Term {}
+declare export class PropertyName extends Term {
+  constructor(attrs?: any, type?: string): void;
+}
+declare export class ObjectProperty extends Term {
+  constructor(attrs?: any, type?: string): void;
+}
 declare export class NamedObjectProperty extends ObjectProperty {
+  constructor(attrs?: any, type?: string): void;
   name: PropertyName;
 }
 declare export class MethodDefinition extends NamedObjectProperty {
+  constructor(attrs?: any, type?: string): void;
   typeAnnotation?: TypeNode;
   body: FunctionBody;
 }
 
 declare export class TsAbstractMethodDefinition extends Term {
+  constructor(attrs?: any, type?: string): void;
   name: PropertyName;
   typeAnnotation?: TypeNode;
 }
 
 declare export class VariableReference extends Term {
+  constructor(attrs?: any, type?: string): void;
   name: any; // Identifier (string)
 }
 
 declare export class ParameterDeclarationBase extends Term {
+  constructor(attrs?: any, type?: string): void;
   // binding: Binding | BindingWithDefault;
   binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault;
   hasQuestionToken?: any; // boolean
@@ -58,27 +86,36 @@ declare export class ParameterDeclarationBase extends Term {
 // type Binding = (ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression);
 
 declare export class BindingWithDefault extends Term {
+  constructor(attrs?: any, type?: string): void;
   binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
   init: Expression;
 }
 
-declare export class BindingIdentifier extends VariableReference { }
+declare export class BindingIdentifier extends VariableReference {
+  constructor(attrs?: any, type?: string): void;
+}
 
-declare export class AssignmentTargetIdentifier extends VariableReference { }
+declare export class AssignmentTargetIdentifier extends VariableReference {
+  constructor(attrs?: any, type?: string): void;
+}
 
 declare export class MemberAssignmentTarget extends Term {
+  constructor(attrs?: any, type?: string): void;
   object: Expression | Super;
 }
 
 declare export class ComputedMemberAssignmentTarget extends MemberAssignmentTarget {
+  constructor(attrs?: any, type?: string): void;
   expression: Expression;
 }
 
 declare export class StaticMemberAssignmentTarget extends MemberAssignmentTarget {
+  constructor(attrs?: any, type?: string): void;
   property: any;
 }
 
 declare export class ArrayBinding extends Term {
+  constructor(attrs?: any, type?: string): void;
   // elements: (Binding | BindingWithDefault)[];
   elements: (ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault | null)[];
   // restElement?: Binding
@@ -86,17 +123,22 @@ declare export class ArrayBinding extends Term {
 }
 
 declare export class ObjectBinding extends Term {
+  constructor(attrs?: any, type?: string): void;
   properties: BindingProperty[];
 }
 
-declare export class BindingProperty extends Term {}
+declare export class BindingProperty extends Term {
+  constructor(attrs?: any, type?: string): void;
+}
 
 declare export class BindingPropertyIdentifier extends BindingProperty {
+  constructor(attrs?: any, type?: string): void;
   binding: BindingIdentifier;
   init?: Expression;
 }
 
 declare export class BindingPropertyProperty extends BindingProperty {
+  constructor(attrs?: any, type?: string): void;
   name: PropertyName;
   // binding: Binding | BindingWithDefault;
   binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault;
@@ -111,28 +153,35 @@ declare export class BindingPropertyProperty extends BindingProperty {
 */
 
 declare export class AssignmentTargetWithDefault extends Term {
+  constructor(attrs?: any, type?: string): void;
   binding: ObjectAssignmentTarget | ArrayAssignmentTarget | AssignmentTargetIdentifier | MemberAssignmentTarget;
   init: Expression;
 }
 
 
 declare export class ArrayAssignmentTarget extends Term {
+  constructor(attrs?: any, type?: string): void;
   elements: (ObjectAssignmentTarget | ArrayAssignmentTarget | AssignmentTargetIdentifier | MemberAssignmentTarget | AssignmentTargetWithDefault | null)[];
   rest?: ObjectAssignmentTarget | ArrayAssignmentTarget | AssignmentTargetIdentifier | MemberAssignmentTarget;
 }
 
 declare export class ObjectAssignmentTarget extends Term {
+  constructor(attrs?: any, type?: string): void;
   properties?: AssignmentTargetProperty[];
 }
 
-declare export class AssignmentTargetProperty extends Term { }
+declare export class AssignmentTargetProperty extends Term {
+  constructor(attrs?: any, type?: string): void;
+}
 
 declare export class AssignmentTargetPropertyIdentifier extends AssignmentTargetProperty {
+  constructor(attrs?: any, type?: string): void;
   binding: AssignmentTargetIdentifier;
   init?: Expression;
 }
 
 declare export class AssignmentTargetPropertyProperty extends AssignmentTargetProperty {
+  constructor(attrs?: any, type?: string): void;
   name: PropertyName;
   binding?: ObjectAssignmentTarget | ArrayAssignmentTarget | AssignmentTargetIdentifier | MemberAssignmentTarget | AssignmentTargetWithDefault;
 }
@@ -142,30 +191,36 @@ declare export class AssignmentTargetPropertyProperty extends AssignmentTargetPr
 // class
 
 declare export class ClassExpressionBase extends Expression {
+  constructor(attrs?: any, type?: string): void;
   name?: BindingIdentifier;
 }
 
 declare export class ClassDeclarationBase extends Statement {
+  constructor(attrs?: any, type?: string): void;
   name: BindingIdentifier;
 }
 
 declare export class ClassExpression extends ClassExpressionBase {
+  constructor(attrs?: any, type?: string): void;
   super?: Expression;
   elements: ClassElement[];
 }
 
 declare export class ClassDeclaration extends ClassDeclarationBase {
+  constructor(attrs?: any, type?: string): void;
   super?: Expression;
   elements: ClassElement[];
 }
 
 declare export class TsClassExpression extends ClassExpressionBase {
+  constructor(attrs?: any, type?: string): void;
   typeParameters?: TsTypeParameterDeclaration[];
   heritageClauses?: TsHeritageClause[];
   elements: (TsClassElement | TsIndexSignatureDeclaration)[];
 }
 
 declare export class TsClassDeclaration extends ClassDeclarationBase {
+  constructor(attrs?: any, type?: string): void;
   isAbstract: any; // boolean
   typeParameters?: TsTypeParameterDeclaration[];
   heritageClauses?: TsHeritageClause[];
@@ -173,43 +228,52 @@ declare export class TsClassDeclaration extends ClassDeclarationBase {
 }
 
 declare export class ClassElementBase extends Term {
+  constructor(attrs?: any, type?: string): void;
   isStatic: any; // boolean
 }
 
 declare export class ClassElement extends ClassElementBase {
+  constructor(attrs?: any, type?: string): void;
   method: MethodDefinition;
 }
 
 declare export class TsClassElement extends ClassElementBase {
+  constructor(attrs?: any, type?: string): void;
   accessModifier?: any; // 'public' | 'protected' | 'private'
 }
 
 declare export class TsMethodClassElement extends TsClassElement {
+  constructor(attrs?: any, type?: string): void;
   hasQuestionToken?: any; // boolean
   method: MethodDefinition;
 }
 
 declare export class TsAbstractMethodClassElement extends TsClassElement {
+  constructor(attrs?: any, type?: string): void;
   hasQuestionToken?: any; // boolean
   method: TsAbstractMethodDefinition;
 }
 
 declare export class TsConstructorClassElement extends TsClassElement {
+  constructor(attrs?: any, type?: string): void;
   params: TsConstructorFormalParameters;
   body: FunctionBody;
 }
 
 declare export class TsConstructorFormalParameters extends Term {
+  constructor(attrs?: any, type?: string): void;
   items: TsConstructorParameterDeclaration[];
   rest?: ParameterDeclaration;
 }
 
 declare export class TsConstructorParameterDeclaration extends ParameterDeclarationBase {
+  constructor(attrs?: any, type?: string): void;
   accessModifier?: any; // 'public' | 'protected' | 'private'
   hasReadonlyModifier: any; // boolean
 }
 
 declare export class TsPropertyDeclaration extends TsClassElement {
+  constructor(attrs?: any, type?: string): void;
   hasReadonlyModifier: any; // boolean
   name: PropertyName;
   hasQuestionToken?: any; // boolean
@@ -221,9 +285,12 @@ declare export class TsPropertyDeclaration extends TsClassElement {
 
 // interface
 
-declare export class InterfaceDeclaration extends Statement {}
+declare export class InterfaceDeclaration extends Statement {
+  constructor(attrs?: any, type?: string): void;
+}
 
 declare export class TsInterfaceDeclaration extends InterfaceDeclaration {
+  constructor(attrs?: any, type?: string): void;
   name: BindingIdentifier;
   typeParameters?: TsTypeParameterDeclaration[];
   heritageClauses?: TsHeritageClause[];
@@ -231,27 +298,37 @@ declare export class TsInterfaceDeclaration extends InterfaceDeclaration {
 }
 
 // TypeScript interface elements
-declare export class TypeElement extends Term {}
+declare export class TypeElement extends Term {
+  constructor(attrs?: any, type?: string): void;
+}
 
-declare export class TsTypeElement extends TypeElement {}
+declare export class TsTypeElement extends TypeElement {
+  constructor(attrs?: any, type?: string): void;
+}
 
 declare export class FunctionSignatureLikeTsTypeElement extends TsTypeElement {
+  constructor(attrs?: any, type?: string): void;
   typeParameters?: TsTypeParameterDeclaration[];
   params: FormalParameters;
   typeAnnotation?: TsTypeNode;
 }
 
 declare export class TsMethodSignature extends FunctionSignatureLikeTsTypeElement {
+  constructor(attrs?: any, type?: string): void;
   name: PropertyName;
 }
 
-declare export class TsCallSignatureDeclaration extends FunctionSignatureLikeTsTypeElement {}
+declare export class TsCallSignatureDeclaration extends FunctionSignatureLikeTsTypeElement {
+  constructor(attrs?: any, type?: string): void;
+}
 
 declare export class TsConstructorSignatureDeclaration extends FunctionSignatureLikeTsTypeElement {
+  constructor(attrs?: any, type?: string): void;
   // note: TypeScript does not allow TsConstructorFormalParameters here
 }
 
 declare export class TsPropertySignature extends TsTypeElement {
+  constructor(attrs?: any, type?: string): void;
   hasReadonlyModifier: any; // boolean
   name: PropertyName;
   hasQuestionToken?: any; // boolean
@@ -263,13 +340,19 @@ declare export class TsPropertySignature extends TsTypeElement {
 // common for TypeScript classes and interfaces
 
 declare export class TsHeritageClause extends Term {
+  constructor(attrs?: any, type?: string): void;
   parent?: TsClassExpression | TsClassDeclaration | TsInterfaceDeclaration;
   types: ExpressionWithTsTypeArguments[];
 }
-declare export class TsExtendsClause extends TsHeritageClause {}
-declare export class TsImplementsClause extends TsHeritageClause {}
+declare export class TsExtendsClause extends TsHeritageClause {
+  constructor(attrs?: any, type?: string): void;
+}
+declare export class TsImplementsClause extends TsHeritageClause {
+  constructor(attrs?: any, type?: string): void;
+}
 
 declare export class TsIndexSignatureDeclaration extends Term {
+  constructor(attrs?: any, type?: string): void;
   parent?: TsClassExpression | TsClassDeclaration | TsInterfaceDeclaration | TsTypeLiteralNode;
   parameter: ParameterDeclaration;
   valueType: TsTypeNode;
@@ -279,9 +362,12 @@ declare export class TsIndexSignatureDeclaration extends Term {
 
 // type alias
 
-declare export class TypeAliasDeclaration extends Statement {}
+declare export class TypeAliasDeclaration extends Statement {
+  constructor(attrs?: any, type?: string): void;
+}
 
 declare export class TsTypeAliasDeclaration extends TypeAliasDeclaration {
+  constructor(attrs?: any, type?: string): void;
   name: BindingIdentifier;
   typeParameters?: TsTypeParameterDeclaration[];
   typeAnnotation: TypeNode;
@@ -291,14 +377,18 @@ declare export class TsTypeAliasDeclaration extends TypeAliasDeclaration {
 
 // enum
 
-declare export class EnumDeclaration extends Statement {}
+declare export class EnumDeclaration extends Statement {
+  constructor(attrs?: any, type?: string): void;
+}
 
 declare export class TsEnumDeclaration extends EnumDeclaration {
+  constructor(attrs?: any, type?: string): void;
   name: BindingIdentifier;
   elements: TsEnumElement[];
 }
 
 declare export class TsEnumElement extends Term {
+  constructor(attrs?: any, type?: string): void;
   parent?: TsEnumDeclaration;
   name: PropertyName;
   initializer?: Expression;
@@ -309,59 +399,73 @@ declare export class TsEnumElement extends Term {
 // modules
 
 declare export class Module extends Term {
+  constructor(attrs?: any, type?: string): void;
   directives: any[];
   items : Term[];
 }
 
 declare export class ImportDeclaration extends Term {
+  constructor(attrs?: any, type?: string): void;
   moduleSpecifier: any;
   forSyntax: any;
 }
 
-declare export class ExportDeclaration extends Term {}
+declare export class ExportDeclaration extends Term {
+  constructor(attrs?: any, type?: string): void;
+}
 
 declare export class Import extends ImportDeclaration {
+  constructor(attrs?: any, type?: string): void;
   defaultBinding?: BindingIdentifier;
   namedImports: ImportSpecifier[];
 }
 
 declare export class ImportNamespace extends ImportDeclaration {
+  constructor(attrs?: any, type?: string): void;
   defaultBinding?: BindingIdentifier;
   namespaceBinding: BindingIdentifier;
 }
 
 declare export class ImportSpecifier extends Term {
+  constructor(attrs?: any, type?: string): void;
   name?: any;
   binding: BindingIdentifier;
 }
 
 declare export class ExportAllFrom extends ExportDeclaration {
+  constructor(attrs?: any, type?: string): void;
   moduleSpecifier: any;
 }
 
 declare export class ExportFrom extends ExportDeclaration {
+  constructor(attrs?: any, type?: string): void;
   namedExports: ExportFromSpecifier[];
   moduleSpecifier?: any;
 }
 
 declare export class ExportLocals extends ExportDeclaration {
+  constructor(attrs?: any, type?: string): void;
   namedExports: ExportLocalSpecifier[];
 }
 
 declare export class Export extends ExportDeclaration {
+  constructor(attrs?: any, type?: string): void;
   declaration: FunctionDeclaration | ClassDeclarationBase | VariableDeclaration;
 }
 
 declare export class ExportDefault extends ExportDeclaration {
+  constructor(attrs?: any, type?: string): void;
   body: FunctionDeclaration | ClassDeclarationBase | Expression;
 }
 
 declare export class ExportFromSpecifier extends Term {
+  constructor(attrs?: any, type?: string): void;
   name: any;
   exportedName?: any;
 }
 
 declare export class ExportLocalSpecifier extends Term {
+  constructor(attrs?: any, type?: string): void;
   name: IdentifierExpression;
   exportedName?: any;
 }
@@ -369,6 +473,7 @@ declare export class ExportLocalSpecifier extends Term {
 
 // property definition
 declare export class Method extends MethodDefinition {
+  constructor(attrs?: any, type?: string): void;
   parent?: ClassExpressionBase | ClassDeclarationBase | ObjectExpression;
   isAsync: any; // boolean
   isGenerator: any; // boolean
@@ -377,6 +482,7 @@ declare export class Method extends MethodDefinition {
 }
 
 declare export class TsAbstractMethod extends TsAbstractMethodDefinition {
+  constructor(attrs?: any, type?: string): void;
   parent?: TsClassExpression | TsClassDeclaration;
   isAsync: any; // boolean
   isGenerator: any; // boolean
@@ -385,53 +491,68 @@ declare export class TsAbstractMethod extends TsAbstractMethodDefinition {
 }
 
 declare export class Getter extends MethodDefinition {
+  constructor(attrs?: any, type?: string): void;
   parent?: ClassExpressionBase | ClassDeclarationBase | ObjectExpression;
 }
 
 declare export class TsAbstractGetter extends TsAbstractMethodDefinition {
+  constructor(attrs?: any, type?: string): void;
   parent?: TsClassExpression | TsClassDeclaration;
 }
 
 declare export class Setter extends MethodDefinition {
+  constructor(attrs?: any, type?: string): void;
   parent?: ClassExpressionBase | ClassDeclarationBase | ObjectExpression;
   param: ParameterDeclaration;
 }
 
 declare export class TsAbstractSetter extends TsAbstractMethodDefinition {
+  constructor(attrs?: any, type?: string): void;
   parent?: TsClassExpression | TsClassDeclaration;
   param: ParameterDeclaration;
 }
 
 declare export class DataProperty extends NamedObjectProperty {
+  constructor(attrs?: any, type?: string): void;
   hasQuestionToken?: any; // boolean
   expression: Expression;
 }
 
 declare export class ShorthandProperty extends ObjectProperty {
+  constructor(attrs?: any, type?: string): void;
   name: IdentifierExpression;
 }
 
 declare export class StaticPropertyName extends PropertyName {
+  constructor(attrs?: any, type?: string): void;
   value: any;
 }
 
 declare export class ComputedPropertyName extends PropertyName {
+  constructor(attrs?: any, type?: string): void;
   expression: Expression;
 }
 
 
 // literals
 declare export class LiteralBooleanExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   value: any;
 }
 
-declare export class LiteralInfinityExpression extends Expression { }
-declare export class LiteralNullExpression extends Expression { }
+declare export class LiteralInfinityExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
+}
+declare export class LiteralNullExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
+}
 declare export class LiteralNumericExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   value: any;
 }
 
 declare export class LiteralRegExpExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   pattern: any;
   global: any;
   ignoreCase: any;
@@ -441,6 +562,7 @@ declare export class LiteralRegExpExpression extends Expression {
 }
 
 declare export class LiteralStringExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   value: any;
 }
 
@@ -448,10 +570,12 @@ declare export class LiteralStringExpression extends Expression {
 
 // expressions
 declare export class ArrayExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   elements: (SpreadElement | Expression | null)[];
 }
 
 declare export class ArrowExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   isAsync: any; // boolean
   typeParameters?: TypeParameterDeclaration[];
   params: FormalParameters;
@@ -459,6 +583,7 @@ declare export class ArrowExpression extends Expression {
   body: FunctionBody | Expression;
 }
 declare export class ArrowExpressionE extends Expression {
+  constructor(attrs?: any, type?: string): void;
   isAsync: any; // boolean
   typeParameters?: TypeParameterDeclaration[];
   params: FormalParameters;
@@ -467,45 +592,53 @@ declare export class ArrowExpressionE extends Expression {
 }
 
 declare export class AssignmentExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   // binding: Binding;
   binding: ObjectAssignmentTarget | ArrayAssignmentTarget | AssignmentTargetIdentifier | MemberAssignmentTarget;
   expression: Expression;
 }
 
 declare export class BinaryExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   operator: any;
   left: Expression;
   right: Expression;
 }
 
 declare export class CallExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   callee: Expression | Super;
   typeArguments?: TypeNode[];
   arguments: (SpreadElement | Expression)[];
 }
 declare export class CallExpressionE extends Expression {
+  constructor(attrs?: any, type?: string): void;
   callee: Expression | Super;
   typeArguments?: TypeNode[];
   arguments: Term[];
 }
 
 declare export class CompoundAssignmentExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   binding: AssignmentTargetIdentifier | MemberAssignmentTarget;
   operator: any;
   expression: Expression;
 }
 
 declare export class ComputedMemberExpression extends MemberExpression {
+  constructor(attrs?: any, type?: string): void;
   expression: Expression;
 }
 
 declare export class ConditionalExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   test: Expression;
   consequent: Expression;
   alternate: Expression;
 }
 
 declare export class FunctionExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   name?: BindingIdentifier;
   isAsync: any; // boolean
   isGenerator: any;
@@ -513,6 +646,7 @@ declare export class FunctionExpression extends Expression {
   body: FunctionBody;
 }
 declare export class FunctionExpressionE extends Expression {
+  constructor(attrs?: any, type?: string): void;
   name?: BindingIdentifier;
   isAsync: any; // boolean
   isGenerator: any;
@@ -521,131 +655,164 @@ declare export class FunctionExpressionE extends Expression {
 }
 
 declare export class IdentifierExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   name: any;
 }
 
 declare export class NewExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   callee: Expression;
   typeArguments?: TypeNode[];
   arguments: (SpreadElement | Expression)[];
 }
 
-declare export class NewTargetExpression extends Expression { }
+declare export class NewTargetExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
+}
 declare export class ObjectExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   properties: ObjectProperty[];
 }
 
 declare export class UnaryExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   operator: any;
   operand: Expression;
 }
 
 declare export class StaticMemberExpression extends MemberExpression {
+  constructor(attrs?: any, type?: string): void;
   property: any;
 }
 
 declare export class TemplateExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   tag?: Expression;
   elements: (Expression | TemplateElement)[];
 }
 
 declare export class ThisExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   stx: any
 }
 
 declare export class UpdateExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   isPrefix: any;
   operator: any;
   operand: AssignmentTargetIdentifier | MemberAssignmentTarget;
 }
 
 declare export class YieldExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   expression?: Expression;
 }
 
 declare export class YieldGeneratorExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   expression: Expression;
 }
 
 declare export class AwaitExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   expression: Expression;
 }
 
 declare export class ParenthesizedExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   inner: any;
 }
 
 declare export class TsAsExpression extends Expression {
+  constructor(attrs?: any, type?: string): void;
   expression: Expression;
   typeAnnotation: TsTypeNode;
 }
 
 declare export class TsTypeAssertion extends UnaryExpression {
+  constructor(attrs?: any, type?: string): void;
   typeAnnotation: TsTypeNode;
   expression: UnaryExpression;
 }
 
 // statements
 declare export class BlockStatement extends Statement {
+  constructor(attrs?: any, type?: string): void;
   block: Block;
 }
 
 declare export class BreakStatement extends Statement {
+  constructor(attrs?: any, type?: string): void;
   label?: any;
 }
 
 declare export class ContinueStatement extends Statement {
+  constructor(attrs?: any, type?: string): void;
   label?: any;
 }
 
 
-declare export class DebuggerStatement extends Statement { }
+declare export class DebuggerStatement extends Statement {
+  constructor(attrs?: any, type?: string): void;
+}
 declare export class DoWhileStatement extends IterationStatement {
+  constructor(attrs?: any, type?: string): void;
   test: Expression;
 }
 
-declare export class EmptyStatement extends Statement { }
+declare export class EmptyStatement extends Statement {
+  constructor(attrs?: any, type?: string): void;
+}
 declare export class ExpressionStatement extends Statement {
+  constructor(attrs?: any, type?: string): void;
   expression : Expression;
 }
 
 declare export class ForInStatement extends IterationStatement {
+  constructor(attrs?: any, type?: string): void;
   left: VariableDeclaration | ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
   right: Expression;
 }
 
 declare export class ForOfStatement extends IterationStatement {
+  constructor(attrs?: any, type?: string): void;
   left: VariableDeclaration | ObjectAssignmentTarget | ArrayAssignmentTarget | AssignmentTargetIdentifier | MemberAssignmentTarget;
   right: Expression;
 }
 
 declare export class ForStatement extends IterationStatement {
+  constructor(attrs?: any, type?: string): void;
   init?: VariableDeclaration | Expression;
   test?: Expression;
   update?: Expression;
 }
 
 declare export class IfStatement extends Statement {
+  constructor(attrs?: any, type?: string): void;
   test: Expression;
   consequent: Statement;
   alternate?: Statement;
 }
 
 declare export class LabeledStatement extends Statement {
+  constructor(attrs?: any, type?: string): void;
   label: any;
   body: Statement;
 }
 
 declare export class ReturnStatement extends Statement {
+  constructor(attrs?: any, type?: string): void;
   expression?: Expression;
 }
 
 declare export class SwitchStatement extends Statement {
+  constructor(attrs?: any, type?: string): void;
   discriminant: Expression;
   cases: SwitchCase[];
 }
 
 declare export class SwitchStatementWithDefault extends Statement {
+  constructor(attrs?: any, type?: string): void;
   discriminant: Expression;
   preDefaultCases: SwitchCase[];
   defaultCase: SwitchDefault;
@@ -653,66 +820,81 @@ declare export class SwitchStatementWithDefault extends Statement {
 }
 
 declare export class ThrowStatement extends Statement {
+  constructor(attrs?: any, type?: string): void;
   expression: Expression;
 }
 
 declare export class TryCatchStatement extends Statement {
+  constructor(attrs?: any, type?: string): void;
   body: Block;
   catchClause: CatchClause;
 }
 
 declare export class TryFinallyStatement extends Statement {
+  constructor(attrs?: any, type?: string): void;
   body: Block;
   catchClause?: CatchClause;
   finalizer: Block;
 }
 
 declare export class VariableDeclarationStatement extends Statement {
+  constructor(attrs?: any, type?: string): void;
   declaration: VariableDeclaration;
 }
 
 declare export class WithStatement extends Statement {
+  constructor(attrs?: any, type?: string): void;
   object: Expression;
   body: Statement;
 }
 
 declare export class WhileStatement extends IterationStatement {
+  constructor(attrs?: any, type?: string): void;
   test: Expression;
 }
 
 
 // other
 declare export class Pragma extends Term {
+  constructor(attrs?: any, type?: string): void;
   kind: any;
   items: any;
 }
 
 declare export class Block extends Term {
+  constructor(attrs?: any, type?: string): void;
   statements: Statement[];
 }
 
 declare export class CatchClause extends Term {
+  constructor(attrs?: any, type?: string): void;
   binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
   body: Block;
 }
 
 declare export class Directive extends Term {
+  constructor(attrs?: any, type?: string): void;
   rawValue: any;
 }
 
 declare export class FormalParameters extends Term {
+  constructor(attrs?: any, type?: string): void;
   items: (ParameterDeclaration | ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault)[];
   rest?: ParameterDeclaration | BindingIdentifier;
 }
 
-declare export class ParameterDeclaration extends ParameterDeclarationBase {}
+declare export class ParameterDeclaration extends ParameterDeclarationBase {
+  constructor(attrs?: any, type?: string): void;
+}
 
 declare export class FunctionBody extends Term {
+  constructor(attrs?: any, type?: string): void;
   directives: any[];
   statements: Statement[];
 }
 
 declare export class FunctionDeclaration extends Statement {
+  constructor(attrs?: any, type?: string): void;
   name: BindingIdentifier;
   isAsync: any; // boolean
   isGenerator: any; // boolean
@@ -723,6 +905,7 @@ declare export class FunctionDeclaration extends Statement {
   body: FunctionBody;
 }
 declare export class FunctionDeclarationE extends Statement {
+  constructor(attrs?: any, type?: string): void;
   name: BindingIdentifier;
   isAsync: any; // boolean
   isGenerator: any; // boolean
@@ -734,43 +917,54 @@ declare export class FunctionDeclarationE extends Statement {
 }
 
 declare export class Script extends Term {
+  constructor(attrs?: any, type?: string): void;
   directives: any[];
   statements: Statement[];
 }
 
 declare export class SpreadElement extends Term {
+  constructor(attrs?: any, type?: string): void;
   expression: Expression;
 }
 
-declare export class Super extends Term { }
+declare export class Super extends Term {
+  constructor(attrs?: any, type?: string): void;
+}
 declare export class SwitchCase extends Term {
+  constructor(attrs?: any, type?: string): void;
   test: Expression;
   consequent: Statement[];
 }
 
 declare export class SwitchDefault extends Term {
+  constructor(attrs?: any, type?: string): void;
   consequent: Statement[];
 }
 
 declare export class TemplateElement extends Term {
+  constructor(attrs?: any, type?: string): void;
   rawValue: any;
 }
 
 declare export class SyntaxTemplate extends Expression {
+  constructor(attrs?: any, type?: string): void;
   template: SyntaxTerm[];
 }
 
 declare export class SyntaxQuote extends Term {
+  constructor(attrs?: any, type?: string): void;
   name: any;
   template: any;
 }
 
 declare export class VariableDeclaration extends Term {
+  constructor(attrs?: any, type?: string): void;
   kind: any;
   declarators: VariableDeclarator[];
 }
 
 declare export class VariableDeclarator extends Term {
+  constructor(attrs?: any, type?: string): void;
   binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
   // binding: Binding;
   typeAnnotation?: TypeNode;
@@ -778,6 +972,7 @@ declare export class VariableDeclarator extends Term {
 }
 
 declare export class OperatorDeclarator extends VariableDeclarator {
+  constructor(attrs?: any, type?: string): void;
   prec: any;
   assoc: any;
 }
@@ -786,15 +981,22 @@ declare export class OperatorDeclarator extends VariableDeclarator {
 
 // type annotations
 
-declare export class TypeNode extends Term {}
+declare export class TypeNode extends Term {
+  constructor(attrs?: any, type?: string): void;
+}
 
-declare export class TypeParameterDeclaration extends Term {}
+declare export class TypeParameterDeclaration extends Term {
+  constructor(attrs?: any, type?: string): void;
+}
 
 // TypeScript type annotations
 
-declare export class TsTypeNode extends TypeNode {}
+declare export class TsTypeNode extends TypeNode {
+  constructor(attrs?: any, type?: string): void;
+}
 
 declare export class TsTypeParameterDeclaration extends TypeParameterDeclaration {
+  constructor(attrs?: any, type?: string): void;
   parent?: TsClassExpression | TsClassDeclaration | TsInterfaceDeclaration | TsTypeAliasDeclaration | ArrowExpression | FunctionDeclaration | SignatureTsTypeNode | MappedTsTypeNode;
   name: any; // Identifier
   constraint?: TsTypeNode;
@@ -804,27 +1006,35 @@ declare export class TsTypeParameterDeclaration extends TypeParameterDeclaration
 // Note: TypeScript also has a separate ThisTypeNode interface that is
 //       not reflected here
 declare export class TsKeywordTypeNode extends TsTypeNode {
+  constructor(attrs?: any, type?: string): void;
   kind: any; // 'any' | 'number' | 'object' | 'boolean' | 'string' | 'symbol' |
              // 'this' | 'void' | 'undefined' | 'null' | 'never'
 }
 
 declare export class SignatureTsTypeNode extends TsTypeNode {
+  constructor(attrs?: any, type?: string): void;
   typeParameters?: TsTypeParameterDeclaration[];
   params: FormalParameters;
   typeAnnotation?: TsTypeNode;
 }
 // example: `(i: number, s: string) => boolean`
-declare export class FunctionTsTypeNode extends SignatureTsTypeNode {}
+declare export class FunctionTsTypeNode extends SignatureTsTypeNode {
+  constructor(attrs?: any, type?: string): void;
+}
 // example: `new (i: number, s: string) => SomeClass`
-declare export class ConstructorTsNodeType extends SignatureTsTypeNode {}
+declare export class ConstructorTsNodeType extends SignatureTsTypeNode {
+  constructor(attrs?: any, type?: string): void;
+}
 
 declare export class TsTypeReferenceNode extends TsTypeNode {
+  constructor(attrs?: any, type?: string): void;
   typeName: any; // Identifier
   typeArguments?: TypeNode[];
 }
 
 // example: `SomeMapWithGenericClassValues["key"]<number, string>`
 declare export class ExpressionWithTsTypeArguments extends TsTypeNode {
+  constructor(attrs?: any, type?: string): void;
   parent?: TsHeritageClause;
   /*
    * In TypeScript, the "destination" class/interface of a heritage clause is
@@ -844,47 +1054,56 @@ declare export class ExpressionWithTsTypeArguments extends TsTypeNode {
 //   `this is string` in a boolean-returning class method declared as
 //   `isString(): this is string`
 declare export class TsTypePredicateNode extends TsTypeNode {
+  constructor(attrs?: any, type?: string): void;
   parameterName: any; //  Identifier | 'this'
   typeAnnotation: TsTypeNode;
 }
 
 // example: `typeof someVariable`
 declare export class TsTypeQueryNode extends TsTypeNode {
+  constructor(attrs?: any, type?: string): void;
   exprName: any; // Identifier
 }
 
 // example: `{ readonly someKey: number }`
 declare export class TsTypeLiteralNode extends TsTypeNode {
+  constructor(attrs?: any, type?: string): void;
   members: (TsTypeElement | TsIndexSignatureDeclaration)[];
 }
 
 // example: `string[]`
 declare export class ArrayTsTypeNode extends TsTypeNode {
+  constructor(attrs?: any, type?: string): void;
   elementType: TsTypeNode;
 }
 
 // example: `[string, number]`
 declare export class TupleTsTypeNode extends TsTypeNode {
+  constructor(attrs?: any, type?: string): void;
   elementTypes: TsTypeNode[];
 }
 
 // example: `number | string`
 declare export class UnionTsTypeNode extends TsTypeNode {
+  constructor(attrs?: any, type?: string): void;
   types: TsTypeNode[];
 }
 
 // example: `number & string`
 declare export class IntersectionTsTypeNode extends TsTypeNode {
+  constructor(attrs?: any, type?: string): void;
   types: TsTypeNode[];
 }
 
 // example: `(number)`
 declare export class ParenthesizedTsTypeNode extends TsTypeNode {
+  constructor(attrs?: any, type?: string): void;
   typeAnnotation: TsTypeNode;
 }
 
 // example: `keyof { a: number, b: string }`
 declare export class TsTypeOperatorNode extends TsTypeNode {
+  constructor(attrs?: any, type?: string): void;
   operator: any; // 'keyof'
   typeAnnotation: TsTypeNode;
 }
@@ -894,12 +1113,14 @@ declare export class TsTypeOperatorNode extends TsTypeNode {
 //   where
 //   `class SomeClass { [index: number]: string }`
 declare export class IndexedAccessTsTypeNode extends TsTypeNode {
+  constructor(attrs?: any, type?: string): void;
   objectType: TsTypeNode;
   indexType: TsTypeNode;
 }
 
 // example: `{ readonly [K in "some" | "permissible" | "keys"]: string }`
 declare export class MappedTsTypeNode extends TsTypeNode {
+  constructor(attrs?: any, type?: string): void;
   parent?: TsTypeAliasDeclaration;
   hasReadonlyToken: any; // boolean
   typeParameter: TsTypeParameterDeclaration;
@@ -909,6 +1130,7 @@ declare export class MappedTsTypeNode extends TsTypeNode {
 
 // examples: `"someValue"`, `42`, `null`, `false`
 declare export class LiteralTsTypeNode extends TsTypeNode {
+  constructor(attrs?: any, type?: string): void;
   literal: Expression;
 }
 

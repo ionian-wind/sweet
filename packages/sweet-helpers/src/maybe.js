@@ -2,33 +2,27 @@
 // @flow
 
 export class Maybe<T> {
-  // $FlowFixMe[cannot-resolve-name]
-  static ['fantasy-land/of'](v: T): Maybe<T> {
+  static ['fantasy-land/of']<V>(v: V): Maybe<V> {
     return Maybe.of(v);
   }
 
-  // $FlowFixMe[cannot-resolve-name]
-  static of(v: T): Maybe<T> {
+  static of<V>(v: V): Maybe<V> {
     return new Just(v);
   }
 
-  // $FlowFixMe[cannot-resolve-name]
-  static ['fantasy-land/empty'](): Maybe<T> {
+  static ['fantasy-land/empty']<V>(): Maybe<V> {
     return Maybe.empty();
   }
 
-  // $FlowFixMe[cannot-resolve-name]
-  static empty(): Maybe<T> {
+  static empty<V>(): Maybe<V> {
     return new Nothing();
   }
 
-  // $FlowFixMe[cannot-resolve-name]
-  static ['fantasy-land/zero'](): Maybe<T> {
+  static ['fantasy-land/zero']<V>(): Maybe<V> {
     return Maybe.zero();
   }
 
-  // $FlowFixMe[cannot-resolve-name]
-  static zero(): Maybe<T> {
+  static zero<V>(): Maybe<V> {
     return new Nothing();
   }
 

@@ -1,7 +1,6 @@
 // @flow
 import { List } from 'immutable';
 
-// $FlowFixMe[untyped-type-import]
 import type { CharStream } from 'readtable';
 import { isEOS } from 'readtable';
 
@@ -11,7 +10,6 @@ import { TemplateToken, TemplateElementToken } from '../tokens';
 
 // $FlowFixMe[missing-this-annot]
 export default function readTemplateLiteral(
-  // $FlowFixMe[value-as-type]
   stream: CharStream,
   prefix: List<any>,
 ): TemplateToken {
@@ -34,7 +32,6 @@ export default function readTemplateLiteral(
 }
 
 // $FlowFixMe[missing-this-annot]
-// $FlowFixMe[value-as-type]
 function readTemplateElement(stream: CharStream): TemplateElementToken {
   let char = stream.peek(),
     idx = 0,

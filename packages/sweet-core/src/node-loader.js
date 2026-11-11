@@ -1,11 +1,8 @@
 // @flow
 import SweetLoader, { phaseInModulePathRegexp } from './sweet-loader';
-// $FlowFixMe[cannot-resolve-module]
 import { readFileSync } from 'fs';
-// $FlowFixMe[cannot-resolve-module]
 import { dirname } from 'path';
 import resolve from 'resolve';
-// $FlowFixMe[cannot-resolve-module]
 import vm from 'vm';
 import Store from './store';
 import type { LoaderOptions } from './sweet-loader';
@@ -69,7 +66,7 @@ export default class NodeLoader extends SweetLoader {
     return new Store(vm.createContext(sandbox));
   }
 
-  // $FlowFixMe[value-as-type]
+  // $FlowFixMe[incompatible-type]
   eval(source: string, store: Store): any {
     return vm.runInContext(source, store.getBackingObject());
   }

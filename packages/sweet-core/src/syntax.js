@@ -4,9 +4,6 @@ import { assert } from './errors';
 import BindingMap from './binding-map';
 import { Maybe } from 'ramda-fantasy';
 import * as _ from 'ramda';
-// $FlowFixMe[cannot-resolve-module]
-// $FlowFixMe[cannot-resolve-module]
-// $FlowFixMe[cannot-resolve-module]
 import * as T from 'sweet-spec';
 
 import { TokenType, TokenClass, TypeCodes } from './tokens';
@@ -175,7 +172,6 @@ export let Types: TypesHelper = {
       Types.delimiter.match(token) &&
       token.get(0).token.type === TokenType.LBRACE,
     create: (inner, stx) => {
-      // $FlowFixMe[extra-arg]
       let left = new T.RawSyntax({
         value: new Syntax({
           type: TokenType.LBRACE,
@@ -184,7 +180,6 @@ export let Types: TypesHelper = {
           slice: getFirstSlice(stx),
         }),
       });
-      // $FlowFixMe[extra-arg]
       let right = new T.RawSyntax({
         value: new Syntax({
           type: TokenType.RBRACE,
@@ -193,7 +188,6 @@ export let Types: TypesHelper = {
           slice: getFirstSlice(stx),
         }),
       });
-      // $FlowFixMe[extra-arg]
       // $FlowFixMe[incompatible-type]
       return new T.RawDelimiter({
         kind: 'braces',
@@ -206,7 +200,6 @@ export let Types: TypesHelper = {
       Types.delimiter.match(token) &&
       token.get(0).token.type === TokenType.LBRACK,
     create: (inner, stx) => {
-      // $FlowFixMe[extra-arg]
       let left = new T.RawSyntax({
         value: new Syntax({
           type: TokenType.LBRACK,
@@ -215,7 +208,6 @@ export let Types: TypesHelper = {
           slice: getFirstSlice(stx),
         }),
       });
-      // $FlowFixMe[extra-arg]
       let right = new T.RawSyntax({
         value: new Syntax({
           type: TokenType.RBRACK,
@@ -224,7 +216,6 @@ export let Types: TypesHelper = {
           slice: getFirstSlice(stx),
         }),
       });
-      // $FlowFixMe[extra-arg]
       // $FlowFixMe[incompatible-type]
       return new T.RawDelimiter({
         kind: 'brackets',
@@ -237,7 +228,6 @@ export let Types: TypesHelper = {
       Types.delimiter.match(token) &&
       token.get(0).token.type === TokenType.LPAREN,
     create: (inner, stx) => {
-      // $FlowFixMe[extra-arg]
       let left = new T.RawSyntax({
         value: new Syntax({
           type: TokenType.LPAREN,
@@ -246,7 +236,6 @@ export let Types: TypesHelper = {
           slice: getFirstSlice(stx),
         }),
       });
-      // $FlowFixMe[extra-arg]
       let right = new T.RawSyntax({
         value: new Syntax({
           type: TokenType.RPAREN,
@@ -255,7 +244,6 @@ export let Types: TypesHelper = {
           slice: getFirstSlice(stx),
         }),
       });
-      // $FlowFixMe[extra-arg]
       // $FlowFixMe[incompatible-type]
       return new T.RawDelimiter({
         kind: 'parens',
@@ -364,7 +352,6 @@ export default class Syntax {
     // TODO: this is gross, fix
     let s = Syntax.from(type, value, this);
     if (s instanceof Syntax) {
-      // $FlowFixMe[extra-arg]
       return new T.RawSyntax({ value: s });
     }
     return s;

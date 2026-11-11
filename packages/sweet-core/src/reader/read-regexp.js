@@ -1,5 +1,4 @@
 // @flow
-// $FlowFixMe[untyped-type-import]
 import type { CharStream } from 'readtable';
 
 import { isEOS } from 'readtable';
@@ -7,7 +6,6 @@ import { RegExpToken } from '../tokens';
 import { isLineTerminator, isIdentifierPart } from './utils';
 
 // $FlowFixMe[missing-this-annot]
-// $FlowFixMe[value-as-type]
 export default function readRegExp(stream: CharStream): RegExpToken {
   let value = stream.readString(),
     char = stream.peek(),

@@ -4,14 +4,12 @@ import { getCurrentReadtable, setCurrentReadtable } from 'readtable';
 import { List } from 'immutable';
 import { TokenType as TT } from '../tokens';
 
-// $FlowFixMe[untyped-type-import]
 import type { CharStream } from 'readtable';
 
 const backtickEntry = {
   key: '`',
   mode: 'terminating',
   action: function readBacktick(
-    // $FlowFixMe[value-as-type]
     stream: CharStream,
     prefix: List<any>,
     e: boolean,
@@ -32,7 +30,6 @@ const backtickEntry = {
 
 // $FlowFixMe[missing-this-annot]
 export function readSyntaxTemplate(
-  // $FlowFixMe[value-as-type]
   stream: CharStream,
   prefix: List<any>,
   exprAllowed: boolean,

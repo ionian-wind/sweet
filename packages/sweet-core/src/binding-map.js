@@ -10,7 +10,6 @@ type Scopeset = any;
 type ScopesetBinding = {
   scopes: Scopeset,
   binding: SymbolClass,
-  // $FlowFixMe[value-as-type]
   alias: Maybe<Syntax>,
 };
 
