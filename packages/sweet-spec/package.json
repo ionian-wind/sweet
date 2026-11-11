@@ -4,7 +4,7 @@
   "description": "The Sweet.js Term specification",
   "main": "dist/term-spec.js",
   "scripts": {
-    "test": "ava",
+    "test": "echo \"No tests in sweet-spec\"",
     "prebuild": "mkdir -p dist && mkdir -p build",
     "build:sweet": "sjs --out-dir build src/term-spec.js",
     "build:babel": "babel --out-dir dist build",
@@ -22,10 +22,5 @@
     "eslint": "^3.3.1",
     "sweet-spec-macro": "3.0.0",
     "sweet.js": "^2.2.0"
-  },
-  "ava": {
-    "files": [
-      "test/*.js"
-    ]
   }
 }

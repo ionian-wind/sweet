@@ -43,6 +43,22 @@ npm run build -w @sweet-js/core
 npx turbo run test --filter=@sweet-js/cli
 ```
 
+To run every test even when some fail:
+
+```bash
+npx turbo run test --continue
+```
+
+## Current status (Node 24)
+
+| Check | Result |
+| ----- | ------ |
+| `npm run build` | Works: `sweet-core`, `sweet-helpers`, and `sweet-spec` produce their `dist`/compiled output |
+| `sweet-spec-macro` tests | 8 tests pass (ava 0.16) |
+| `sweet-core` / `sweet-helpers` tests | Blocked by an upstream bug in `sweet-spec`: the generated `dist/term-spec.js` extends an undeclared `TypeElement` class |
+| `sweet-core` lint | Legacy ESLint 3 / babel-eslint 7 configuration reports errors under current dependency resolution |
+| `sweet-shell`, `sweet-spec` | Have no upstream tests; their `test` scripts are no-ops |
+
 ## History
 
 Each project was imported with `git subtree`, so per-project history is preserved
