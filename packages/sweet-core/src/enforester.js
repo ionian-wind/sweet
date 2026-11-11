@@ -4,6 +4,9 @@ import {
   isStaticMemberExpression,
   isComputedMemberExpression,
 } from './terms';
+// $FlowFixMe[cannot-resolve-module]
+// $FlowFixMe[cannot-resolve-module]
+// $FlowFixMe[cannot-resolve-module]
 import Term, * as T from 'sweet-spec';
 import { Maybe } from 'ramda-fantasy';
 import ScopeReducer from './scope-reducer';
@@ -1044,8 +1047,11 @@ export class Enforester {
       let isStatic = false;
       let { methodOrKey, kind } = enf.enforestMethodDefinition();
       if (
+        // $FlowFixMe[invalid-compare]
         kind === 'identifier' &&
+        // $FlowFixMe[invalid-compare]
         methodOrKey instanceof T.StaticPropertyName &&
+        // $FlowFixMe[invalid-compare]
         methodOrKey.value.val() === 'static'
       ) {
         isStatic = true;

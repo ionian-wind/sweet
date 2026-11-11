@@ -1,14 +1,13 @@
 [ignore]
 **/chalk/**
 **/readtable/**
-packages/*/dist/**
-packages/*/build/**
 **/coverage/**
+**/build/**
 packages/sweet-cli/**
 packages/sweet-helpers/*.js
 packages/sweet-helpers/*.js.flow
 packages/sweet-shell/**
-packages/sweet-spec/**
+packages/sweet-spec/src/**
 packages/sweet-spec-macro/**
 apps/**
 

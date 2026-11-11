@@ -1,4 +1,7 @@
 // @flow
+// $FlowFixMe[cannot-resolve-module]
+// $FlowFixMe[cannot-resolve-module]
+// $FlowFixMe[cannot-resolve-module]
 import Term, * as S from 'sweet-spec';
 import type Syntax from './syntax';
 import type { SymbolClass } from './symbol';

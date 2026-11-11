@@ -32,13 +32,13 @@ declare export class NamedObjectProperty extends ObjectProperty {
   name: PropertyName;
 }
 declare export class MethodDefinition extends NamedObjectProperty {
-  type?: TypeNode;
+  typeAnnotation?: TypeNode;
   body: FunctionBody;
 }
 
 declare export class TsAbstractMethodDefinition extends Term {
   name: PropertyName;
-  type?: TypeNode;
+  typeAnnotation?: TypeNode;
 }
 
 declare export class VariableReference extends Term {
@@ -48,8 +48,8 @@ declare export class VariableReference extends Term {
 declare export class ParameterDeclarationBase extends Term {
   // binding: Binding | BindingWithDefault;
   binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault;
-  hasQuestionToken: any; // boolean
-  type?: TypeNode;
+  hasQuestionToken?: any; // boolean
+  typeAnnotation?: TypeNode;
 }
 
 /* ***** Bindings ***** */
@@ -184,12 +184,12 @@ declare export class TsClassElement extends ClassElementBase {
 }
 
 declare export class TsMethodClassElement extends TsClassElement {
-  hasQuestionToken: any; // boolean
+  hasQuestionToken?: any; // boolean
   method: MethodDefinition;
 }
 
 declare export class TsAbstractMethodClassElement extends TsClassElement {
-  hasQuestionToken: any; // boolean
+  hasQuestionToken?: any; // boolean
   method: TsAbstractMethodDefinition;
 }
 
@@ -211,8 +211,8 @@ declare export class TsConstructorParameterDeclaration extends ParameterDeclarat
 declare export class TsPropertyDeclaration extends TsClassElement {
   hasReadonlyModifier: any; // boolean
   name: PropertyName;
-  hasQuestionToken: any; // boolean
-  type?: TsTypeNode;
+  hasQuestionToken?: any; // boolean
+  typeAnnotation?: TsTypeNode;
   initializer?: Expression;
 }
 
@@ -237,7 +237,7 @@ declare export class TsTypeElement extends TypeElement {}
 declare export class FunctionSignatureLikeTsTypeElement extends TsTypeElement {
   typeParameters?: TsTypeParameterDeclaration[];
   params: FormalParameters;
-  type?: TsTypeNode;
+  typeAnnotation?: TsTypeNode;
 }
 
 declare export class TsMethodSignature extends FunctionSignatureLikeTsTypeElement {
@@ -253,8 +253,8 @@ declare export class TsConstructorSignatureDeclaration extends FunctionSignature
 declare export class TsPropertySignature extends TsTypeElement {
   hasReadonlyModifier: any; // boolean
   name: PropertyName;
-  hasQuestionToken: any; // boolean
-  type?: TsTypeNode;
+  hasQuestionToken?: any; // boolean
+  typeAnnotation?: TsTypeNode;
 }
 
 
@@ -283,7 +283,7 @@ declare export class TypeAliasDeclaration extends Statement {}
 declare export class TsTypeAliasDeclaration extends TypeAliasDeclaration {
   name: BindingIdentifier;
   typeParameters?: TsTypeParameterDeclaration[];
-  type: TypeNode;
+  typeAnnotation: TypeNode;
 }
 
 
@@ -402,7 +402,7 @@ declare export class TsAbstractSetter extends TsAbstractMethodDefinition {
 }
 
 declare export class DataProperty extends NamedObjectProperty {
-  hasQuestionToken: any; // boolean
+  hasQuestionToken?: any; // boolean
   expression: Expression;
 }
 
@@ -454,14 +454,14 @@ declare export class ArrowExpression extends Expression {
   isAsync: any; // boolean
   typeParameters?: TypeParameterDeclaration[];
   params: FormalParameters;
-  type?: TypeNode;
+  typeAnnotation?: TypeNode;
   body: FunctionBody | Expression;
 }
 declare export class ArrowExpressionE extends Expression {
   isAsync: any; // boolean
   typeParameters?: TypeParameterDeclaration[];
   params: FormalParameters;
-  type?: TypeNode;
+  typeAnnotation?: TypeNode;
   body: Term[];
 }
 
@@ -576,11 +576,11 @@ declare export class ParenthesizedExpression extends Expression {
 
 declare export class TsAsExpression extends Expression {
   expression: Expression;
-  type: TsTypeNode;
+  typeAnnotation: TsTypeNode;
 }
 
 declare export class TsTypeAssertion extends UnaryExpression {
-  type: TsTypeNode;
+  typeAnnotation: TsTypeNode;
   expression: UnaryExpression;
 }
 
@@ -700,8 +700,8 @@ declare export class Directive extends Term {
 }
 
 declare export class FormalParameters extends Term {
-  items: ParameterDeclaration[];
-  rest?: ParameterDeclaration;
+  items: (ParameterDeclaration | ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault)[];
+  rest?: ParameterDeclaration | BindingIdentifier;
 }
 
 declare export class ParameterDeclaration extends ParameterDeclarationBase {}
@@ -715,20 +715,20 @@ declare export class FunctionDeclaration extends Statement {
   name: BindingIdentifier;
   isAsync: any; // boolean
   isGenerator: any; // boolean
-  hasQuestionToken: any; // boolean
+  hasQuestionToken?: any; // boolean
   typeParameters?: TypeParameterDeclaration[];
   params: FormalParameters;
-  type?: TypeNode;
+  typeAnnotation?: TypeNode;
   body: FunctionBody;
 }
 declare export class FunctionDeclarationE extends Statement {
   name: BindingIdentifier;
   isAsync: any; // boolean
   isGenerator: any; // boolean
-  hasQuestionToken: any; // boolean
+  hasQuestionToken?: any; // boolean
   typeParameters?: TypeParameterDeclaration[];
   params: FormalParameters;
-  type?: TypeNode;
+  typeAnnotation?: TypeNode;
   body: Term[];
 }
 
@@ -772,7 +772,7 @@ declare export class VariableDeclaration extends Term {
 declare export class VariableDeclarator extends Term {
   binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
   // binding: Binding;
-  type?: TypeNode;
+  typeAnnotation?: TypeNode;
   init?: Expression;
 }
 
@@ -810,7 +810,7 @@ declare export class TsKeywordTypeNode extends TsTypeNode {
 declare export class SignatureTsTypeNode extends TsTypeNode {
   typeParameters?: TsTypeParameterDeclaration[];
   params: FormalParameters;
-  type?: TsTypeNode;
+  typeAnnotation?: TsTypeNode;
 }
 // example: `(i: number, s: string) => boolean`
 declare export class FunctionTsTypeNode extends SignatureTsTypeNode {}
@@ -844,7 +844,7 @@ declare export class ExpressionWithTsTypeArguments extends TsTypeNode {
 //   `isString(): this is string`
 declare export class TsTypePredicateNode extends TsTypeNode {
   parameterName: any; //  Identifier | 'this'
-  type: TsTypeNode;
+  typeAnnotation: TsTypeNode;
 }
 
 // example: `typeof someVariable`
@@ -879,13 +879,13 @@ declare export class IntersectionTsTypeNode extends TsTypeNode {
 
 // example: `(number)`
 declare export class ParenthesizedTsTypeNode extends TsTypeNode {
-  type: TsTypeNode;
+  typeAnnotation: TsTypeNode;
 }
 
 // example: `keyof { a: number, b: string }`
 declare export class TsTypeOperatorNode extends TsTypeNode {
   operator: any; // 'keyof'
-  type: TsTypeNode;
+  typeAnnotation: TsTypeNode;
 }
 
 // example:
@@ -902,8 +902,8 @@ declare export class MappedTsTypeNode extends TsTypeNode {
   parent?: TsTypeAliasDeclaration;
   hasReadonlyToken: any; // boolean
   typeParameter: TsTypeParameterDeclaration;
-  hasQuestionToken: any; // boolean
-  type?: TsTypeNode;
+  hasQuestionToken?: any; // boolean
+  typeAnnotation?: TsTypeNode;
 }
 
 // examples: `"someValue"`, `42`, `null`, `false`

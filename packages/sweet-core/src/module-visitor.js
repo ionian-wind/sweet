@@ -1,6 +1,9 @@
 // @flow
 import { evalCompiletimeValue } from './load-syntax';
 import * as _ from 'ramda';
+// $FlowFixMe[cannot-resolve-module]
+// $FlowFixMe[cannot-resolve-module]
+// $FlowFixMe[cannot-resolve-module]
 import * as T from 'sweet-spec';
 import * as S from './sweet-spec-utils';
 import { gensym } from './symbol';

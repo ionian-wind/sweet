@@ -4,6 +4,9 @@ import { assert } from './errors';
 import BindingMap from './binding-map';
 import { Maybe } from 'ramda-fantasy';
 import * as _ from 'ramda';
+// $FlowFixMe[cannot-resolve-module]
+// $FlowFixMe[cannot-resolve-module]
+// $FlowFixMe[cannot-resolve-module]
 import * as T from 'sweet-spec';
 
 import { TokenType, TokenClass, TypeCodes } from './tokens';

@@ -1,4 +1,7 @@
 // @flow
+// $FlowFixMe[cannot-resolve-module]
+// $FlowFixMe[cannot-resolve-module]
+// $FlowFixMe[cannot-resolve-module]
 import Term, * as T from 'sweet-spec';
 import * as _ from 'ramda';
 import * as S from './sweet-spec-utils';
@@ -76,8 +79,11 @@ function wrapStatement(declaration: Term) {
   return declaration;
 }
 
+// $FlowFixMe[value-as-type]
 const memoSym = Symbol('memo');
+// $FlowFixMe[value-as-type]
 
+// $FlowFixMe[value-as-type]
 function makeVarDeclStmt(name: T.BindingIdentifier, expr: T.Expression) {
   // $FlowFixMe[extra-arg]
   return new T.VariableDeclarationStatement({
@@ -95,11 +101,17 @@ function makeVarDeclStmt(name: T.BindingIdentifier, expr: T.Expression) {
   });
 }
 
+// $FlowFixMe[value-as-type]
 export default class SweetModule {
+  // $FlowFixMe[value-as-type]
   path: string;
+  // $FlowFixMe[value-as-type]
   items: List<Term>;
+  // $FlowFixMe[value-as-type]
   directives: List<string>;
+  // $FlowFixMe[value-as-type]
   imports: List<T.ImportDeclaration>;
+  // $FlowFixMe[value-as-type]
   exports: List<T.ExportDeclaration>;
   exportedNames: List<ExportSpecifier>;
   defaultExport: any;
@@ -151,14 +163,17 @@ export default class SweetModule {
                 }),
             ),
           });
+          // $FlowFixMe[missing-local-annot]
           body.push(exp);
           exports.push(exp);
           this.exportedNames = this.exportedNames.concat(
             extractSpecifiers(exp),
+            // $FlowFixMe[missing-local-annot]
           );
         } else if (item instanceof T.ExportLocals) {
           // $FlowFixMe[extra-arg]
           let exp = new T.ExportLocals({
+            // $FlowFixMe[missing-local-annot]
             namedExports: item.namedExports.map(({ name, exportedName }) => {
               if (name == null) {
                 // $FlowFixMe[extra-arg]

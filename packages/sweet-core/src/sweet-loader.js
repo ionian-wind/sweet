@@ -6,6 +6,9 @@ import { List } from 'immutable';
 import Compiler from './compiler';
 import { ALL_PHASES } from './syntax';
 import BindingMap from './binding-map.js';
+// $FlowFixMe[cannot-resolve-module]
+// $FlowFixMe[cannot-resolve-module]
+// $FlowFixMe[cannot-resolve-module]
 import Term from 'sweet-spec';
 import SweetModule from './sweet-module';
 import * as _ from 'ramda';

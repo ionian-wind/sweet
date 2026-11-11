@@ -1,4 +1,7 @@
 // @flow
+// $FlowFixMe[cannot-resolve-module]
+// $FlowFixMe[cannot-resolve-module]
+// $FlowFixMe[cannot-resolve-module]
 import Term, * as S from 'sweet-spec';
 import { complement } from 'ramda';
 import { List } from 'immutable';
@@ -134,10 +137,16 @@ export default class extends Term.CloneReducer {
   }
 
   reduceImportNamespace(
+    // $FlowFixMe[value-as-type]
     t: Term,
+    // $FlowFixMe[value-as-type]
+    // $FlowFixMe[value-as-type]
     s: {
+      // $FlowFixMe[value-as-type]
+      // $FlowFixMe[value-as-type]
       defaultBinding: S.BindingIdentifier,
       moduleSpecifier: Syntax,
+      // $FlowFixMe[value-as-type]
       namespaceBinding: S.BindingIdentifier,
     },
   ): any {
@@ -145,12 +154,15 @@ export default class extends Term.CloneReducer {
     if (s.forSyntax) {
       return new S.EmptyStatement();
     }
+    // $FlowFixMe[value-as-type]
     return t;
   }
 
+  // $FlowFixMe[value-as-type]
   reduceImport(
     t: Term,
     s: {
+      // $FlowFixMe[value-as-type]
       defaultBinding: S.BindingIdentifier,
       moduleSpecifier: Syntax,
       namedImports: List<any>,
@@ -192,26 +204,32 @@ export default class extends Term.CloneReducer {
     s: { name: any, exportedName?: Syntax },
   ): any {
     // $FlowFixMe[extra-arg]
+    // $FlowFixMe[value-as-type]
     return new S.ExportLocalSpecifier({
       name: s.name,
       exportedName: s.exportedName == null ? null : s.exportedName.val(),
     });
+    // $FlowFixMe[value-as-type]
   }
 
   reduceExportFrom(
     t: Term,
+    // $FlowFixMe[value-as-type]
     s: { moduleSpecifier?: Syntax, namedExports: List<S.ExportFromSpecifier> },
   ): any {
+    // $FlowFixMe[value-as-type]
     // $FlowFixMe[extra-arg]
     return new S.ExportFrom({
       moduleSpecifier:
         s.moduleSpecifier != null ? s.moduleSpecifier.val() : null,
       namedExports: s.namedExports.toArray(),
+      // $FlowFixMe[value-as-type]
     });
   }
 
   reduceExportLocals(
     t: Term,
+    // $FlowFixMe[value-as-type]
     s: { moduleSpecifier?: Syntax, namedExports: List<S.ExportLocalSpecifier> },
   ): any {
     // $FlowFixMe[extra-arg]

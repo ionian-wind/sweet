@@ -1,4 +1,7 @@
 // @flow
+// $FlowFixMe[cannot-resolve-module]
+// $FlowFixMe[cannot-resolve-module]
+// $FlowFixMe[cannot-resolve-module]
 import Term, * as S from 'sweet-spec';
 import { List } from 'immutable';
 import { Enforester } from './enforester';
@@ -119,8 +122,11 @@ export default class TokenExpander extends ASTDispatcher {
 
     return List(result);
   }
+  // $FlowFixMe[value-as-type]
 
+  // $FlowFixMe[value-as-type]
   expandVariableDeclarationStatement(
+    // $FlowFixMe[value-as-type]
     term: S.VariableDeclarationStatement,
   ): any {
     // $FlowFixMe[prop-missing]
@@ -131,10 +137,13 @@ export default class TokenExpander extends ASTDispatcher {
 
   expandFunctionDeclaration(term: Term): any {
     return this.registerFunctionOrClass(term);
+    // $FlowFixMe[value-as-type]
   }
 
+  // $FlowFixMe[value-as-type]
   // TODO: think about function expressions
 
+  // $FlowFixMe[value-as-type]
   registerImport(term: S.Import | S.ImportNamespace): any {
     let path = term.moduleSpecifier.val();
     let mod;
@@ -178,15 +187,21 @@ export default class TokenExpander extends ASTDispatcher {
     let namedImports = List();
     if (term.defaultBinding != null) {
       if (!isBoundToCompiletime(term.defaultBinding.name, this.context.store)) {
+        // $FlowFixMe[missing-local-annot]
         defaultBinding = term.defaultBinding;
       }
     }
+    // $FlowFixMe[invalid-compare]
+    // $FlowFixMe[missing-local-annot]
     if (term instanceof S.Import) {
       // $FlowFixMe[incompatible-type]
       namedImports = term.namedImports.filter(
+        // $FlowFixMe[invalid-compare]
+        // $FlowFixMe[missing-local-annot]
         (specifier) =>
           !isBoundToCompiletime(specifier.binding.name, this.context.store),
       );
+      // $FlowFixMe[invalid-compare]
       if (defaultBinding == null && namedImports.size === 0) {
         return new S.EmptyStatement();
       }
@@ -200,20 +215,26 @@ export default class TokenExpander extends ASTDispatcher {
     } else if (term instanceof S.ImportNamespace) {
       // $FlowFixMe[extra-arg]
       return new S.ImportNamespace({
+        // $FlowFixMe[value-as-type]
         forSyntax: term.forSyntax,
         moduleSpecifier: term.moduleSpecifier,
         defaultBinding,
         namespaceBinding: term.namespaceBinding,
+        // $FlowFixMe[value-as-type]
       });
+      // $FlowFixMe[value-as-type]
     }
     // return a new import filtered to just the runtime imports
     return term;
   }
+  // $FlowFixMe[value-as-type]
 
+  // $FlowFixMe[value-as-type]
   expandImport(term: S.Import): any {
     return this.registerImport(term);
   }
 
+  // $FlowFixMe[value-as-type]
   expandImportNamespace(term: S.ImportNamespace): any {
     return this.registerImport(term);
   }
