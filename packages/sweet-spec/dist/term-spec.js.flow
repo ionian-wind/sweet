@@ -21,7 +21,7 @@ declare export class SyntaxTerm extends Term {
 declare export class RawDelimiter extends SyntaxTerm {
   constructor(attrs?: any, type?: string): void;
   kind: any; // 'parens' | 'square' | 'curly'
-  inner: Term[];
+  inner: any;
 }
 declare export class RawSyntax extends SyntaxTerm {
   constructor(attrs?: any, type?: string): void;

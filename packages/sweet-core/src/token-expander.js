@@ -41,8 +41,7 @@ class RegisterBindingsReducer extends Term.CloneReducer {
     this.env = env;
   }
 
-  // $FlowFixMe[missing-local-annot]
-  reduceBindingIdentifier(t: Term, s: { name: Syntax }) {
+  reduceBindingIdentifier(t: Term, s: { name: Syntax }): any {
     let newName = s.name.removeScope(this.useScope, this.phase);
     let newBinding = gensym(newName.val());
     this.bindings.add(newName, {
@@ -73,8 +72,7 @@ class RegisterSyntaxBindingsReducer extends Term.CloneReducer {
     this.val = val;
   }
 
-  // $FlowFixMe[missing-local-annot]
-  reduceBindingIdentifier(t: Term, s: { name: Syntax }) {
+  reduceBindingIdentifier(t: Term, s: { name: Syntax }): any {
     let newName = s.name.removeScope(this.useScope, this.phase);
     let newBinding = gensym(newName.val());
     this.bindings.add(newName, {
@@ -101,8 +99,7 @@ export default class TokenExpander extends ASTDispatcher {
     if (stxl.size === 0) {
       return List(result);
     }
-    // $FlowFixMe[underconstrained-implicit-instantiation]
-    let prev = List();
+    let prev = List<any>();
     let enf = new Enforester(stxl, prev, this.context);
 
     while (!enf.done) {
@@ -165,16 +162,15 @@ export default class TokenExpander extends ASTDispatcher {
       this.context.isEntrypoint,
     );
     let defaultBinding = null;
-    // $FlowFixMe[underconstrained-implicit-instantiation]
-    let namedImports = List();
+    let namedImports = List<any>();
     if (term.defaultBinding != null) {
       if (!isBoundToCompiletime(term.defaultBinding.name, this.context.store)) {
         defaultBinding = term.defaultBinding;
       }
     }
     if (term instanceof S.Import) {
-      // $FlowFixMe[incompatible-type]
-      namedImports = term.namedImports.filter(
+      let namedImportsAny: any = term.namedImports;
+      namedImports = namedImportsAny.filter(
         (specifier) =>
           !isBoundToCompiletime(specifier.binding.name, this.context.store),
       );

@@ -31,8 +31,7 @@ export function getSlice(
   };
 }
 
-// $FlowFixMe[underconstrained-implicit-instantiation]
-const streams = new WeakMap();
+const streams = new WeakMap<any, any>();
 
 class ReadError extends Error {
   index: number;
@@ -58,7 +57,6 @@ class ReadError extends Error {
   }
 }
 
-// $FlowFixMe[incompatible-variance]
 class TokenReader extends Reader {
   locationInfo: LocationInfo;
   context: ?Context;
@@ -72,38 +70,29 @@ class TokenReader extends Reader {
     };
   }
 
-  createError(msg: string): ReadError {
+  createError(msg: string, ...rest: Array<any>): ReadError {
     let message = msg.replace(/\{(\d+)\}/g, (_, n) =>
       JSON.stringify(arguments[+n + 1]),
     );
     return new ReadError({
       message,
-      // $FlowFixMe[incompatible-type]
-      index: streams.get(this)?.sourceInfo?.position,
+      index: streams.get(this)?.sourceInfo?.position ?? 0,
       line: this.locationInfo.line,
       column: this.locationInfo.column,
     });
   }
 
-  // $FlowFixMe[missing-local-annot]
-  createILLEGAL(char) {
+  createILLEGAL(char: any): any {
     return !isEOS(char)
-      ? // $FlowFixMe[extra-arg]
-        this.createError('Unexpected {0}', char)
+      ? this.createError('Unexpected {0}', char)
       : this.createError('Unexpected end of input');
   }
 
-  // $FlowFixMe[incompatible-type]
-  // $FlowFixMe[missing-local-annot]
-  readToken(stream: CharStream, ...rest: Array<any>) {
-    // $FlowFixMe[prop-missing]
-    // $FlowFixMe[unsafe-object-assign]
-    const startLocation = Object.assign(
-      {},
-      this.locationInfo,
-      stream.sourceInfo,
-    );
-    // $FlowFixMe[prop-missing]
+  readToken(stream: CharStream, ...rest: Array<any>): any {
+    const startLocation = {
+      ...this.locationInfo,
+      ...stream.sourceInfo,
+    };
     const result = super.read(stream, ...rest);
 
     if (
@@ -121,7 +110,6 @@ class TokenReader extends Reader {
     return result;
   }
 
-  // $FlowFixMe[incompatible-type]
   readUntil(
     close: ?Function | ?string,
     stream: CharStream,

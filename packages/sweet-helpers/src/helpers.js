@@ -84,7 +84,7 @@ type RawDelimiter = {
 
 export type Term = RawSyntax | RawDelimiter;
 
-const TypeCodes = {
+const TypeCodes: { [string]: Codes } = {
   Identifier: 0,
   Keyword: 1,
   Punctuator: 2,
@@ -124,7 +124,6 @@ export function unwrap(obj: ?Term): { value?: any } {
 }
 
 export function isIdentifier(obj: Term): boolean {
-  // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.Identifier);
 }
 
@@ -133,7 +132,6 @@ export function fromIdentifier(obj: RawSyntax, x: string): Syntax {
 }
 
 export function isKeyword(obj: Term): boolean {
-  // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.Keyword);
 }
 
@@ -142,7 +140,6 @@ export function fromKeyword(obj: RawSyntax, x: string): Syntax {
 }
 
 export function isPunctuator(obj: Term): boolean {
-  // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.Punctuator);
 }
 
@@ -151,7 +148,6 @@ export function fromPunctuator(obj: RawSyntax, x: string): Syntax {
 }
 
 export function isNumericLiteral(obj: Term): boolean {
-  // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.NumericLiteral);
 }
 
@@ -160,7 +156,6 @@ export function fromNumericLiteral(obj: RawSyntax, x: number): Syntax {
 }
 
 export function isStringLiteral(obj: Term): boolean {
-  // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.StringLiteral);
 }
 
@@ -169,17 +164,14 @@ export function fromStringLiteral(obj: RawSyntax, x: string): Syntax {
 }
 
 export function isTemplateElement(obj: Term): boolean {
-  // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.TemplateElement);
 }
 
 export function isTemplate(obj: Term): boolean {
-  // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.Template);
 }
 
 export function isRegExp(obj: Term): boolean {
-  // $FlowFixMe[incompatible-type]
   return check(obj, TypeCodes.RegExp);
 }
 

@@ -126,9 +126,9 @@ export default class extends Term.CloneReducer {
       defaultBinding: S.BindingIdentifier,
       moduleSpecifier: Syntax,
       namespaceBinding: S.BindingIdentifier,
+      forSyntax?: any,
     },
   ): any {
-    // $FlowFixMe[prop-missing]
     if (s.forSyntax) {
       return new S.EmptyStatement();
     }
@@ -141,9 +141,9 @@ export default class extends Term.CloneReducer {
       defaultBinding: S.BindingIdentifier,
       moduleSpecifier: Syntax,
       namedImports: List<any>,
+      forSyntax?: any,
     },
   ): any {
-    // $FlowFixMe[prop-missing]
     if (s.forSyntax) {
       return new S.EmptyStatement();
     }

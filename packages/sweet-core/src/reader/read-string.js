@@ -5,8 +5,10 @@ import { readStringEscape, isLineTerminator } from './utils';
 import { isEOS } from 'readtable';
 import { StringToken } from '../tokens';
 
-// $FlowFixMe[missing-this-annot]
-export default function readStringLiteral(stream: CharStream): StringToken {
+export default function readStringLiteral(
+  this: any,
+  stream: CharStream,
+): StringToken {
   let str = '',
     octal = null,
     idx: number = 0,

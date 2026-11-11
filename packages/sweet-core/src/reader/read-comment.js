@@ -5,8 +5,10 @@ import { isEOS } from 'readtable';
 import { skipSingleLineComment } from './utils';
 import { EmptyToken } from '../tokens';
 
-// $FlowFixMe[missing-this-annot]
-export default function readComment(stream: CharStream): typeof EmptyToken {
+export default function readComment(
+  this: any,
+  stream: CharStream,
+): typeof EmptyToken {
   let char = stream.peek();
 
   while (!isEOS(char)) {
@@ -33,8 +35,7 @@ export default function readComment(stream: CharStream): typeof EmptyToken {
   return EmptyToken;
 }
 
-// $FlowFixMe[missing-this-annot]
-function skipMultiLineComment(stream: CharStream): void {
+function skipMultiLineComment(this: any, stream: CharStream): void {
   let idx = 2;
   let char = stream.peek(idx);
   const { position: startPosition } = stream.sourceInfo;

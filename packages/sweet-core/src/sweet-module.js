@@ -18,13 +18,11 @@ const extractDeclaration = _.cond([
   ],
 ]);
 
-// $FlowFixMe[missing-local-annot]
-const ExpSpec = (x) => ({
+const ExpSpec = (x: any) => ({
   exportedName: x,
 });
 
-// $FlowFixMe[recursive-definition]
-const extractDeclarationNames = _.cond([
+const extractDeclarationNames: any = _.cond([
   [S.isVariableDeclarator, ({ binding }) => List.of(binding.name)],
   [
     S.isVariableDeclaration,
@@ -34,8 +32,7 @@ const extractDeclarationNames = _.cond([
   [S.isClassDeclaration, ({ name }) => List.of(name.name)],
 ]);
 
-// $FlowFixMe[recursive-definition]
-const extractDeclarationSpecifiers = _.cond([
+const extractDeclarationSpecifiers: any = _.cond([
   [S.isVariableDeclarator, ({ binding }) => List.of(ExpSpec(binding.name))],
   [
     S.isVariableDeclaration,
@@ -97,7 +94,7 @@ export default class SweetModule {
   directives: List<string>;
   imports: List<T.ImportDeclaration>;
   exports: List<T.ExportDeclaration>;
-  exportedNames: List<ExportSpecifier>;
+  exportedNames: List<any>;
   defaultExport: any;
 
   runtime: List<Term>;
@@ -180,7 +177,6 @@ export default class SweetModule {
           if (S.isExportDefault(item)) {
             this.defaultExport = Syntax.fromIdentifier('_default');
             this.exportedNames = this.exportedNames.push(
-              // $FlowFixMe[incompatible-type]
               ExpSpec(this.defaultExport),
             );
           }

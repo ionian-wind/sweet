@@ -42,8 +42,7 @@ export function compile(
     noBabel = true;
   if (options != null) {
     refererName = options.refererName;
-    // $FlowFixMe[incompatible-type]
-    noBabel = options.noBabel;
+    noBabel = options.noBabel === true;
   }
   let code = compileModule(entryPath, loader, refererName).codegen();
   if (noBabel) {

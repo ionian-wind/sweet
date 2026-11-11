@@ -47,8 +47,7 @@ export default class SweetLoader {
     this.logging = options.logging || false;
 
     let bindings = new BindingMap();
-    // $FlowFixMe[underconstrained-implicit-instantiation]
-    let templateMap = new Map();
+    let templateMap = new Map<any, any>();
     let tempIdent = 0;
     this.context = {
       phase: 0,
@@ -82,7 +81,13 @@ export default class SweetLoader {
     return name;
   }
 
-  locate({ name, metadata }: { name: string, metadata: {} }): any {
+  locate({
+    name,
+    metadata,
+  }: {
+    name: string,
+    metadata: { [string]: any },
+  }): any {
     // takes `/abs/path/to/source.js:<phase>`
     // gives { path: '/abs/path/to/source.js', phase: <phase> }
     let match = name.match(phaseInModulePathRegexp);
@@ -95,16 +100,7 @@ export default class SweetLoader {
     throw new Error(`Module ${name} is missing phase information`);
   }
 
-  fetch({
-    name,
-    address,
-    metadata,
-  }: {
-    name: string,
-    address: { path: string, phase: number },
-    metadata: {},
-    // $FlowFixMe[missing-local-annot]
-  }) {
+  fetch({ name, address, metadata }: any): any {
     throw new Error('No default fetch defined');
   }
 
@@ -117,7 +113,7 @@ export default class SweetLoader {
     name: string,
     address: { path: string, phase: number },
     source: string,
-    metadata: {},
+    metadata: { [string]: any },
   }): any {
     let src = this.compiledCache.get(address.path);
     if (src != null) {
@@ -137,13 +133,12 @@ export default class SweetLoader {
     name: string,
     address: { path: string, phase: number },
     source: SweetModule,
-    metadata: {},
-    // $FlowFixMe[missing-local-annot]
-  }) {
+    metadata: { [string]: any },
+  }): any {
     throw new Error('Not implemented yet');
   }
 
-  eval(source: string): any {
+  eval(source: string, store?: any): any {
     return (0, eval)(source);
   }
 
@@ -175,11 +170,8 @@ export default class SweetLoader {
       entryPath,
     };
     let name = this.normalize(entryPath, refererName);
-    // $FlowFixMe[incompatible-type]
     let address = this.locate({ name, metadata });
-    // $FlowFixMe[incompatible-type]
     let source = this.fetch({ name, address, metadata });
-    // $FlowFixMe[incompatible-type]
     return this.translate({ name, address, source, metadata });
   }
 

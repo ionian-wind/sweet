@@ -39,9 +39,9 @@ export default class extends Term.CloneReducer {
 
   reduceRawSyntax(t: Term, s: { value: Syntax }): any {
     // TODO: fix this once reading tokens is reasonable
-    // $FlowFixMe[prop-missing]
-    if (s.value.isTemplate() && s.value.items) {
-      s.value.token.items = s.value.token.items.map((t) => {
+    let value: any = s.value;
+    if (value.isTemplate() && value.items) {
+      value.token.items = value.token.items.map((t) => {
         if (t instanceof Term) {
           return t.reduce(this);
         }

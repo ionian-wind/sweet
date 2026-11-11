@@ -40,8 +40,7 @@ function getFirstSlice(stx: ?Syntax) {
   return stx.token.get(0).token.slice;
 }
 
-// $FlowFixMe[missing-local-annot]
-function sizeDecending(a, b) {
+function sizeDecending(a: any, b: any) {
   if (a.scopes.size > b.scopes.size) {
     return -1;
   } else if (b.scopes.size > a.scopes.size) {
@@ -54,7 +53,7 @@ function sizeDecending(a, b) {
 type TypesHelper = {
   [key: TokenTag]: {
     match(token: any): boolean,
-    create?: (value: any, stx: ?Syntax) => Syntax,
+    create?: (value: any, stx: ?Syntax) => any,
   },
 };
 
@@ -69,7 +68,6 @@ export let Types: TypesHelper = {
           value: null,
           typeCode: TypeCodes.Keyword,
         },
-        // $FlowFixMe[incompatible-exact]
         stx,
       ),
   },
@@ -84,7 +82,6 @@ export let Types: TypesHelper = {
           value,
           typeCode: TypeCodes.NumericLiteral,
         },
-        // $FlowFixMe[incompatible-exact]
         stx,
       ),
   },
@@ -99,7 +96,6 @@ export let Types: TypesHelper = {
           str: value,
           typeCode: TypeCodes.StringLiteral,
         },
-        // $FlowFixMe[incompatible-exact]
         stx,
       ),
   },
@@ -117,7 +113,6 @@ export let Types: TypesHelper = {
           typeCode: TypeCodes.Punctuator,
           value,
         },
-        // $FlowFixMe[incompatible-exact]
         stx,
       ),
   },
@@ -134,7 +129,6 @@ export let Types: TypesHelper = {
           typeCode: TypeCodes.Keyword,
           value,
         },
-        // $FlowFixMe[incompatible-exact]
         stx,
       ),
   },
@@ -148,7 +142,6 @@ export let Types: TypesHelper = {
           value,
           typeCode: TypeCodes.Identifier,
         },
-        // $FlowFixMe[incompatible-exact]
         stx,
       ),
   },
@@ -163,7 +156,6 @@ export let Types: TypesHelper = {
           value,
           typeCode: TypeCodes.RegExp,
         },
-        // $FlowFixMe[incompatible-exact]
         stx,
       ),
   },
@@ -188,7 +180,6 @@ export let Types: TypesHelper = {
           slice: getFirstSlice(stx),
         }),
       });
-      // $FlowFixMe[incompatible-type]
       return new T.RawDelimiter({
         kind: 'braces',
         inner: List.of(left).concat(inner).push(right),
@@ -216,7 +207,6 @@ export let Types: TypesHelper = {
           slice: getFirstSlice(stx),
         }),
       });
-      // $FlowFixMe[incompatible-type]
       return new T.RawDelimiter({
         kind: 'brackets',
         inner: List.of(left).concat(inner).push(right),
@@ -244,7 +234,6 @@ export let Types: TypesHelper = {
           slice: getFirstSlice(stx),
         }),
       });
-      // $FlowFixMe[incompatible-type]
       return new T.RawDelimiter({
         kind: 'parens',
         inner: List.of(left).concat(inner).push(right),
@@ -315,7 +304,7 @@ export default class Syntax {
   bindings: BindingMap;
   scopesets: Scopeset;
 
-  constructor(token: any, oldstx: ?{ bindings: any, scopesets: any }) {
+  constructor(token: any, oldstx: ?any) {
     this.token = token;
     this.bindings =
       oldstx && oldstx.bindings != null ? oldstx.bindings : new BindingMap();
@@ -330,7 +319,6 @@ export default class Syntax {
   }
 
   static of(token: Token, stx: ?Syntax): any {
-    // $FlowFixMe[incompatible-exact]
     return new Syntax(token, stx);
   }
 
@@ -508,7 +496,7 @@ export default class Syntax {
   }
 
   setLineNumber(line: number): any {
-    let newTok = {};
+    let newTok: any = {};
     if (this.isDelimiter()) {
       newTok = this.token.map((s) => s.setLineNumber(line));
     } else {
@@ -516,15 +504,11 @@ export default class Syntax {
         newTok[key] = this.token[key];
       }
       assert(
-        // $FlowFixMe[prop-missing]
         newTok.slice && newTok.slice.startLocation,
         'all tokens must have line info',
       );
-      // $FlowFixMe[incompatible-use]
-      // $FlowFixMe[prop-missing]
       newTok.slice.startLocation.line = line;
     }
-    // $FlowFixMe[incompatible-exact]
     return new Syntax(newTok, this);
   }
 
@@ -553,7 +537,7 @@ export default class Syntax {
         }),
       });
     }
-    let oldScopeset;
+    let oldScopeset: any = List();
     if (phase === ALL_PHASES) {
       oldScopeset = this.scopesets.all;
     } else {
@@ -561,7 +545,7 @@ export default class Syntax {
         ? this.scopesets.phase.get(phase)
         : List();
     }
-    let newScopeset;
+    let newScopeset: any;
     if (options.flip) {
       // $FlowFixMe[incompatible-use]
       let index = oldScopeset.indexOf(scope);
@@ -599,6 +583,7 @@ export default class Syntax {
     let phaseScopeset = this.scopesets.phase.has(phase)
       ? this.scopesets.phase.get(phase)
       : List();
+    if (phaseScopeset == null) phaseScopeset = List();
     let allScopeset = this.scopesets.all;
     let newstx = {
       bindings: this.bindings,
@@ -608,13 +593,11 @@ export default class Syntax {
       },
     };
 
-    // $FlowFixMe[incompatible-use]
     let phaseIndex = phaseScopeset.indexOf(scope);
     let allIndex = allScopeset.indexOf(scope);
     if (phaseIndex !== -1) {
       newstx.scopesets.phase = this.scopesets.phase.set(
         phase,
-        // $FlowFixMe[incompatible-use]
         phaseScopeset.remove(phaseIndex),
       );
     } else if (allIndex !== -1) {

@@ -178,9 +178,7 @@ export function infixl<A>(
   p: Parser<A, any>,
   op: Parser<(A, A) => A, any>,
 ): Parser<A, any> {
-  // $FlowFixMe[missing-local-annot]
-  // $FlowFixMe[recursive-definition]
-  function rest(x) {
+  function rest(x: any): any {
     return op.chain((f) => p.chain((y) => rest(f(x, y)))).alt(Parser.of(x));
   }
   return p.chain(rest);

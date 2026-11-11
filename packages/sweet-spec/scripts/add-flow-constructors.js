@@ -24,6 +24,8 @@ source = source.replace(
   `$1\n${constructor}\n`,
 );
 
+source = source.replace(/\binner: Term\[\];/g, 'inner: any;');
+
 source = source.replace(
   /(declare\s+export\s+default\s+class\s+Term\s*\{\n\s*constructor\([^\n]*\n)/,
   `$1  static CloneReducer: any;\n  type: string;\n  loc: any;\n  reduce(reducer: any): any;\n  extend(attrs?: any): any;\n  _reduceState(reducer: any, state?: any): any;\n  _cloneAttrs(): any;\n`,

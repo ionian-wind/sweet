@@ -15,7 +15,6 @@ export default class extends SweetLoader {
     this.store = store;
   }
 
-  // $FlowFixMe[incompatible-type]
   fetch({ name, address }: { name: string, address: any }): any {
     if (this.store.has(address.path)) {
       return this.store.get(address.path);
@@ -29,8 +28,7 @@ export default class extends SweetLoader {
     return new Store(vm.createContext());
   }
 
-  // $FlowFixMe[incompatible-type]
-  eval(source: string, store: Store): any {
+  eval(source: string, store: any): any {
     return vm.runInContext(source, store.getBackingObject());
   }
 }

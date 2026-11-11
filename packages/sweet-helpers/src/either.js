@@ -3,6 +3,8 @@
 /* eslint-disable no-undef */
 
 export class Either<L, R> {
+  right: any;
+  left: any;
   static ['fantasy-land/of']<V>(v: V): Either<any, V> {
     return Either.of(v);
   }
@@ -121,8 +123,8 @@ export class Right<L, R> extends Either<L, R> {
     if (either instanceof Left) {
       return new Left(either.left);
     } else if (either instanceof Right && typeof this.right === 'function') {
-      // $FlowFixMe[incompatible-use]
-      return new Right(this.right(either.right));
+      let rightFn: any = this.right;
+      return new Right(rightFn(either.right));
     }
     throw new Error('Invalid type');
   }

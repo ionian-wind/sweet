@@ -14,8 +14,10 @@ const {
 
 let terminates;
 
-// $FlowFixMe[missing-this-annot]
-export default function readNumericLiteral(stream: CharStream): NumericToken {
+export default function readNumericLiteral(
+  this: any,
+  stream: CharStream,
+): NumericToken {
   terminates = isTerminating(getCurrentReadtable());
   let idx = 0,
     char = stream.peek();
@@ -64,9 +66,7 @@ export default function readNumericLiteral(stream: CharStream): NumericToken {
   });
 }
 
-// $FlowFixMe[missing-local-annot]
-// $FlowFixMe[missing-this-annot]
-function addDecimalLiteralSuffixLength(stream, idx) {
+function addDecimalLiteralSuffixLength(this: any, stream: any, idx: any) {
   let char = stream.peek(idx);
   if (char === '.') {
     char = stream.peek(++idx);
@@ -95,9 +95,7 @@ function addDecimalLiteralSuffixLength(stream, idx) {
   return idx;
 }
 
-// $FlowFixMe[missing-local-annot]
-// $FlowFixMe[missing-this-annot]
-function readLegacyOctalLiteral(stream) {
+function readLegacyOctalLiteral(this: any, stream: any) {
   let idx = 0,
     isOctal = true,
     char = stream.peek();
@@ -131,9 +129,7 @@ function readLegacyOctalLiteral(stream) {
   });
 }
 
-// $FlowFixMe[missing-local-annot]
-// $FlowFixMe[missing-this-annot]
-function readOctalLiteral(stream) {
+function readOctalLiteral(this: any, stream: any) {
   let start,
     idx = (start = 2),
     char = stream.peek(idx);
@@ -156,9 +152,7 @@ function readOctalLiteral(stream) {
   });
 }
 
-// $FlowFixMe[missing-local-annot]
-// $FlowFixMe[missing-this-annot]
-function readBinaryLiteral(stream) {
+function readBinaryLiteral(this: any, stream: any) {
   let start,
     idx = (start = 2);
   let char = stream.peek(idx);
@@ -188,9 +182,7 @@ function readBinaryLiteral(stream) {
   });
 }
 
-// $FlowFixMe[missing-local-annot]
-// $FlowFixMe[missing-this-annot]
-function readHexLiteral(stream) {
+function readHexLiteral(this: any, stream: any) {
   let start,
     idx = (start = 2),
     char = stream.peek(idx);
@@ -215,13 +207,11 @@ function readHexLiteral(stream) {
   });
 }
 
-// $FlowFixMe[missing-local-annot]
-function parseNumeric(stream, len, radix, start = 0) {
+function parseNumeric(stream: any, len: any, radix: any, start: any = 0) {
   stream.readString(start);
   return parseInt(stream.readString(len - start), radix);
 }
 
-// $FlowFixMe[missing-local-annot]
-function isDecimalChar(char) {
+function isDecimalChar(char: any) {
   return '0' <= char && char <= '9';
 }

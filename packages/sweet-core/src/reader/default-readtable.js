@@ -42,8 +42,7 @@ const punctuatorTable = Object.keys(punctuatorMapping).reduce(
   {},
 );
 
-// $FlowFixMe[missing-local-annot]
-function readPunctuator(stream) {
+function readPunctuator(stream: any) {
   const len = retrieveSequenceLength(punctuatorTable, stream, 0);
   if (len > 0) {
     return new PunctuatorToken({
@@ -76,9 +75,7 @@ const lineTerminatorTable = [0x0a, 0x0d, 0x2028, 0x2029];
 const lineTerminatorEntries = lineTerminatorTable.map((lt) => ({
   key: lt,
   mode: 'terminating',
-  // $FlowFixMe[missing-local-annot]
-  // $FlowFixMe[missing-this-annot]
-  action: function readLineTerminator(stream) {
+  action: function readLineTerminator(this: any, stream: any) {
     this.incrementLine();
     return eatWhitespace(stream);
   },
@@ -126,9 +123,7 @@ const primitiveReadtable = getCurrentReadtable().extend(
 const dotEntry = {
   key: '.',
   mode: 'terminating',
-  // $FlowFixMe[missing-local-annot]
-  // $FlowFixMe[missing-this-annot]
-  action: function readDot(stream, ...rest) {
+  action: function readDot(this: any, stream: any, ...rest: any) {
     const nxt = stream.peek(1).charCodeAt(0);
     if (isDecimalDigit(nxt)) {
       return readNumericLiteral(stream, ...rest);
@@ -142,9 +137,7 @@ const keywordTable = Object.keys(keywordMapping).reduce(insertSequence, {});
 const keywordEntries = Object.keys(keywordTable).map((k) => ({
   key: k,
   mode: 'non-terminating',
-  // $FlowFixMe[missing-local-annot]
-  // $FlowFixMe[missing-this-annot]
-  action: function readKeyword(stream) {
+  action: function readKeyword(this: any, stream: any) {
     const len = retrieveSequenceLength(keywordTable, stream, 0);
     if (len > 0 && !isIdentifierPart(stream.peek(len).charCodeAt(0))) {
       return new KeywordToken({
@@ -160,9 +153,13 @@ const delimiterPairs = [
   ['(', ')'],
 ];
 
-// $FlowFixMe[missing-local-annot]
-// $FlowFixMe[missing-this-annot]
-function readDelimiters(closing, stream, prefix, b) {
+function readDelimiters(
+  this: any,
+  closing: any,
+  stream: any,
+  prefix: any,
+  b: any,
+) {
   const currentReadtable = getCurrentReadtable();
   setCurrentReadtable(primitiveReadtable);
 
@@ -175,9 +172,12 @@ function readDelimiters(closing, stream, prefix, b) {
 const delimiterEntries = delimiterPairs.map((p) => ({
   key: p[0],
   mode: 'terminating',
-  // $FlowFixMe[missing-local-annot]
-  // $FlowFixMe[missing-this-annot]
-  action: function readDefaultDelimiters(stream, prefix, b) {
+  action: function readDefaultDelimiters(
+    this: any,
+    stream: any,
+    prefix: any,
+    b: any,
+  ) {
     return readDelimiters.call(this, p[1], stream, prefix, true);
   },
 }));
@@ -185,18 +185,21 @@ const delimiterEntries = delimiterPairs.map((p) => ({
 const bracesEntry = {
   key: '{',
   mode: 'terminating',
-  // $FlowFixMe[missing-local-annot]
-  // $FlowFixMe[missing-this-annot]
-  action: function readBraces(stream, prefix, b) {
+  action: function readBraces(this: any, stream: any, prefix: any, b: any) {
     const line = this.locationInfo.line;
     const innerB = isExprPrefix(line, b, prefix);
     return readDelimiters.call(this, '}', stream, prefix, innerB);
   },
 };
 
-// $FlowFixMe[missing-local-annot]
-// $FlowFixMe[missing-this-annot]
-function readClosingDelimiter(opening, closing, stream, prefix, b) {
+function readClosingDelimiter(
+  this: any,
+  opening: any,
+  closing: any,
+  stream: any,
+  prefix: any,
+  b: any,
+) {
   if (prefix.first().value !== opening) {
     throw Error('Unmatched delimiter:', closing);
   }
@@ -210,9 +213,12 @@ const unmatchedDelimiterEntries = [
 ].map((p) => ({
   key: p[1],
   mode: 'terminating',
-  // $FlowFixMe[missing-local-annot]
-  // $FlowFixMe[missing-this-annot]
-  action: function readClosingDelimiters(stream, prefix, b) {
+  action: function readClosingDelimiters(
+    this: any,
+    stream: any,
+    prefix: any,
+    b: any,
+  ) {
     return readClosingDelimiter.call(this, ...p, stream, prefix, b);
   },
 }));
@@ -220,9 +226,7 @@ const unmatchedDelimiterEntries = [
 const divEntry = {
   key: '/',
   mode: 'terminating',
-  // $FlowFixMe[missing-local-annot]
-  // $FlowFixMe[missing-this-annot]
-  action: function readDiv(stream, prefix, b) {
+  action: function readDiv(this: any, stream: any, prefix: any, b: any) {
     let nxt = stream.peek(1);
     if (nxt === '/' || nxt === '*') {
       const result = readComment.call(this, stream);
@@ -243,9 +247,7 @@ const dispatchBacktickEntry = {
 
 const defaultDispatchEntry = {
   mode: 'dispatch',
-  // $FlowFixMe[missing-local-annot]
-  // $FlowFixMe[missing-this-annot]
-  action: function readDefaultDispatch(...args) {
+  action: function readDefaultDispatch(this: any, ...args: any) {
     this.readToken(...args);
     return EmptyToken;
   },
@@ -256,16 +258,12 @@ const dispatchWhiteSpaceEntries = whiteSpaceTable
   .map((w) => ({
     key: w,
     mode: 'dispatch',
-    // $FlowFixMe[missing-this-annot]
     action: function readDispatchWhitespace(
-      // $FlowFixMe[missing-local-annot]
-      stream,
-      // $FlowFixMe[missing-local-annot]
-      prefix,
-      // $FlowFixMe[missing-local-annot]
-      allowExprs,
-      // $FlowFixMe[missing-local-annot]
-      dispatchKey,
+      this: any,
+      stream: any,
+      prefix: any,
+      allowExprs: any,
+      dispatchKey: any,
     ) {
       this.readToken(stream, prefix, allowExprs);
       return new IdentifierToken({ value: dispatchKey });
@@ -275,8 +273,7 @@ const dispatchWhiteSpaceEntries = whiteSpaceTable
 const atEntry = {
   key: '@',
   mode: 'terminating',
-  // $FlowFixMe[missing-local-annot]
-  action: function readAt(stream, prefix) {
+  action: function readAt(stream: any, prefix: any) {
     const nxt = stream.peek(1),
       nxtCode = nxt.charCodeAt(0);
     if (isEOS(nxt) || isWhiteSpace(nxtCode) || isLineTerminator(nxtCode)) {

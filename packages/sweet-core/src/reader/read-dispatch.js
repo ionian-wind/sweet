@@ -28,8 +28,8 @@ const backtickEntry = {
   },
 };
 
-// $FlowFixMe[missing-this-annot]
 export function readSyntaxTemplate(
+  this: any,
   stream: CharStream,
   prefix: List<any>,
   exprAllowed: boolean,
@@ -54,8 +54,7 @@ export function readSyntaxTemplate(
   return result;
 }
 
-// $FlowFixMe[missing-local-annot]
-function updateSyntax(prefix, token) {
+function updateSyntax(prefix: any, token: any) {
   token.value = prefix + token.value;
   token.slice.text = prefix + token.slice.text;
   token.slice.start -= 1;

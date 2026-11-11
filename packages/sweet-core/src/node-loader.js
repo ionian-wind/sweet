@@ -42,7 +42,7 @@ export default class NodeLoader extends SweetLoader {
   }: {
     name: string,
     address: { path: string, phase: number },
-    metadata: {},
+    metadata: { [string]: any },
   }): any {
     let src = this.sourceCache.get(address.path);
     if (src != null) {
@@ -66,8 +66,7 @@ export default class NodeLoader extends SweetLoader {
     return new Store(vm.createContext(sandbox));
   }
 
-  // $FlowFixMe[incompatible-type]
-  eval(source: string, store: Store): any {
+  eval(source: string, store: any): any {
     return vm.runInContext(source, store.getBackingObject());
   }
 }

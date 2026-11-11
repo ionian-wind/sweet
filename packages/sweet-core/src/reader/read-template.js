@@ -8,8 +8,8 @@ import { readStringEscape } from './utils';
 import { getSlice } from './token-reader';
 import { TemplateToken, TemplateElementToken } from '../tokens';
 
-// $FlowFixMe[missing-this-annot]
 export default function readTemplateLiteral(
+  this: any,
   stream: CharStream,
   prefix: List<any>,
 ): TemplateToken {
@@ -31,14 +31,15 @@ export default function readTemplateLiteral(
   });
 }
 
-// $FlowFixMe[missing-this-annot]
-function readTemplateElement(stream: CharStream): TemplateElementToken {
+function readTemplateElement(
+  this: any,
+  stream: CharStream,
+): TemplateElementToken {
   let char = stream.peek(),
     idx = 0,
     value = '',
     octal = null;
-  // $FlowFixMe[unsafe-object-assign]
-  const startLocation = Object.assign({}, this.locationInfo, stream.sourceInfo);
+  const startLocation = { ...this.locationInfo, ...stream.sourceInfo };
   while (!isEOS(char)) {
     switch (char) {
       case '`': {

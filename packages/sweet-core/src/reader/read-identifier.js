@@ -11,14 +11,15 @@ import { isTerminating, isIdentifierPart, isIdentifierStart } from './utils';
 
 let terminates;
 
-// $FlowFixMe[missing-local-annot]
-const startsEscape = (code) => {
+const startsEscape = (code: any) => {
   if (code === 0x005c /* backslash */) return true;
   return 0xd800 <= code && code <= 0xdbff;
 };
 
-// $FlowFixMe[missing-this-annot]
-export default function readIdentifier(stream: CharStream): IdentifierToken {
+export default function readIdentifier(
+  this: any,
+  stream: CharStream,
+): IdentifierToken {
   terminates = isTerminating(getCurrentReadtable());
   let char = stream.peek();
   let code = char.charCodeAt(0);
@@ -50,9 +51,7 @@ export default function readIdentifier(stream: CharStream): IdentifierToken {
   });
 }
 
-// $FlowFixMe[missing-local-annot]
-// $FlowFixMe[missing-this-annot]
-function getEscapedIdentifier(stream) {
+function getEscapedIdentifier(this: any, stream: any) {
   const sPeek = stream.peek.bind(stream);
   let id = '';
   let check = isIdentifierStart;
@@ -102,7 +101,6 @@ function getEscapedIdentifier(stream) {
   return id;
 }
 
-// $FlowFixMe[missing-local-annot]
-function decodeUtf16(lead, trail) {
+function decodeUtf16(lead: any, trail: any) {
   return (lead - 0xd800) * 0x400 + (trail - 0xdc00) + 0x10000;
 }

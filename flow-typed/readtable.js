@@ -7,10 +7,8 @@ declare module 'readtable' {
     sourceInfo: any;
   }
 
-  declare export class Reader {
-    readToken: (...args: Array<any>) => any;
-    readUntil: (...args: Array<any>) => any;
-  }
+  declare export type Reader = any;
+  declare export var Reader: any;
 
   declare export class Readtable {
     extend: (...args: Array<any>) => any;

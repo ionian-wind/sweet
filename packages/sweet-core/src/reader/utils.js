@@ -52,8 +52,7 @@ export function getHexValue(rune: string): number {
   return -1;
 }
 
-// $FlowFixMe[missing-this-annot]
-export function skipSingleLineComment(stream: CharStream): void {
+export function skipSingleLineComment(this: any, stream: CharStream): void {
   let idx = 0;
   let char = stream.peek(idx);
   while (!isEOS(char)) {
@@ -72,8 +71,11 @@ export function skipSingleLineComment(stream: CharStream): void {
   stream.readString(idx);
 }
 
-// $FlowFixMe[missing-this-annot]
-export function scanUnicode(stream: CharStream, start: number): number {
+export function scanUnicode(
+  this: any,
+  stream: CharStream,
+  start: number,
+): number {
   const sPeek = stream.peek.bind(stream);
   let idx = start;
   let hexDigits = 0;
@@ -112,8 +114,8 @@ export function scanUnicode(stream: CharStream, start: number): number {
   return hexDigits;
 }
 
-// $FlowFixMe[missing-this-annot]
 export function readStringEscape(
+  this: any,
   str: string,
   stream: CharStream,
   start: number,
@@ -197,9 +199,14 @@ export function readStringEscape(
   return [str, idx, octal, lineStart];
 }
 
-// $FlowFixMe[missing-local-annot]
-// $FlowFixMe[missing-this-annot]
-function scanOctal(str, stream, char, start, octal) {
+function scanOctal(
+  this: any,
+  str: any,
+  stream: any,
+  char: any,
+  start: any,
+  octal: any,
+) {
   let len = 1,
     idx = start;
   if ('0' <= char && char <= '3') {
@@ -225,8 +232,7 @@ function scanOctal(str, stream, char, start, octal) {
   return [str, idx, octal];
 }
 
-// $FlowFixMe[missing-local-annot]
-function scanHexEscape2(stream, idx) {
+function scanHexEscape2(stream: any, idx: any) {
   let char = stream.peek(idx);
 
   if (isEOS(char)) return -1;

@@ -65,15 +65,13 @@ const EXPR_LOOP_OPERATOR = {};
 const EXPR_LOOP_NO_CHANGE = {};
 const EXPR_LOOP_EXPANSION = {};
 
-// $FlowFixMe[recursive-definition]
-function getLineNumber(x: any) {
+function getLineNumber(x: any): any {
   let stx;
   if (x instanceof Syntax) {
     stx = x;
   } else if (x instanceof T.RawSyntax) {
     stx = x.value;
   } else if (x instanceof T.RawDelimiter) {
-    // $FlowFixMe[prop-missing]
     return getLineNumber(x.inner.first());
   } else {
     throw new Error(`Not implemented yet ${x}`);
@@ -309,8 +307,7 @@ export class Enforester {
   enforestImportDeclaration(): any {
     let lookahead = this.peek();
     let defaultBinding = null;
-    // $FlowFixMe[underconstrained-implicit-instantiation]
-    let namedImports = List();
+    let namedImports = List<any>();
     let forSyntax = false;
 
     if (this.isStringLiteral(lookahead)) {
@@ -1231,8 +1228,7 @@ export class Enforester {
       kind = 'operator';
     }
 
-    // $FlowFixMe[underconstrained-implicit-instantiation]
-    let decls = List();
+    let decls = List<any>();
 
     while (true) {
       let term = this.enforestVariableDeclarator({
@@ -1355,8 +1351,9 @@ export class Enforester {
       // if nothing changed, maybe we just need to pop the expr stack
       if (term === EXPR_LOOP_NO_CHANGE && this.opCtx.stack.size > 0) {
         this.term = this.opCtx.combine(this.term);
-        // $FlowFixMe[incompatible-use]
-        let { prec, combine } = this.opCtx.stack.last();
+        let top = this.opCtx.stack.last();
+        if (top == null) throw new Error('operator stack is empty');
+        let { prec, combine } = top;
         this.opCtx.prec = prec;
         this.opCtx.combine = combine;
         this.opCtx.stack = this.opCtx.stack.pop();
@@ -1789,8 +1786,7 @@ export class Enforester {
     if (this.isParens(this.peek())) {
       args = this.matchParens();
     } else {
-      // $FlowFixMe[underconstrained-implicit-instantiation]
-      args = List();
+      args = List<any>();
     }
     return new T.NewExpression({
       callee,
@@ -2032,8 +2028,7 @@ export class Enforester {
   enforestObjectExpression(): any {
     let obj = this.matchCurlies();
 
-    // $FlowFixMe[underconstrained-implicit-instantiation]
-    let properties = List();
+    let properties = List<any>();
 
     let enf = new Enforester(obj, List(), this.context);
 
@@ -2313,15 +2308,13 @@ export class Enforester {
         throw this.createError(lookahead, 'unexpected transform');
       }
       prec = operatorTransform.value.prec;
-      // $FlowFixMe[missing-local-annot]
-      combine = (rightTerm) => {
+      combine = (rightTerm: any) => {
         return this.expandOperator(lookahead, operatorTransform, [rightTerm]);
       };
     } else {
       // all builtins are 16
       prec = 16;
-      // $FlowFixMe[missing-local-annot]
-      combine = (rightTerm) => {
+      combine = (rightTerm: any) => {
         if (operator.val() === '++' || operator.val() === '--') {
           return new T.UpdateExpression({
             operator: operator.val(),
@@ -2352,8 +2345,9 @@ export class Enforester {
     // first, pop the operator stack
     let test = this.opCtx.combine(this.term);
     if (this.opCtx.stack.size > 0) {
-      // $FlowFixMe[incompatible-use]
-      let { prec, combine } = this.opCtx.stack.last();
+      let top = this.opCtx.stack.last();
+      if (top == null) throw new Error('operator stack is empty');
+      let { prec, combine } = top;
       this.opCtx.stack = this.opCtx.stack.pop();
       this.opCtx.prec = prec;
       this.opCtx.combine = combine;
@@ -2388,15 +2382,13 @@ export class Enforester {
       }
       prec = operatorTransform.value.prec;
       assoc = operatorTransform.value.assoc;
-      // $FlowFixMe[missing-local-annot]
-      combine = (left: any, right) => {
+      combine = (left: any, right: any) => {
         return this.expandOperator(opStx, operatorTransform, [left, right]);
       };
     } else {
       prec = getOperatorPrec(opStx.value.val());
       assoc = getOperatorAssoc(opStx.value.val());
-      // $FlowFixMe[missing-local-annot]
-      combine = (left, right) =>
+      combine = (left: any, right: any) =>
         new T.BinaryExpression({
           left,
           right,
@@ -2418,8 +2410,9 @@ export class Enforester {
     } else {
       let term = this.opCtx.combine(leftTerm);
       // this.rest does not change
-      // $FlowFixMe[incompatible-use]
-      let { prec, combine } = this.opCtx.stack.last();
+      let top = this.opCtx.stack.last();
+      if (top == null) throw new Error('operator stack is empty');
+      let { prec, combine } = top;
       this.opCtx.stack = this.opCtx.stack.pop();
       this.opCtx.prec = prec;
       this.opCtx.combine = combine;
@@ -2445,8 +2438,7 @@ export class Enforester {
     return elements;
   }
 
-  // $FlowFixMe[missing-local-annot]
-  expandMacro() {
+  expandMacro(): any {
     let lookahead = this.peek();
     while (this.isCompiletimeTransform(lookahead)) {
       let name = this.matchRawSyntax();
@@ -2554,8 +2546,6 @@ export class Enforester {
         },
       ],
       this.context.bindings,
-      // $FlowFixMe[extra-arg]
-      true,
     );
     result = result.map((terms) => {
       if (terms instanceof Syntax) {
@@ -2603,10 +2593,12 @@ export class Enforester {
         return type === 'delimiter' || obj.kind === type;
       }
     }
+    let matchable: any = obj;
     return (
-      // $FlowFixMe[incompatible-type]
-      // $FlowFixMe[incompatible-use]
-      obj && (typeof obj.match === 'function' ? obj.match(type, val) : false)
+      matchable &&
+      (typeof matchable.match === 'function'
+        ? matchable.match(type, val)
+        : false)
     );
   }
 
@@ -2907,7 +2899,6 @@ export class Enforester {
   matchRawDelimiter(): List<Term> {
     let lookahead = this.advance();
     if (lookahead instanceof T.RawDelimiter) {
-      // $FlowFixMe[incompatible-type]
       return lookahead.inner;
     }
     throw this.createError(lookahead, 'expecting a RawDelimiter');
