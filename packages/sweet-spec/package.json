@@ -15,12 +15,12 @@
   "author": "Tim Disney",
   "license": "BSD-2-Clause",
   "devDependencies": {
-    "ava": "^0.19.1",
-    "babel-cli": "^6.24.1",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
-    "babel-preset-es2015-node5": "^1.2.0",
+    "ava": "0.19.1",
+    "babel-cli": "6.26.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "6.26.2",
+    "babel-preset-es2015-node5": "1.2.0",
     "eslint": "4.19.1",
     "sweet-spec-macro": "3.0.0",
-    "sweet.js": "^2.2.1"
+    "sweet.js": "2.2.1"
   }
 }

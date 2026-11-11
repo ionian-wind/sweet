@@ -16,8 +16,8 @@
     "docs": "asciidoctorjs doc/1.0/tutorial.adoc & asciidoctorjs doc/1.0/reference.adoc"
   },
   "devDependencies": {
-    "asciidoctor-cli": "^1.5.2-alpha.3",
-    "asciidoctor.js": "^1.5.4"
+    "asciidoctor-cli": "1.5.2-alpha.3",
+    "asciidoctor.js": "1.5.9"
   },
   "repository": {
     "type": "git",

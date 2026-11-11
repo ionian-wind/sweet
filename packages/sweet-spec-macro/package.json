@@ -9,11 +9,11 @@
   "author": "Tim Disney",
   "license": "BSD-2-Clause",
   "devDependencies": {
-    "ava": "^0.19.1",
-    "babel-core": "^6.25.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
+    "ava": "0.19.1",
+    "babel-core": "6.26.3",
+    "babel-plugin-transform-es2015-modules-commonjs": "6.26.2",
     "eslint": "4.19.1",
-    "sweet.js": "^2.2.1"
+    "sweet.js": "2.2.1"
   },
   "ava": {
     "files": [

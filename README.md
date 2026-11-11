@@ -145,12 +145,15 @@ applied:
 
 Dependencies otherwise stay close to the versions pinned in the original repositories.
 
-## Dependency alignment
+## Dependency alignment and pinning
 
-Shared dependencies use one version across every workspace, preferring the newest
-range already in use. Where a newer release worked, it was adopted — for example
-`ava` 0.19.1, `eslint` 4.19.1, `babel-eslint` 8.2.6, `babel-cli` ^6.24.1,
-`babel-core` ^6.25.0, and `@sweet-js/core` `^3.0.13`.
+Every dependency is pinned to an **exact version** (no `^` or `~` ranges), and shared
+dependencies use the same version across all workspaces. This makes installs
+reproducible alongside `package-lock.json`; `.npmrc` sets `save-exact=true` so newly
+added dependencies are pinned too.
+
+Notable versions: `ava` 0.19.1, `eslint` 4.19.1, `babel-eslint` 8.2.6,
+`babel-cli` 6.26.0, `babel-core` 6.26.3, and `@sweet-js/core` 3.0.13.
 
 `flow-bin` is pinned to **0.45.0** in every package: Flow 0.46+ rejects the archived
 `sweet-spec` type declarations for term constructors, so 0.45 is the newest version
