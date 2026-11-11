@@ -1,5 +1,7 @@
 # sweet-monorepo
 
+[![CI](https://github.com/ionian-wind/sweet/actions/workflows/ci.yml/badge.svg)](https://github.com/ionian-wind/sweet/actions/workflows/ci.yml)
+
 A [Turborepo](https://turbo.build/repo) monorepo that consolidates the repositories
 from the archived [`sweet-js`](https://github.com/orgs/sweet-js/repositories) GitHub
 organization into a single npm workspace, with one `build` / `test` / `lint` pipeline.

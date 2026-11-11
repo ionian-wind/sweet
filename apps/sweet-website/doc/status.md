@@ -80,6 +80,8 @@ fixes needed to make the archived packages work together on current Node.js.
   additional core reader/loader cases.
 - Coverage is collected with c8; every measured package enforces at least 87%
   statements, branches, and functions.
+- Pull requests run ESLint (`npm run lint`) and the full test suite (`npm test`) in
+  GitHub Actions.
 - The documentation is Markdown rendered by Jekyll and is current with this codebase.
 
 ## What stayed the same
