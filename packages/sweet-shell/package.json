@@ -1,7 +1,7 @@
 {
   "name": "sweet.js",
   "version": "3.0.15",
-  "description": "Deprecated package, use sweet-cli or sweet-core instead",
+  "description": "Deprecated workspace wrapper, use @ionian-wind/sweet or @ionian-wind/sweet-core instead",
   "main": "index.js",
   "bin": {
     "sjs": "sjs.js"
@@ -10,7 +10,7 @@
     "test": "ava",
     "coverage": "c8 ava"
   },
-  "author": "Tim Disney",
+  "author": "Dmitry Shadrunov <ionian.wind@gmail.com>",
   "licenses": [
     {
       "type": "BSD",
@@ -19,7 +19,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/sweet-js/sweet-shell.git"
+    "url": "git+https://github.com/ionian-wind/sweet.git",
+    "directory": "packages/sweet-shell"
   },
   "keywords": [
     "macros",
@@ -27,8 +28,8 @@
   ],
   "license": "BSD-2-Clause",
   "dependencies": {
-    "@sweet-js/cli": "3.0.13",
-    "@sweet-js/core": "3.0.13"
+    "@ionian-wind/sweet": "3.0.13",
+    "@ionian-wind/sweet-core": "3.0.13"
   },
   "type": "module",
   "exports": {
@@ -58,5 +59,19 @@
     "branches": 87,
     "functions": 87,
     "lines": 87
-  }
+  },
+  "contributors": [
+    "Tim Disney"
+  ],
+  "files": [
+    "index.js",
+    "node-loader.js",
+    "helpers.js",
+    "sjs.js"
+  ],
+  "homepage": "https://www.sweetjs.org",
+  "bugs": {
+    "url": "https://github.com/ionian-wind/sweet/issues"
+  },
+  "private": true
 }

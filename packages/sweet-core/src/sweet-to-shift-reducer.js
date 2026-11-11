@@ -1,5 +1,5 @@
 // @flow
-import Term, * as S from 'sweet-spec';
+import Term, * as S from '@ionian-wind/sweet-spec';
 import { complement } from 'ramda';
 import { List } from 'immutable';
 

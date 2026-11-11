@@ -15,12 +15,12 @@ use_anchors: true
 This monorepo brings the seven archived Sweet.js projects together so they can be
 built, tested, and documented from one place:
 
-- [`sweet-js/sweet-core`](https://github.com/sweet-js/sweet-core) → `@sweet-js/core`
-- [`sweet-js/sweet-cli`](https://github.com/sweet-js/sweet-cli) → `@sweet-js/cli`
-- [`sweet-js/sweet-helpers`](https://github.com/sweet-js/sweet-helpers) → `@sweet-js/helpers`
-- [`sweet-js/sweet-spec`](https://github.com/sweet-js/sweet-spec) → `sweet-spec`
-- [`sweet-js/sweet-spec-macro`](https://github.com/sweet-js/sweet-spec-macro) → `sweet-spec-macro`
-- [`sweet-js/sweet-shell`](https://github.com/sweet-js/sweet-shell) → `sweet.js`
+- [`sweet-js/sweet-core`](https://github.com/sweet-js/sweet-core) → `@ionian-wind/sweet-core`
+- [`sweet-js/sweet-cli`](https://github.com/sweet-js/sweet-cli) → `@ionian-wind/sweet`
+- [`sweet-js/sweet-helpers`](https://github.com/sweet-js/sweet-helpers) → `@ionian-wind/sweet-helpers`
+- [`sweet-js/sweet-spec`](https://github.com/sweet-js/sweet-spec) → `@ionian-wind/sweet-spec`
+- [`sweet-js/sweet-spec-macro`](https://github.com/sweet-js/sweet-spec-macro) → `@ionian-wind/sweet-spec-macro` (private)
+- [`sweet-js/sweet-shell`](https://github.com/sweet-js/sweet-shell) → `sweet.js` (private)
 - [`sweet-js/sweet-website`](https://github.com/sweet-js/sweet-website) → `@sweet-js/website`
 
 Each package was imported from its original `master` branch with `git subtree`, so the
@@ -54,18 +54,18 @@ fixes needed to make the archived packages work together on current Node.js.
 
 - Every workspace package is native ESM (`"type": "module"`).
 - Relative imports use explicit `.js` extensions.
-- `sweet-spec` ships a single ESM build; the transitional CommonJS output was removed.
+- `@ionian-wind/sweet-spec` ships a single ESM build; the transitional CommonJS output was removed.
 - The CLI uses static ESM imports and no longer relies on `createRequire`.
 - `ramda-fantasy` is imported through its default export for native ESM compatibility.
 
 ### Compatibility fixes
 
-- `sweet-spec` 4.1.0 is consumed from the workspace instead of a nested published
+- `@ionian-wind/sweet-spec` 4.1.0 is consumed from the workspace instead of a nested published
   4.0.0 copy.
 - The spec gained a `TypeElement` base class, optional `hasQuestionToken` fields, a
   `FormalParameters` union that accepts legacy binding terms, and TypeScript annotation
   fields renamed from `type` to `typeAnnotation`.
-- `sweet-spec-macro` no longer treats optional (`?`) attributes as required.
+- `@ionian-wind/sweet-spec-macro` no longer treats optional (`?`) attributes as required.
 - The `declare` DSL was ported to Sweet.js 3's term API, and the generated
   `dist/term-spec.js` is committed as a self-hosting bootstrap artifact.
 - The CLI's `--no-babel` / `-b` flag now correctly disables the Babel backend.
@@ -76,7 +76,7 @@ fixes needed to make the archived packages work together on current Node.js.
 ### Tests, coverage, and docs
 
 - Test coverage was expanded beyond the archived suites, including the CLI,
-  `sweet-spec`, the `sweet.js` wrapper, Babel preset, ESLint config, helpers, and
+  `@ionian-wind/sweet-spec`, the `@ionian-wind/sweet` wrapper, Babel preset, ESLint config, helpers, and
   additional core reader/loader cases.
 - Coverage is collected with c8; every measured package enforces at least 87%
   statements, branches, and functions.
@@ -97,9 +97,11 @@ fixes needed to make the archived packages work together on current Node.js.
 
 - This repository is not an official upstream release and is not maintained by the
   original Sweet.js maintainers.
-- The workspace packages are not published to npm from this repository; use them from
-  the workspace or build them locally.
-- The browser playground uses a prebuilt browser bundle, so the CLI and `@sweet-js/core`
+- The active packages `@ionian-wind/sweet`, `@ionian-wind/sweet-core`, and
+  `@ionian-wind/sweet-helpers` are published from this repository through GitHub Actions,
+  together with the `@ionian-wind/sweet-spec` runtime dependency. Older `@sweet-js/*` and
+  unscoped package names are not updated by this fork.
+- The browser playground uses a prebuilt browser bundle, so the CLI and `@ionian-wind/sweet-core`
   are the source of truth for current behavior.
 
 For the complete technical change list, see the

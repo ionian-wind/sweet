@@ -1,6 +1,7 @@
 // @flow
 import type SweetLoader from './sweet-loader.js';
 import { transformSync as babel } from '@babel/core';
+import sweetBabelPreset from './babel-preset.js';
 
 type CompileOptions = {
   refererName?: string,
@@ -53,6 +54,6 @@ export function compile(
   return babel(code, {
     babelrc: false,
     configFile: false,
-    presets: [['@sweet-js/babel-preset', { modules: false }]],
+    presets: [[sweetBabelPreset, { modules: false }]],
   });
 }

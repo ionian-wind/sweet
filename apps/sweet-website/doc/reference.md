@@ -177,10 +177,10 @@ Introspection and manipulation functions are provided in the helpers library doc
 
 # Helpers
 
-A library of helper functions for introspecting syntax objects is provided at `'@sweet-js/helpers'`. To use inside a macro definition, import `for syntax`.
+A library of helper functions for introspecting syntax objects is provided at `'@ionian-wind/sweet-helpers'`. To use inside a macro definition, import `for syntax`.
 
 ```js
-import { isStringLiteral } from '@sweet-js/helpers' for syntax;
+import { isStringLiteral } from '@ionian-wind/sweet-helpers' for syntax;
 
 syntax m = ctx => {
   return isStringLiteral(ctx.next().value) ? #`'a string'` : #`'not a string'`;
@@ -213,7 +213,7 @@ For syntax objects that represent delimiters, `unwrap` returns an object who's `
 For all other inputs `unwrap` returns the empty object.
 
 ```js
-import { unwrap } from '@sweet-js/helpers' for syntax;
+import { unwrap } from '@ionian-wind/sweet-helpers' for syntax;
 
 syntax m = ctx => {
   let id = ctx.next().value;
@@ -236,7 +236,7 @@ fromIdentifier(other: Syntax, s: string): Syntax
 Create a new identifier syntax object named `s` using the lexical context from `other`.
 
 ```js
-import { fromIdentifier } from '@sweet-js/helpers' for syntax;
+import { fromIdentifier } from '@ionian-wind/sweet-helpers' for syntax;
 
 syntax m = ctx => {
   let dummy = #`dummy`.get(0);
@@ -263,7 +263,7 @@ fromNumericLiteral(other: Syntax, n: number): Syntax
 Create a new numeric literal syntax object with the value `n` using the lexical context from `other`.
 
 ```js
-import { fromNumericLiteral } from '@sweet-js/helpers' for syntax;
+import { fromNumericLiteral } from '@ionian-wind/sweet-helpers' for syntax;
 
 syntax m = ctx => {
   let dummy = #`dummy`.get(0);
@@ -286,7 +286,7 @@ fromStringLiteral(other: Syntax, s: string): Syntax
 Create a new string literal syntax object with the value `s` using the lexical context from `other`.
 
 ```js
-import { unwrap, fromStringLiteral } from '@sweet-js/helpers' for syntax;
+import { unwrap, fromStringLiteral } from '@ionian-wind/sweet-helpers' for syntax;
 
 syntax to_str = ctx => {
   let dummy = #`dummy`.get(0);
@@ -309,7 +309,7 @@ fromPunctuator(other: Syntax, punc: string): Syntax
 Creates a punctuator (e.g. `+`, `==`, etc.) from its string representation `punc` using the lexical context from `other`.
 
 ```js
-import { fromPunctuator } from '@sweet-js/helpers' for syntax;
+import { fromPunctuator } from '@ionian-wind/sweet-helpers' for syntax;
 
 syntax m = ctx => {
   let dummy = #`dummy`.get(0);
@@ -331,7 +331,7 @@ fromKeyword(other: Syntax, kwd: string): Syntax
 Create a new keyword syntax object with the value `kwd` using the lexical context from `other`.
 
 ```js
-import { fromKeyword } from '@sweet-js/helpers' for syntax;
+import { fromKeyword } from '@ionian-wind/sweet-helpers' for syntax;
 
 syntax m = ctx => {
   let dummy = #`dummy`.get(0);
@@ -353,7 +353,7 @@ fromBraces(other: Syntax, inner: List<Syntax>): Syntax
 Creates a curly brace delimiter with inner syntax objects `inner` using the lexical context from `other`.
 
 ```js
-import { fromBraces } from '@sweet-js/helpers' for syntax;
+import { fromBraces } from '@ionian-wind/sweet-helpers' for syntax;
 
 syntax m = ctx => {
   let dummy = #`dummy`.get(0);
@@ -378,7 +378,7 @@ fromBrackets(other: Syntax, inner: List<Syntax>): Syntax
 Creates a bracket delimiter with inner syntax objects `inner` using the lexical context from `other`.
 
 ```js
-import { fromBrackets } from '@sweet-js/helpers' for syntax;
+import { fromBrackets } from '@ionian-wind/sweet-helpers' for syntax;
 
 syntax m = ctx => {
   let dummy = #`dummy`.get(0);
@@ -401,7 +401,7 @@ fromParens(other: Syntax, inner: List<Syntax>): Syntax
 Creates a paren delimiter with inner syntax objects `inner` using the lexical context from `other`.
 
 ```js
-import { fromParens } from '@sweet-js/helpers' for syntax;
+import { fromParens } from '@ionian-wind/sweet-helpers' for syntax;
 
 syntax m = ctx => {
   let dummy = #`dummy`.get(0);

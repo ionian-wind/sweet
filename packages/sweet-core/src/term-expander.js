@@ -1,6 +1,6 @@
 import { List } from 'immutable';
 import { isExpressionStatement, isLiteralStringExpression } from './terms.js';
-import Term, * as T from 'sweet-spec';
+import Term, * as T from '@ionian-wind/sweet-spec';
 import { freshScope } from './scope.js';
 import Compiler from './compiler.js';
 import { ALL_PHASES } from './syntax.js';

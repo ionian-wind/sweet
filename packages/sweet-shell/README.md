@@ -1,10 +1,16 @@
-# sweet-shell
+# sweet.js
 
-This is a wrapper npm package called `sweet.js` around the npm
-packages [`@sweet-js/cli`](https://github.com/sweet-js/sweet-cli) 
-and [`@sweet-js/core`](https://github.com/sweet-js/sweet-core). 
-It is deprecated; you should probably use either the cli or the core package depending on if you want to use the Sweet
-command line app or integrate the Sweet compiler as a library.
+A deprecated compatibility wrapper around
+[`@ionian-wind/sweet`](https://www.npmjs.com/package/@ionian-wind/sweet) and
+[`@ionian-wind/sweet-core`](https://www.npmjs.com/package/@ionian-wind/sweet-core).
 
-This package will keep upto date with its wrapped packages for the lifetime of the current major version (v3.x.x).
-We will stop updating this package after the next major version bump.
+Use the CLI if you want the `sjs` command, or the core package if you are embedding the
+Sweet compiler as a library.
+
+This package is published from a preservation fork of the archived Sweet.js
+repositories. See the [project status](https://www.sweetjs.org/doc/status.html) for what
+changed.
+
+## License
+
+BSD-2-Clause. Original Sweet.js code is by the Sweet.js contributors.

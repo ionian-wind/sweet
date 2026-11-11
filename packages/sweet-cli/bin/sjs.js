@@ -6,8 +6,8 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import semver from 'semver';
 
-import { compile } from '@sweet-js/core';
-import NodeLoader from '@sweet-js/core/dist/node-loader';
+import { compile } from '@ionian-wind/sweet-core';
+import NodeLoader from '@ionian-wind/sweet-core/dist/node-loader';
 
 const argv = yargs(hideBin(process.argv))
   .parserConfiguration({ 'boolean-negation': false })

@@ -1,7 +1,7 @@
 import test from 'ava';
 import fs from 'node:fs';
-import * as core from '@sweet-js/core';
-import CoreNodeLoader from '@sweet-js/core/dist/node-loader.js';
+import * as core from '@ionian-wind/sweet-core';
+import CoreNodeLoader from '@ionian-wind/sweet-core/dist/node-loader.js';
 import * as shell from '../index.js';
 import ShellNodeLoader from '../node-loader.js';
 

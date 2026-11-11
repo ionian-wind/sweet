@@ -1,6 +1,6 @@
 import test from 'ava';
-import { compile } from '@sweet-js/core';
-import NodeLoader from '@sweet-js/core/dist/node-loader';
+import { compile } from '@ionian-wind/sweet-core';
+import NodeLoader from '@ionian-wind/sweet-core/dist/node-loader';
 import { transformSync } from '@babel/core';
 import { join } from 'node:path';
 

@@ -1,5 +1,5 @@
 // @flow
-import Term, * as S from 'sweet-spec';
+import Term, * as S from '@ionian-wind/sweet-spec';
 import { List } from 'immutable';
 import { Enforester } from './enforester.js';
 import TermExpander from './term-expander.js';

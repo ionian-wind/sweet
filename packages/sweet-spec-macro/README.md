@@ -1,5 +1,14 @@
-# Sweet Spec Macro
+# @ionian-wind/sweet-spec-macro
 
-Generate terms from a flow-like spec.
+Generate Sweet.js terms from a Flow-like spec. This macro is used internally by
+Sweet.js and is not intended as a general-purpose library.
 
-Note: this project is developed for use in the Sweet.js internals and is not (yet) intended to be more generally useful.
+This package is published from a preservation fork of the archived Sweet.js
+repositories. See the [project status](https://www.sweetjs.org/doc/status.html) for
+what changed.
+
+## Install
+
+```sh
+npm install @ionian-wind/sweet-spec-macro
+```

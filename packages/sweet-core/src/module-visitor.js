@@ -1,7 +1,7 @@
 // @flow
 import { evalCompiletimeValue } from './load-syntax.js';
 import * as _ from 'ramda';
-import * as T from 'sweet-spec';
+import * as T from '@ionian-wind/sweet-spec';
 import * as S from './sweet-spec-utils.js';
 import { gensym } from './symbol.js';
 import {

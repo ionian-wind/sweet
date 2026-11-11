@@ -1,5 +1,5 @@
 // @flow
-import Term, * as S from 'sweet-spec';
+import Term, * as S from '@ionian-wind/sweet-spec';
 import type Syntax from './syntax.js';
 import type { SymbolClass } from './symbol.js';
 import type BindingMap from './binding-map.js';

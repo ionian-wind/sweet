@@ -39,7 +39,8 @@ This monorepo is a preservation and integration effort, not a new release of Swe
 It:
 
 - imports all seven original repositories with their full git history;
-- links the packages through npm workspaces (`@sweet-js/core`, `sweet-spec`, etc.);
+- links the packages through npm workspaces (`@ionian-wind/sweet-core`, `@ionian-wind/sweet-spec`, etc.);
+- publishes the original runtime packages under the `@ionian-wind` npm scope;
 - provides unified `build`, `test`, `lint`, and `clean` tasks via Turbo;
 - modernizes the build/test/lint toolchain (Babel 8, AVA 8, ESLint 10, Prettier 3,
   Flow 0.339) and upgrades the compiler's runtime dependencies (Immutable 5,
@@ -50,12 +51,12 @@ It:
 
 | Path                        | Package               | Description                                     |
 | --------------------------- | --------------------- | ----------------------------------------------- |
-| `packages/sweet-core`       | `@sweet-js/core`      | Hygienic macros for JavaScript (the compiler)   |
-| `packages/sweet-cli`        | `@sweet-js/cli`       | Command-line interface (`sjs`)                  |
-| `packages/sweet-helpers`    | `@sweet-js/helpers`   | Utilities for matching syntax in macros         |
-| `packages/sweet-spec`       | `sweet-spec`          | The Sweet.js Term specification                 |
-| `packages/sweet-spec-macro` | `sweet-spec-macro`    | Macro for defining term specifications          |
-| `packages/sweet-shell`      | `sweet.js`            | Deprecated wrapper package (use the CLI/core)   |
+| `packages/sweet-core`       | `@ionian-wind/sweet-core`      | Hygienic macros for JavaScript (the compiler)   |
+| `packages/sweet-cli`        | `@ionian-wind/sweet`       | Command-line interface (`sjs`)                  |
+| `packages/sweet-helpers`    | `@ionian-wind/sweet-helpers`   | Utilities for matching syntax in macros         |
+| `packages/sweet-spec`       | `@ionian-wind/sweet-spec` | The Sweet.js Term specification            |
+| `packages/sweet-spec-macro` | `@ionian-wind/sweet-spec-macro` | Macro for defining term specifications |
+| `packages/sweet-shell`      | `sweet.js` (private)  | Deprecated wrapper package                      |
 | `apps/sweet-website`        | `@sweet-js/website`   | Documentation website assets                    |
 | `packages/babel-preset`     | `@sweet-js/babel-preset` | Shared Babel 8 preset (preset-env + Flow)   |
 | `packages/eslint-config`    | `@sweet-js/eslint-config` | Shared ESLint 10 flat config              |
@@ -70,12 +71,12 @@ history is preserved under the package directory.
 
 | Package               | Original repository                                          | Original version | License        |
 | --------------------- | ------------------------------------------------------------ | ---------------- | -------------- |
-| `@sweet-js/core`      | [sweet-js/sweet-core](https://github.com/sweet-js/sweet-core) | 3.0.13           | BSD-2-Clause   |
-| `@sweet-js/cli`       | [sweet-js/sweet-cli](https://github.com/sweet-js/sweet-cli)   | 3.0.13           | BSD-2-Clause   |
-| `@sweet-js/helpers`   | [sweet-js/sweet-helpers](https://github.com/sweet-js/sweet-helpers) | 4.0.1      | BSD-2-Clause   |
-| `sweet-spec`          | [sweet-js/sweet-spec](https://github.com/sweet-js/sweet-spec) | 4.0.0 (local `4.1.0`) | BSD-2-Clause |
-| `sweet-spec-macro`    | [sweet-js/sweet-spec-macro](https://github.com/sweet-js/sweet-spec-macro) | 3.0.0 | BSD-2-Clause |
-| `sweet.js`            | [sweet-js/sweet-shell](https://github.com/sweet-js/sweet-shell) | 3.0.15         | BSD-2-Clause   |
+| `@ionian-wind/sweet-core`      | [sweet-js/sweet-core](https://github.com/sweet-js/sweet-core) | 3.0.13           | BSD-2-Clause   |
+| `@ionian-wind/sweet`       | [sweet-js/sweet-cli](https://github.com/sweet-js/sweet-cli)   | 3.0.13           | BSD-2-Clause   |
+| `@ionian-wind/sweet-helpers`   | [sweet-js/sweet-helpers](https://github.com/sweet-js/sweet-helpers) | 4.0.1      | BSD-2-Clause   |
+| `@ionian-wind/sweet-spec` | [sweet-js/sweet-spec](https://github.com/sweet-js/sweet-spec) | 4.0.0 (local `4.1.0`) | BSD-2-Clause |
+| `@ionian-wind/sweet-spec-macro` | [sweet-js/sweet-spec-macro](https://github.com/sweet-js/sweet-spec-macro) | 3.0.0 | BSD-2-Clause |
+| `sweet.js` (private) | [sweet-js/sweet-shell](https://github.com/sweet-js/sweet-shell) | 3.0.15         | BSD-2-Clause   |
 | `@sweet-js/website`   | [sweet-js/sweet-website](https://github.com/sweet-js/sweet-website) | 1.0.0      | BSD-2-Clause   |
 
 Every import is recorded as a subtree merge commit containing the upstream commit SHA,
@@ -111,8 +112,8 @@ npm run graph        # write the dependency graph to graph.html
 Run a task for a single workspace:
 
 ```bash
-npm run build -w @sweet-js/core
-npx turbo run test --filter=@sweet-js/cli
+npm run build -w @ionian-wind/sweet-core
+npx turbo run test --filter=@ionian-wind/sweet
 ```
 
 Run every test even if one package fails:
@@ -139,6 +140,28 @@ bundle install
 npm run docs:serve
 ```
 
+## Publishing packages
+
+The original runtime packages are published under the `@ionian-wind` npm scope by
+[`.github/workflows/publish.yml`](.github/workflows/publish.yml):
+
+| Repository package | Published name |
+| ------------------ | -------------- |
+| `packages/sweet-spec` | `@ionian-wind/sweet-spec` |
+| `packages/sweet-core` | `@ionian-wind/sweet-core` |
+| `packages/sweet-helpers` | `@ionian-wind/sweet-helpers` |
+| `packages/sweet-cli` | `@ionian-wind/sweet` |
+
+`@ionian-wind/sweet-spec` is required at runtime by core. The internal tooling packages
+(`@sweet-js/babel-preset`, `@sweet-js/eslint-config`, `@sweet-js/prettier-config`,
+`@sweet-js/test-loader`), `@ionian-wind/sweet-spec-macro`, the deprecated `sweet.js`
+wrapper, and `@sweet-js/website` stay private.
+
+Publishing runs on a published GitHub release or manually from the Actions tab. The
+workflow needs an `NPM_TOKEN` repository secret with publish access to `@ionian-wind`.
+Versions are not bumped automatically; bump the package versions before creating the
+release tag.
+
 ## Current status
 
 `npm run build`, `npm run lint`, and `npm test` all pass on Node 24 — **13/13 Turbo
@@ -146,35 +169,35 @@ tasks**.
 
 | Workspace | Build | Lint | Tests |
 | --------- | ----- | ---- | ----- |
-| `@sweet-js/core` | ✔ | ✔ | 294 passing (AVA 8) |
-| `@sweet-js/helpers` | ✔ | ✔ | 48 passing (AVA 8) |
-| `sweet-spec` | ✔ | — | 6 passing (generated terms) |
-| `sweet-spec-macro` | — | — | 8 passing (AVA 8) |
-| `@sweet-js/cli` | — | — | 7 passing (AVA 8) |
+| `@ionian-wind/sweet-core` | ✔ | ✔ | 294 passing (AVA 8) |
+| `@ionian-wind/sweet-helpers` | ✔ | ✔ | 48 passing (AVA 8) |
+| `@ionian-wind/sweet-spec` | ✔ | — | 6 passing (generated terms) |
+| `@ionian-wind/sweet-spec-macro` | — | — | 8 passing (AVA 8) |
+| `@ionian-wind/sweet` | — | — | 7 passing (AVA 8) |
 | `@sweet-js/babel-preset` | — | — | 5 passing (AVA 8) |
 | `@sweet-js/eslint-config` | — | — | 4 passing (AVA 8) |
 | `sweet.js` | — | — | 3 passing (AVA 8) |
 | `@sweet-js/website` | — | — | No test script |
 
 Coverage is collected with c8 through AVA. Every measured package enforces at least
-87% statements, branches, and functions through c8 `check-coverage`; `@sweet-js/core`
+87% statements, branches, and functions through c8 `check-coverage`; `@ionian-wind/sweet-core`
 additionally enforces 90% statements and functions.
 
 | Workspace | Statements | Functions |
 | --------- | ---------- | --------- |
-| `@sweet-js/core` | 90.9% | 91.7% |
-| `@sweet-js/helpers` | 93.1% | 93.6% |
-| `@sweet-js/cli` | 91.1% | 100% |
+| `@ionian-wind/sweet-core` | 90.9% | 91.7% |
+| `@ionian-wind/sweet-helpers` | 93.1% | 93.6% |
+| `@ionian-wind/sweet` | 91.1% | 100% |
 | `@sweet-js/babel-preset` | 100% | 100% |
 | `@sweet-js/eslint-config` | 100% | 100% |
 | `sweet.js` | 100% | 100% |
-| `sweet-spec` | excluded (generated `dist/term-spec.js`) | — |
+| `@ionian-wind/sweet-spec` | excluded (generated `dist/term-spec.js`) | — |
 | **Overall** | **91.1%** | **92.0%** |
 
 Overall measured source is **91.1% statements, 88.2% branches, and 92.0% functions**.
-The generated `sweet-spec/dist/term-spec.js` artifact is excluded from coverage; its
+The generated `packages/sweet-spec/dist/term-spec.js` artifact is excluded from coverage; its
 tests still run and cover construction, attribute validation, the term hierarchy, and
-cloning. `sweet-spec-macro` source is Sweet.js syntax consumed by the compiler, so it
+cloning. `@ionian-wind/sweet-spec-macro` source is Sweet.js syntax consumed by the compiler, so it
 is not instrumentable by Node's coverage tooling.
 
 ## Toolchain
@@ -197,14 +220,14 @@ All tooling majors are now current; no major upgrades are intentionally blocked.
 The archived repositories are not fully consistent with each other, and their 2017
 toolchain does not run unmodified on Node 24. The following fixes were applied:
 
-- **`sweet-spec`** — the local `4.1.0` master is now consumed by core/helpers. It
+- **`@ionian-wind/sweet-spec`** — the local `4.1.0` master is now consumed by core/helpers. It
   gained the missing `TypeElement` base class, optional `hasQuestionToken` fields, a
   `FormalParameters` union that accepts the legacy binding terms, and its TypeScript
   annotation fields were renamed from `type` to `typeAnnotation` because `type` is the
   term tag generated by the `declare` DSL.
-- **`sweet-spec-macro`** — optional (`?`) attributes are no longer treated as required
+- **`@ionian-wind/sweet-spec-macro`** — optional (`?`) attributes are no longer treated as required
   by the generated `hasOwnProperty` checks.
-- **`@sweet-js/core` / `@sweet-js/helpers`** — resolve `sweet-spec` from the local
+- **`@ionian-wind/sweet-core` / `@ionian-wind/sweet-helpers`** — resolve `@ionian-wind/sweet-spec` from the local
   workspace (`4.1.0`); the nested published `4.0.0` copy is no longer used.
 - **Babel** — migrated from Babel 6 to Babel 8 (`@babel/preset-env` +
   `@babel/preset-flow`, ESM-only packages). Core's runtime macro compiler now uses
@@ -220,7 +243,7 @@ toolchain does not run unmodified on Node 24. The following fixes were applied:
   suppressions and `@noflow` pragmas were removed; remaining gaps are typed through
   local libdefs and `any` annotations.
 - **Modules** — every workspace package is now native ESM (`"type": "module"`).
-  Relative imports carry explicit `.js` extensions, `sweet-spec` ships a single ESM
+  Relative imports carry explicit `.js` extensions, `@ionian-wind/sweet-spec` ships a single ESM
   build, and the CLI uses static imports instead of `createRequire`. The AVA loader is
   retained only to strip Flow types; it no longer models CommonJS interop or resolves
   extensionless imports.
@@ -229,18 +252,19 @@ toolchain does not run unmodified on Node 24. The following fixes were applied:
   `contains` helpers were replaced with `mergeRight` and `includes`, and
   shift-codegen 8 is imported through its named `codeGen` export. The unused
   `shift-reducer` and `semver` dependencies were removed from core.
-- **`sweet-spec` / `sweet-spec-macro` build** — the `declare` macro DSL was ported to
-  Sweet.js 3's term API, so the spec now builds with the workspace `@sweet-js/cli`
+- **`@ionian-wind/sweet-spec` / `@ionian-wind/sweet-spec-macro` build** — the `declare` macro DSL was ported to
+  Sweet.js 3's term API, so the spec now builds with the workspace `@ionian-wind/sweet`
   instead of the legacy `sjs` 2.2.1 compiler. Because the spec is self-hosting (Core
-  needs `sweet-spec` to compile anything), the generated
+  needs `@ionian-wind/sweet-spec` to compile anything), the generated
   `packages/sweet-spec/dist/term-spec.js` is committed as a bootstrap artifact; the
   build regenerates it and Babel emits the final `dist`.
 - **CLI/website** — the CLI was converted to ESM and upgraded to yargs 18.2 (latest).
   The website docs are now Markdown rendered by Jekyll; the old AsciiDoc pipeline was
   removed.
 
-No registry `sweet.js@2` dependency remains. The workspace package named `sweet.js` is
-only the local 3.0.15 compatibility wrapper around `@sweet-js/core`/`cli`.
+No registry `sweet.js@2` dependency remains. The private workspace package named
+`sweet.js` is only the local 3.0.15 compatibility wrapper around
+`@ionian-wind/sweet-core` and `@ionian-wind/sweet`.
 
 ## Dependency alignment and pinning
 
@@ -251,7 +275,7 @@ added dependencies are pinned too.
 
 Notable versions: `@babel/core` 8.1.0, `immutable` 5.1.10, `ramda` 0.32.0,
 `shift-codegen` 8.1.0, `ava` 8.4.0, `eslint` 10.14.0, `prettier` 3.9.10,
-`flow-bin` 0.339.0, `yargs` 18.2.0, `semver` 7.8.6, and `@sweet-js/core` 3.0.13.
+`flow-bin` 0.339.0, `yargs` 18.2.0, `semver` 7.8.6, and `@ionian-wind/sweet-core` 3.0.13.
 
 ## AI assistance
 

@@ -1,5 +1,5 @@
 {
-  "name": "@sweet-js/cli",
+  "name": "@ionian-wind/sweet",
   "description": "Hygienic Macros for JavaScript",
   "bin": {
     "sjs": "bin/sjs.js"
@@ -8,7 +8,7 @@
   "engines": {
     "node": "^22.20.0 || >=24.12.0"
   },
-  "author": "Tim Disney",
+  "author": "Dmitry Shadrunov <ionian.wind@gmail.com>",
   "licenses": [
     {
       "type": "BSD",
@@ -16,13 +16,14 @@
     }
   ],
   "dependencies": {
-    "@sweet-js/core": "3.0.13",
+    "@ionian-wind/sweet-core": "3.0.13",
     "semver": "7.8.6",
     "yargs": "18.2.0"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/sweet-js/sweet-cli.git"
+    "url": "git+https://github.com/ionian-wind/sweet.git",
+    "directory": "packages/sweet-cli"
   },
   "keywords": [
     "macros",
@@ -56,5 +57,18 @@
     "branches": 87,
     "functions": 87,
     "lines": 87
+  },
+  "contributors": [
+    "Tim Disney"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "bin"
+  ],
+  "homepage": "https://www.sweetjs.org",
+  "bugs": {
+    "url": "https://github.com/ionian-wind/sweet/issues"
   }
 }

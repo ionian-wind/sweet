@@ -15,7 +15,7 @@ Sweet brings the hygienic macros of languages like Scheme and Rust to JavaScript
 Sweet requires Node.js `^22.20` or `>=24.12`. Install the command line app:
 
 ```
-$ npm install -g @sweet-js/cli
+$ npm install -g @ionian-wind/sweet
 ```
 
 Write your sweet code:
@@ -37,12 +37,12 @@ console.log('hello, world!')
 The CLI is also available through `npx` without a global install:
 
 ```
-$ npx @sweet-js/cli my_sweet_code.js
+$ npx @ionian-wind/sweet my_sweet_code.js
 ```
 
 ## Next steps
 
 - **Learning**: read the [tutorial](doc/tutorial.html) or check out the [reference](doc/reference.html).
-- **Embedding**: use [`@sweet-js/core`](https://www.npmjs.com/package/@sweet-js/core) to compile Sweet from Node.
+- **Embedding**: use [`@ionian-wind/sweet-core`](https://www.npmjs.com/package/@ionian-wind/sweet-core) to compile Sweet from Node.
 - **Questions**: feel free to open an [issue](https://github.com/sweet-js/sweet-core/issues) on GitHub with any questions you might have.
 - **Contributing**: from documentation, website upkeep, bug fixes, and features we'd love your help! See the [contributing guide](https://github.com/sweet-js/sweet-core/blob/master/CONTRIBUTING.md) for pointers on how to get involved.

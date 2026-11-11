@@ -1,6 +1,6 @@
 // @flow
 
-import * as T from 'sweet-spec';
+import * as T from '@ionian-wind/sweet-spec';
 import * as _ from 'ramda';
 
 export const isImportDeclaration: any = _.is(T.ImportDeclaration);

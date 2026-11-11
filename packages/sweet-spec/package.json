@@ -1,5 +1,5 @@
 {
-  "name": "sweet-spec",
+  "name": "@ionian-wind/sweet-spec",
   "version": "4.1.0",
   "description": "The Sweet.js Term specification",
   "main": "dist/term-spec.js",
@@ -9,19 +9,19 @@
     "build:babel:esm": "babel --out-dir dist build",
     "build:flow": "sh gen-flow.sh",
     "build": "npm run build:sweet && npm run build:babel:esm && npm run build:flow",
-    "publish": "npm run build",
     "test": "ava",
-    "coverage": "c8 ava"
+    "coverage": "c8 ava",
+    "prepublishOnly": "npm run build"
   },
-  "author": "Tim Disney",
+  "author": "Dmitry Shadrunov <ionian.wind@gmail.com>",
   "license": "BSD-2-Clause",
   "devDependencies": {
     "@babel/cli": "8.1.0",
     "@sweet-js/babel-preset": "0.0.0",
-    "sweet-spec-macro": "3.0.0",
-    "@sweet-js/cli": "3.0.13",
-    "@sweet-js/core": "3.0.13",
-    "ava": "8.4.0"
+    "@ionian-wind/sweet": "3.0.13",
+    "@ionian-wind/sweet-core": "3.0.13",
+    "ava": "8.4.0",
+    "@ionian-wind/sweet-spec-macro": "3.0.0"
   },
   "exports": {
     ".": "./dist/term-spec.js",
@@ -43,5 +43,23 @@
       "build/**",
       "dist/term-spec.js"
     ]
+  },
+  "contributors": [
+    "Tim Disney"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://www.sweetjs.org",
+  "bugs": {
+    "url": "https://github.com/ionian-wind/sweet/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ionian-wind/sweet.git",
+    "directory": "packages/sweet-spec"
   }
 }

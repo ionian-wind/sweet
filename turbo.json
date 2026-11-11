@@ -6,24 +6,24 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", "build/**", "lib/**", "*.js", "*.flow"]
     },
-    "@sweet-js/core#build": {
+    "@ionian-wind/sweet-core#build": {
       "dependsOn": [],
       "outputs": ["dist/**"]
     },
-    "sweet-spec#build": {
-      "dependsOn": ["@sweet-js/core#build"],
+    "@ionian-wind/sweet-spec#build": {
+      "dependsOn": ["@ionian-wind/sweet-core#build"],
       "outputs": ["dist/**", "build/**"]
     },
     "test": {
-      "dependsOn": ["^build", "sweet-spec#build"],
+      "dependsOn": ["^build", "@ionian-wind/sweet-spec#build"],
       "outputs": []
     },
     "lint": {
-      "dependsOn": ["^build", "sweet-spec#build"],
+      "dependsOn": ["^build", "@ionian-wind/sweet-spec#build"],
       "outputs": []
     },
     "coverage": {
-      "dependsOn": ["^build", "sweet-spec#build"],
+      "dependsOn": ["^build", "@ionian-wind/sweet-spec#build"],
       "outputs": ["coverage/**"]
     },
     "clean": {

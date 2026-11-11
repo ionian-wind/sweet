@@ -2,7 +2,7 @@
   "name": "@sweet-js/website",
   "description": "Website and documentation for Sweet.js",
   "version": "1.0.0",
-  "author": "Tim Disney",
+  "author": "Dmitry Shadrunov <ionian.wind@gmail.com>",
   "licenses": [
     {
       "type": "BSD",
@@ -21,5 +21,8 @@
     "macros",
     "javascript"
   ],
-  "license": "BSD-2-Clause"
+  "license": "BSD-2-Clause",
+  "contributors": [
+    "Tim Disney"
+  ]
 }

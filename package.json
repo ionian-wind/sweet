@@ -25,5 +25,6 @@
     "prettier": "3.9.10",
     "turbo": "2.11.10"
   },
-  "prettier": "@sweet-js/prettier-config"
+  "prettier": "@sweet-js/prettier-config",
+  "author": "Dmitry Shadrunov <ionian.wind@gmail.com>"
 }

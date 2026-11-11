@@ -1,18 +1,18 @@
 {
-  "name": "sweet-spec-macro",
+  "name": "@ionian-wind/sweet-spec-macro",
   "version": "3.0.0",
   "description": "A Sweet.js macro for defining specs",
   "main": "src/spec.js",
   "scripts": {
     "test": "ava"
   },
-  "author": "Tim Disney",
+  "author": "Dmitry Shadrunov <ionian.wind@gmail.com>",
   "license": "BSD-2-Clause",
   "devDependencies": {
     "@babel/core": "8.1.0",
     "@sweet-js/babel-preset": "0.0.0",
     "ava": "8.4.0",
-    "@sweet-js/core": "3.0.13",
+    "@ionian-wind/sweet-core": "3.0.13",
     "@sweet-js/test-loader": "0.0.0"
   },
   "ava": {
@@ -24,5 +24,21 @@
       "./ava.setup.mjs"
     ],
     "timeout": "2m"
-  }
+  },
+  "contributors": [
+    "Tim Disney"
+  ],
+  "files": [
+    "src"
+  ],
+  "homepage": "https://www.sweetjs.org",
+  "bugs": {
+    "url": "https://github.com/ionian-wind/sweet/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ionian-wind/sweet.git",
+    "directory": "packages/sweet-spec-macro"
+  },
+  "private": true
 }

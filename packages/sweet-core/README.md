@@ -1,22 +1,27 @@
-[![Build Status](https://travis-ci.org/sweet-js/sweet.js.svg)](https://travis-ci.org/sweet-js/sweet.js)
+# @ionian-wind/sweet-core
 
-[![Join the chat at https://gitter.im/mozilla/sweet.js](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mozilla/sweet.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+Hygienic macros for JavaScript. Sweet lets you define new syntax directly in
+JavaScript and compile it away, without a separate parser or preprocessor.
 
-Hygienic Macros for JavaScript!
+This package is published from a preservation fork of the archived Sweet.js
+repositories. It is not an official upstream release. See the
+[project status](https://www.sweetjs.org/doc/status.html) for what changed.
 
-Macros allow *you* to build the language of your dreams. Sweeten JavaScript by defining new syntax for your code.
-
-Currently, Sweet should be considered experimental and under heavy development ([re-development](https://medium.com/@disnet/announcing-sweet-js-1-0-e7f4f3e15594#.fo9kyqu48) more like). As such, the API will be undergoing a bit of churn until probably the end of the year. So, probably best not to try Sweet in production systems just yet. If you're interested in helping out though we'd love to have you!
-
-# Getting started
-
-Install the command line app with npm:
+## Install
 
 ```sh
-$ npm install -g @sweet-js/cli
+npm install @ionian-wind/sweet-core
 ```
 
-Write your sweet code:
+For the command-line compiler:
+
+```sh
+npm install -g @ionian-wind/sweet
+```
+
+## Getting started
+
+Write Sweet code:
 
 ```js
 syntax hi = function (ctx) {
@@ -25,17 +30,20 @@ syntax hi = function (ctx) {
 hi
 ```
 
-And compile:
+Compile it:
 
 ```sh
-$ sjs my_sweet_code.js
-console.log('hello, world!')
+sjs my_sweet_code.js
 ```
 
-# Learning More
+## Documentation
 
-* Read the [tutorial](https://www.sweetjs.org/doc/tutorial.html).
-* Read the [reference documentation](https://www.sweetjs.org/doc/reference.html).
-* Play with the [editor](https://www.sweetjs.org/browser/editor.html).
-* Discuss on [Google Groups](https://groups.google.com/forum/#!forum/sweetjs).
-* Hang out on IRC: #sweet.js at irc.mozilla.org and on [Gitter](https://gitter.im/sweet-js/sweet.js).
+- [Tutorial](https://www.sweetjs.org/doc/tutorial.html)
+- [Reference](https://www.sweetjs.org/doc/reference.html)
+- [Project status](https://www.sweetjs.org/doc/status.html)
+- [Editor](https://www.sweetjs.org/browser/editor.html)
+- [Source repository](https://github.com/ionian-wind/sweet)
+
+## License
+
+BSD-2-Clause. Original Sweet.js code is by the Sweet.js contributors.

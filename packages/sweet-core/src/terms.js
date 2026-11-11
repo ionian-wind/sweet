@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import Term from 'sweet-spec';
+import Term from '@ionian-wind/sweet-spec';
 
 // bindings
 export const isBindingWithDefault = R.whereEq({ type: 'BindingWithDefault' });

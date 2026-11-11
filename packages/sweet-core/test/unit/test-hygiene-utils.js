@@ -6,7 +6,7 @@ import {
   BindingPropertyIdentifier,
   BindingPropertyProperty,
   ObjectBinding,
-} from 'sweet-spec';
+} from '@ionian-wind/sweet-spec';
 import { collectBindings } from '../../src/hygiene-utils.js';
 
 test('collects a single binding identifier', (t) => {

@@ -1,1 +1,1 @@
-export { default } from '@sweet-js/core/dist/node-loader';
+export { default } from '@ionian-wind/sweet-core/dist/node-loader';

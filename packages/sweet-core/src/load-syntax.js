@@ -1,4 +1,4 @@
-import * as S from 'sweet-spec';
+import * as S from '@ionian-wind/sweet-spec';
 import * as _ from 'ramda';
 import { List } from 'immutable';
 import Syntax from './syntax.js';

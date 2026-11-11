@@ -6,12 +6,13 @@ import { List } from 'immutable';
 import Compiler from './compiler.js';
 import { ALL_PHASES } from './syntax.js';
 import BindingMap from './binding-map.js';
-import Term from 'sweet-spec';
+import Term from '@ionian-wind/sweet-spec';
 import SweetModule from './sweet-module.js';
 import * as _ from 'ramda';
 import ScopeReducer from './scope-reducer.js';
 import { wrapInTerms } from './macro-context.js';
 import { transformSync as babel } from '@babel/core';
+import sweetBabelPreset from './babel-preset.js';
 import Store from './store.js';
 import Multimap from './multimap.js';
 
@@ -65,7 +66,7 @@ export default class SweetLoader {
         return babel(c, {
           babelrc: false,
           configFile: false,
-          presets: [['@sweet-js/babel-preset', { modules: false }]],
+          presets: [[sweetBabelPreset, { modules: false }]],
         });
       },
     };

@@ -10,5 +10,6 @@
   "dependencies": {
     "@babel/core": "8.1.0",
     "@babel/preset-flow": "8.0.1"
-  }
+  },
+  "author": "Dmitry Shadrunov <ionian.wind@gmail.com>"
 }

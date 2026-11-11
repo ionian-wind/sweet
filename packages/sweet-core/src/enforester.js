@@ -4,7 +4,7 @@ import {
   isStaticMemberExpression,
   isComputedMemberExpression,
 } from './terms.js';
-import Term, * as T from 'sweet-spec';
+import Term, * as T from '@ionian-wind/sweet-spec';
 import ramdaFantasy from 'ramda-fantasy';
 
 const { Maybe } = ramdaFantasy;

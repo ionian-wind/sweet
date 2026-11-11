@@ -6,7 +6,7 @@ import ramdaFantasy from 'ramda-fantasy';
 
 const { Maybe } = ramdaFantasy;
 import * as _ from 'ramda';
-import * as T from 'sweet-spec';
+import * as T from '@ionian-wind/sweet-spec';
 
 import { TokenType, TokenClass, TypeCodes } from './tokens.js';
 

@@ -1,5 +1,5 @@
 // @flow
-import Term, * as T from 'sweet-spec';
+import Term, * as T from '@ionian-wind/sweet-spec';
 import * as _ from 'ramda';
 import * as S from './sweet-spec-utils.js';
 import codegen from './codegen.js';

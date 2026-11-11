@@ -1,1 +1,1 @@
-export * from '@sweet-js/core';
+export * from '@ionian-wind/sweet-core';

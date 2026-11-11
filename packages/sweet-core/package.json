@@ -1,12 +1,12 @@
 {
-  "name": "@sweet-js/core",
+  "name": "@ionian-wind/sweet-core",
   "description": "Hygienic Macros for JavaScript",
   "main": "dist/sweet.js",
   "version": "3.0.13",
   "engines": {
     "node": "^22.20.0 || >=24.12.0"
   },
-  "author": "Tim Disney",
+  "author": "Dmitry Shadrunov <ionian.wind@gmail.com>",
   "licenses": [
     {
       "type": "BSD",
@@ -26,8 +26,8 @@
     "test:262": "ava test/parser/test-run-test262.js",
     "test:ci": "npm run pretest && ava && ava test/parser/test-*.js",
     "test": "ava",
-    "prepublish": "npm run build",
-    "coverage": "c8 ava"
+    "coverage": "c8 ava",
+    "prepublishOnly": "npm run build"
   },
   "files": [
     "dist",
@@ -38,16 +38,17 @@
   },
   "dependencies": {
     "@babel/core": "8.1.0",
-    "@sweet-js/babel-preset": "0.0.0",
     "immutable": "5.1.10",
     "ramda": "0.32.0",
     "ramda-fantasy": "0.8.0",
     "readtable": "0.0.1",
     "resolve": "1.22.14",
     "shift-codegen": "8.1.0",
-    "sweet-spec": "4.1.0",
     "transit-js": "0.8.874",
-    "utils-dirname": "1.0.0"
+    "utils-dirname": "1.0.0",
+    "@babel/preset-env": "8.0.7",
+    "@babel/preset-flow": "8.0.1",
+    "@ionian-wind/sweet-spec": "4.1.0"
   },
   "devDependencies": {
     "@babel/cli": "8.1.0",
@@ -63,7 +64,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/sweet-js/sweet.js.git"
+    "url": "git+https://github.com/ionian-wind/sweet.git",
+    "directory": "packages/sweet-core"
   },
   "keywords": [
     "macros",
@@ -106,5 +108,15 @@
     "branches": 87,
     "lines": 90,
     "functions": 90
+  },
+  "contributors": [
+    "Tim Disney"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://www.sweetjs.org",
+  "bugs": {
+    "url": "https://github.com/ionian-wind/sweet/issues"
   }
 }

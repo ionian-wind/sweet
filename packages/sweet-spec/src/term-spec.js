@@ -1,6 +1,6 @@
 #lang 'sweet.js';
 'lang sweet.js';
-import { declare } from 'sweet-spec-macro';
+import { declare } from '@ionian-wind/sweet-spec-macro';
 
 declare export default class Term {}
 
