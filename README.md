@@ -161,6 +161,17 @@ that keeps both `core` and `helpers` green. The `sweet-spec-macro` tests import 
 macro as `./src/spec.js` because ava 0.19 resolves relative imports from the package
 root.
 
+## AI assistance
+
+The monorepo integration was built with the help of an AI coding agent (OpenCode,
+running DeepSeek V4.1 Flash). The agent scaffolded the Turbo/npm workspace, imported
+the original repositories, implemented the compatibility fixes and dependency
+alignment/pinning, and wrote this documentation.
+
+The original Sweet.js source code and git history were written by the Sweet.js
+contributors and are preserved here unmodified except for the compatibility fixes
+listed above. AI-assisted changes should be reviewed like any other contribution.
+
 ## License
 
 This monorepo is released under the **BSD 2-Clause License**; see
