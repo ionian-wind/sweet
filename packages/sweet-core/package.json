@@ -52,12 +52,12 @@
     "@babel/cli": "7.29.7",
     "@babel/register": "7.29.13",
     "@sweet-js/eslint-config": "0.0.0",
-    "angular": "1.6.0",
+    "angular": "1.8.3",
     "ava": "5.3.1",
     "eslint": "9.39.5",
     "expect.js": "0.3.1",
     "flow-bin": "0.339.0",
-    "jquery": "3.1.1",
+    "jquery": "4.0.0",
     "rimraf": "6.1.4"
   },
   "repository": {
@@ -73,7 +73,8 @@
     "failWithoutAssertions": false,
     "files": [
       "test/unit/*.js",
-      "test/parser/test-ast.js"
+      "test/parser/test-ast.js",
+      "test/parser/test-compile-external-libs.js"
     ],
     "require": [
       "@babel/register"
