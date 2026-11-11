@@ -1,5 +1,5 @@
 exclude: ["node_modules"]
 include: ["_redirects"]
-gems:
+plugins:
   - jekyll-toc
 highlighter: rouge

@@ -16,6 +16,8 @@ Thanks for contributing! So happy you are here!
 
    `npm run docs` produces a static build.
 1. Do not commit generated `_site/` output or other build artifacts.
+1. Pushes to `main` that touch `apps/sweet-website/**` deploy to GitHub Pages through
+   `.github/workflows/pages.yml`.
 1. Run the repository checks from the root with `npm test` and `npm run lint`.
 
 ## Contributor Covenant Code of Conduct
