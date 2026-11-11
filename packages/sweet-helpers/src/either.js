@@ -1,6 +1,5 @@
 'lang sweet.js';
 // @flow
-/* eslint-disable no-undef */
 
 export class Either<L, R> {
   right: any;

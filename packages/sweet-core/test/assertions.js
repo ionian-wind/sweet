@@ -26,7 +26,7 @@ function testParseWithOpts(t, acc, code, expectedAst) {
   try {
     t.deepEqual(expectedAst, acc(getAst(code)));
   } catch (e) {
-    throw new Error(e.message);
+    throw new Error(e.message, { cause: e });
   }
 }
 
@@ -46,6 +46,7 @@ export function testEval(store, cb) {
   let loader = new StoreLoader(__dirname, store);
   let result = compile('main.js', loader).code;
 
+  // eslint-disable-next-line no-unassigned-vars
   var output;
   try {
     eval(result);
@@ -54,6 +55,7 @@ export function testEval(store, cb) {
       `Syntax error: ${e.message}
 
 ${result}`,
+      { cause: e },
     );
   }
   return cb(output);

@@ -3013,7 +3013,7 @@ export class Enforester {
   }
 
   createError(stx: ?(Syntax | Term), message: string): any {
-    let ctx = '';
+    let ctx: string;
     let offending = stx;
     if (this.rest.size > 0) {
       ctx = this.rest

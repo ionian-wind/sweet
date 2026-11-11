@@ -46,6 +46,7 @@ class EntrypointNodeLoader extends NodeLoader {
 }
 
 export function compileAndEval(code) {
+  // eslint-disable-next-line no-unassigned-vars
   let output;
   let loader = new EntrypointNodeLoader(code, __dirname);
   let res = transformSync(compile('*entrypoint*', loader).code, {

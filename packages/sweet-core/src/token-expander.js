@@ -162,15 +162,14 @@ export default class TokenExpander extends ASTDispatcher {
       this.context.isEntrypoint,
     );
     let defaultBinding = null;
-    let namedImports = List<any>();
     if (term.defaultBinding != null) {
       if (!isBoundToCompiletime(term.defaultBinding.name, this.context.store)) {
         defaultBinding = term.defaultBinding;
       }
     }
     if (term instanceof S.Import) {
-      let namedImportsAny: any = term.namedImports;
-      namedImports = namedImportsAny.filter(
+      let namedImports: any = term.namedImports;
+      namedImports = namedImports.filter(
         (specifier) =>
           !isBoundToCompiletime(specifier.binding.name, this.context.store),
       );

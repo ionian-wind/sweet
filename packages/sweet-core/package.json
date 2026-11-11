@@ -54,7 +54,7 @@
     "@sweet-js/eslint-config": "0.0.0",
     "angular": "1.8.3",
     "ava": "5.3.1",
-    "eslint": "9.39.5",
+    "eslint": "10.14.0",
     "expect.js": "0.3.1",
     "flow-bin": "0.339.0",
     "jquery": "4.0.0",

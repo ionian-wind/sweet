@@ -125,7 +125,6 @@ export default class Parser<A, C> {
     });
   }
 
-  // eslint-disable-next-line no-undef
   ['fantasy-land/map']<B>(f: (A) => B): Parser<B, C> {
     return this.map(f);
   }

@@ -537,7 +537,7 @@ export default class Syntax {
         }),
       });
     }
-    let oldScopeset: List<any> = List();
+    let oldScopeset: List<any>;
     if (phase === ALL_PHASES) {
       oldScopeset = this.scopesets.all;
     } else {

@@ -280,7 +280,7 @@ export function retrieveSequenceLength(
     if (table.isValue) return idx;
     return -1;
   } else {
-    return retrieveSequenceLength(table[char], stream, ++idx);
+    return retrieveSequenceLength(table[char], stream, idx + 1);
   }
 }
 

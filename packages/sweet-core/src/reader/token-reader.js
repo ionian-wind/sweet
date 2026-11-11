@@ -117,17 +117,18 @@ class TokenReader extends Reader {
     exprAllowed: boolean,
   ): List<any> {
     let result,
-      results = prefix,
-      done = false;
-    do {
+      results = prefix;
+    while (true) {
       if (isEOS(stream.peek())) break;
-      done = typeof close === 'function' ? close() : stream.peek() === close;
+      let done =
+        typeof close === 'function' ? close() : stream.peek() === close;
       result = this.readToken(stream, results, exprAllowed);
 
       if (result !== EmptyToken) {
         results = results.push(result);
       }
-    } while (!done);
+      if (done) break;
+    }
     return results;
   }
 
