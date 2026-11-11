@@ -1,7 +1,7 @@
 // @flow
-import SweetLoader from './sweet-loader';
+import SweetLoader from './sweet-loader.js';
 import vm from 'vm';
-import Store from './store';
+import Store from './store.js';
 
 export default class extends SweetLoader {
   store: Map<string, string>;

@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import { items, testParseComparison } from '../assertions';
+import { items, testParseComparison } from '../assertions.js';
 
 test(
   'CallExpression followed by identifier',

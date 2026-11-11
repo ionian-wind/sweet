@@ -1,5 +1,5 @@
 import test from 'ava';
-import { compileAndEval } from './_helper';
+import { compileAndEval } from './_helper.js';
 
 test('a mapped combinator should work inside a macro', (t) => {
   let output = compileAndEval(`

@@ -1,11 +1,11 @@
 'lang sweet.js';
 // @flow
-import Parser from './parser';
-import { ImmutableContext } from './parser';
-import * as H from './helpers';
-import type { Term } from './helpers';
-import { Either, Left, Right } from './either';
-import { Just } from './maybe';
+import Parser from './parser.js';
+import { ImmutableContext } from './parser.js';
+import * as H from './helpers.js';
+import type { Term } from './helpers.js';
+import { Either, Left, Right } from './either.js';
+import { Just } from './maybe.js';
 
 function unsafeProp(prop: string, obj: any): any {
   return obj[prop];

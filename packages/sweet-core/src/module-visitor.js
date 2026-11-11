@@ -1,18 +1,21 @@
 // @flow
-import { evalCompiletimeValue } from './load-syntax';
+import { evalCompiletimeValue } from './load-syntax.js';
 import * as _ from 'ramda';
 import * as T from 'sweet-spec';
-import * as S from './sweet-spec-utils';
-import { gensym } from './symbol';
-import { ModuleNamespaceTransform, CompiletimeTransform } from './transforms';
-import { collectBindings } from './hygiene-utils';
-import SweetModule from './sweet-module';
+import * as S from './sweet-spec-utils.js';
+import { gensym } from './symbol.js';
+import {
+  ModuleNamespaceTransform,
+  CompiletimeTransform,
+} from './transforms.js';
+import { collectBindings } from './hygiene-utils.js';
+import SweetModule from './sweet-module.js';
 import { List } from 'immutable';
-import SweetToShiftReducer from './sweet-to-shift-reducer';
+import SweetToShiftReducer from './sweet-to-shift-reducer.js';
 import { codeGen as codegen, FormattedCodeGen } from 'shift-codegen';
-import Syntax from './syntax';
+import Syntax from './syntax.js';
 
-import type { Context } from './sweet-loader';
+import type { Context } from './sweet-loader.js';
 
 export function isBoundToCompiletime(
   name: Syntax,

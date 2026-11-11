@@ -2,8 +2,8 @@
 
 import { isEOS, getCurrentReadtable } from 'readtable';
 import { code } from 'esutils';
-import { isTerminating, getHexValue } from './utils';
-import { NumericToken } from '../tokens';
+import { isTerminating, getHexValue } from './utils.js';
+import { NumericToken } from '../tokens.js';
 
 import type { CharStream } from 'readtable';
 

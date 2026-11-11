@@ -1,8 +1,8 @@
 // @flow
 import Term, * as S from 'sweet-spec';
-import type Syntax from './syntax';
-import type { SymbolClass } from './symbol';
-import type BindingMap from './binding-map';
+import type Syntax from './syntax.js';
+import type { SymbolClass } from './symbol.js';
+import type BindingMap from './binding-map.js';
 
 export default class extends Term.CloneReducer {
   scopes: Array<{ scope: SymbolClass, phase: number | {}, flip: boolean }>;

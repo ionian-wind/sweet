@@ -2,14 +2,12 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { createRequire } from 'node:module';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import semver from 'semver';
 
-const require = createRequire(import.meta.url);
-const { compile } = require('@sweet-js/core');
-const NodeLoader = require('@sweet-js/core/dist/node-loader').default;
+import { compile } from '@sweet-js/core';
+import NodeLoader from '@sweet-js/core/dist/node-loader';
 
 const argv = yargs(hideBin(process.argv))
   .usage('Usage: sjs [options] files ...')

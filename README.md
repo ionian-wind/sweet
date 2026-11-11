@@ -163,15 +163,19 @@ toolchain does not run unmodified on Node 24. The following fixes were applied:
   `transformSync`; the helpers ESM build targets Node 8 so class fields are lowered for
   Sweet's enforester.
 - **Tests** — migrated from ava 0.19 to AVA 8.4. Tests now run as ESM through a small
-  shared loader (`@sweet-js/test-loader`) that strips Flow and resolves extensionless
-  imports. Duplicate titles were made unique and snapshots regenerated.
+  shared loader (`@sweet-js/test-loader`) that strips Flow types. Duplicate titles were
+  made unique and snapshots regenerated.
 - **Lint/formatting** — migrated from ESLint 4 + Prettier 1 to ESLint 10 flat config and
   Prettier 3, shared through the local tooling packages.
 - **Flow** — migrated from 0.45 to 0.339. The package-local configs were replaced by a
-  single root `.flowconfig` (needed for hoisted `node_modules`). Legacy type errors are
-  recorded as coded `$FlowFixMe[...]` suppressions, and
-  `sweet-helpers/src/parser.js` is marked `@noflow` because modern Flow crashes on its
-  generic method signatures.
+  single root `.flowconfig` (needed for hoisted `node_modules`). All legacy
+  suppressions and `@noflow` pragmas were removed; remaining gaps are typed through
+  local libdefs and `any` annotations.
+- **Modules** — every workspace package is now native ESM (`"type": "module"`).
+  Relative imports carry explicit `.js` extensions, `sweet-spec` ships a single ESM
+  build, and the CLI uses static imports instead of `createRequire`. The AVA loader is
+  retained only to strip Flow types; it no longer models CommonJS interop or resolves
+  extensionless imports.
 - **Runtime dependencies** — upgraded `immutable` 3.8 → 5.1, `ramda` 0.22 → 0.32,
   `ramda-fantasy` 0.6 → 0.8, and `shift-codegen` 5 → 8. Ramda's removed `merge` and
   `contains` helpers were replaced with `mergeRight` and `includes`, and

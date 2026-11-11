@@ -1,13 +1,13 @@
 // @flow
 
-import { scanUnicode } from './utils';
+import { scanUnicode } from './utils.js';
 
 import { isEOS, getCurrentReadtable } from 'readtable';
 import type { CharStream } from 'readtable';
 
-import { IdentifierToken } from '../tokens';
+import { IdentifierToken } from '../tokens.js';
 
-import { isTerminating, isIdentifierPart, isIdentifierStart } from './utils';
+import { isTerminating, isIdentifierPart, isIdentifierStart } from './utils.js';
 
 let terminates;
 

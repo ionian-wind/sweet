@@ -6,7 +6,7 @@ import { List } from 'immutable';
 import type { Readtable, CharStream } from 'readtable';
 
 import { code } from 'esutils';
-import type { TokenTree } from '../tokens';
+import type { TokenTree } from '../tokens.js';
 import {
   getLineNumber,
   isPunctuator,
@@ -14,7 +14,7 @@ import {
   isBraces,
   isParens,
   isIdentifier,
-} from '../tokens';
+} from '../tokens.js';
 
 const {
   isLineTerminator,
@@ -25,8 +25,11 @@ const {
 } = code;
 
 import * as R from 'ramda';
-import { Maybe } from 'ramda-fantasy';
-const Nothing = Maybe.Nothing;
+import ramdaFantasy from 'ramda-fantasy';
+import type { Maybe } from 'ramda-fantasy';
+
+const { Maybe: MaybeValue } = ramdaFantasy;
+const Nothing = MaybeValue.Nothing;
 
 // TODO: also, need to handle contextual yield
 const literalKeywords = ['this', 'null', 'true', 'false'];
@@ -443,7 +446,7 @@ export function isExprPrefix(
 
 function popMaybe<T>(p: List<T>): Maybe<T> {
   if (p.size >= 1) {
-    return Maybe.of(p.last());
+    return MaybeValue.of(p.last());
   }
   return Nothing();
 }
@@ -453,7 +456,7 @@ function isTopStandaloneKeyword(prefix: List<TokenTree>) {
   return popRestMaybe(prefix)
     .map(([kwd, rest]) => {
       if (isNonLiteralKeyword(kwd)) {
-        return Maybe.maybe(
+        return MaybeValue.maybe(
           true,
           (dot) => !isPunctuator(dot, '.'),
           popMaybe(rest),
@@ -472,7 +475,7 @@ function isTopParensWithKeyword(prefix: List<TokenTree>) {
     )
     .map(([kwd, rest]) => {
       if (isNonLiteralKeyword(kwd)) {
-        return Maybe.maybe(
+        return MaybeValue.maybe(
           true,
           (dot) => !isPunctuator(dot, '.'),
           popMaybe(rest),
@@ -487,7 +490,7 @@ function popRestMaybe(p: List<TokenTree>): Maybe<[TokenTree, List<TokenTree>]> {
   if (p.size > 0) {
     let last = p.last();
     let rest = p.pop();
-    return Maybe.of([last, rest]);
+    return MaybeValue.of([last, rest]);
   }
   return Nothing();
 }
@@ -514,7 +517,7 @@ function isTopFunctionExpression(
       if (isIdentifier(optIdent)) {
         return popRestMaybe(rest);
       }
-      return Maybe.of([optIdent, rest]);
+      return MaybeValue.of([optIdent, rest]);
     })
     .chain(([fnKwd, rest]) => {
       if (isKeyword(fnKwd, 'function')) {
@@ -522,9 +525,9 @@ function isTopFunctionExpression(
         if (l == null) {
           throw new Error('Un-expected null line number');
         }
-        return Maybe.of(!isExprPrefix(l, exprAllowed, rest));
+        return MaybeValue.of(!isExprPrefix(l, exprAllowed, rest));
       }
-      return Maybe.of(false);
+      return MaybeValue.of(false);
     })
     .getOrElse(false);
 }
@@ -538,9 +541,9 @@ function isTopObjectLiteral(prefix: List<TokenTree>, exprAllowed: boolean) {
         if (l == null) {
           throw new Error('Un-expected null line number');
         }
-        return Maybe.of(!isExprPrefix(l, exprAllowed, rest));
+        return MaybeValue.of(!isExprPrefix(l, exprAllowed, rest));
       }
-      return Maybe.of(false);
+      return MaybeValue.of(false);
     })
     .getOrElse(false);
 }
@@ -564,13 +567,13 @@ function isTopFunction(prefix: List<TokenTree>) {
       if (isIdentifier(optIdent)) {
         return popRestMaybe(rest);
       }
-      return Maybe.of([optIdent, rest]);
+      return MaybeValue.of([optIdent, rest]);
     })
     .chain(([fnKwd, rest]) => {
       if (isKeyword(fnKwd, 'function')) {
-        return Maybe.of(true);
+        return MaybeValue.of(true);
       }
-      return Maybe.of(false);
+      return MaybeValue.of(false);
     })
     .getOrElse(false);
 }

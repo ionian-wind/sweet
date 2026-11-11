@@ -1,14 +1,14 @@
-import { expect } from './errors';
+import { expect } from './errors.js';
 import { List } from 'immutable';
-import { Enforester } from './enforester';
-import { ALL_PHASES } from './syntax';
+import { Enforester } from './enforester.js';
+import { ALL_PHASES } from './syntax.js';
 import * as _ from 'ramda';
-import ScopeReducer from './scope-reducer';
+import ScopeReducer from './scope-reducer.js';
 import * as T from 'sweet-spec';
 import Term, * as S from 'sweet-spec';
-import Syntax from './syntax';
-import { isTemplate, isDelimiter, getKind } from './tokens';
-import type { TokenTree } from './tokens';
+import Syntax from './syntax.js';
+import { isTemplate, isDelimiter, getKind } from './tokens.js';
+import type { TokenTree } from './tokens.js';
 
 export function wrapInTerms(stx: List<TokenTree>): List<Term> {
   return stx.map((s) => {

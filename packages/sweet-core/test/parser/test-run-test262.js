@@ -2,7 +2,7 @@ import test from 'ava';
 import fs from 'fs';
 
 import { compile } from '../../src/sweet.js';
-import NodeLoader from '../../src/node-loader';
+import NodeLoader from '../../src/node-loader.js';
 
 // TODO: make these pass
 const passExcluded = [

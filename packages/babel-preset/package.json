@@ -10,5 +10,6 @@
   },
   "peerDependencies": {
     "@babel/core": "8.1.0"
-  }
+  },
+  "type": "module"
 }

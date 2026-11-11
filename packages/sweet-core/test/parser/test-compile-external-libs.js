@@ -1,6 +1,6 @@
 import test from 'ava';
 import { compile } from '../../src/sweet.js';
-import NodeLoader from '../../src/node-loader';
+import NodeLoader from '../../src/node-loader.js';
 
 function compileLib(t, input) {
   // just want to assert no errors were thrown and we got back *something*

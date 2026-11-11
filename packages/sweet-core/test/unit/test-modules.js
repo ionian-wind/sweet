@@ -1,4 +1,4 @@
-import { evalWithStore } from '../assertions';
+import { evalWithStore } from '../assertions.js';
 import test from 'ava';
 import { readFileSync } from 'fs';
 

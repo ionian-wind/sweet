@@ -1,6 +1,6 @@
 // @flow
-import SweetModule from './sweet-module';
-import Syntax from './syntax';
+import SweetModule from './sweet-module.js';
+import Syntax from './syntax.js';
 
 export class FunctionDeclTransform {}
 export class VariableDeclTransform {}

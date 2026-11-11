@@ -1,11 +1,11 @@
 // @flow
 
 import { CharStream, isEOS, Reader, setCurrentReadtable } from 'readtable';
-import defaultReadtable from './default-readtable';
+import defaultReadtable from './default-readtable.js';
 import { List } from 'immutable';
-import { EmptyToken } from '../tokens';
+import { EmptyToken } from '../tokens.js';
 
-import type { StartLocation, Slice } from '../tokens';
+import type { StartLocation, Slice } from '../tokens.js';
 
 setCurrentReadtable(defaultReadtable);
 

@@ -1,19 +1,19 @@
 // @flow
-import read from './reader/token-reader';
-import { freshScope } from './scope';
-import Env from './env';
+import read from './reader/token-reader.js';
+import { freshScope } from './scope.js';
+import Env from './env.js';
 import { List } from 'immutable';
-import Compiler from './compiler';
-import { ALL_PHASES } from './syntax';
+import Compiler from './compiler.js';
+import { ALL_PHASES } from './syntax.js';
 import BindingMap from './binding-map.js';
 import Term from 'sweet-spec';
-import SweetModule from './sweet-module';
+import SweetModule from './sweet-module.js';
 import * as _ from 'ramda';
-import ScopeReducer from './scope-reducer';
-import { wrapInTerms } from './macro-context';
+import ScopeReducer from './scope-reducer.js';
+import { wrapInTerms } from './macro-context.js';
 import { transformSync as babel } from '@babel/core';
-import Store from './store';
-import Multimap from './multimap';
+import Store from './store.js';
+import Multimap from './multimap.js';
 
 export const phaseInModulePathRegexp: RegExp = /(.*):(\d+)\s*$/;
 

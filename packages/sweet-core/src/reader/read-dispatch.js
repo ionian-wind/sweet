@@ -2,7 +2,7 @@
 
 import { getCurrentReadtable, setCurrentReadtable } from 'readtable';
 import { List } from 'immutable';
-import { TokenType as TT } from '../tokens';
+import { TokenType as TT } from '../tokens.js';
 
 import type { CharStream } from 'readtable';
 

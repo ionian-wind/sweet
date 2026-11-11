@@ -1,5 +1,5 @@
 import test from 'ava';
-import { evalWithOutput } from '../assertions';
+import { evalWithOutput } from '../assertions.js';
 
 test(
   'should handle interpolations for normal tokens',

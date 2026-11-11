@@ -1,7 +1,7 @@
 import test from 'ava';
-import Parser from '../src/parser';
-import * as C from '../src/combinators';
-import { MockContext } from './_helper';
+import Parser from '../src/parser.js';
+import * as C from '../src/combinators.js';
+import { MockContext } from './_helper.js';
 
 const zero = Parser.sat((n) => n === 0, 'zero');
 const one = Parser.sat((n) => n === 1, 'one');

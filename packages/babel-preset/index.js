@@ -1,22 +1,23 @@
-'use strict';
+import presetEnv from '@babel/preset-env';
+import presetFlow from '@babel/preset-flow';
 
-module.exports = function sweetBabelPreset(api, options = {}) {
+export default function sweetBabelPreset(api, options = {}) {
   api.assertVersion(8);
 
   const {
     flow = true,
-    modules = 'commonjs',
+    modules = false,
     targets = { node: 'current' },
   } = options;
 
-  const presets = [[require.resolve('@babel/preset-env'), { targets, modules }]];
+  const presets = [[presetEnv, { targets, modules }]];
 
   if (flow) {
-    presets.push(require.resolve('@babel/preset-flow'));
+    presets.push(presetFlow);
   }
 
   return {
     presets,
     sourceMaps: 'inline',
   };
-};
+}

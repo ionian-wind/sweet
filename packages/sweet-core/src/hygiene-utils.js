@@ -1,6 +1,6 @@
 import { List } from 'immutable';
 
-import ASTDispatcher from './ast-dispatcher';
+import ASTDispatcher from './ast-dispatcher.js';
 
 export class CollectBindingSyntax extends ASTDispatcher {
   constructor() {

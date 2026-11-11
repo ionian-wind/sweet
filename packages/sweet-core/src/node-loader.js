@@ -1,11 +1,11 @@
 // @flow
-import SweetLoader, { phaseInModulePathRegexp } from './sweet-loader';
+import SweetLoader, { phaseInModulePathRegexp } from './sweet-loader.js';
 import { readFileSync } from 'fs';
 import { dirname } from 'path';
 import resolve from 'resolve';
 import vm from 'vm';
-import Store from './store';
-import type { LoaderOptions } from './sweet-loader';
+import Store from './store.js';
+import type { LoaderOptions } from './sweet-loader.js';
 
 type NodeLoaderOptions = LoaderOptions & { extensions?: Array<string> };
 

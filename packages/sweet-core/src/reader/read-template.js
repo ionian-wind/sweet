@@ -4,9 +4,9 @@ import { List } from 'immutable';
 import type { CharStream } from 'readtable';
 import { isEOS } from 'readtable';
 
-import { readStringEscape } from './utils';
-import { getSlice } from './token-reader';
-import { TemplateToken, TemplateElementToken } from '../tokens';
+import { readStringEscape } from './utils.js';
+import { getSlice } from './token-reader.js';
+import { TemplateToken, TemplateElementToken } from '../tokens.js';
 
 export default function readTemplateLiteral(
   this: any,

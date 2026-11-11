@@ -3,7 +3,7 @@ import Term, * as S from 'sweet-spec';
 import { complement } from 'ramda';
 import { List } from 'immutable';
 
-import { isEmptyStatement } from './terms';
+import { isEmptyStatement } from './terms.js';
 
 import type Syntax from './syntax.js';
 

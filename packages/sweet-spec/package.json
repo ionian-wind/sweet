@@ -4,13 +4,13 @@
   "description": "The Sweet.js Term specification",
   "main": "dist/term-spec.js",
   "scripts": {
-    "test": "echo \"No tests in sweet-spec\"",
     "prebuild": "mkdir -p dist && mkdir -p build",
     "build:sweet": "sjs --out-dir build src/term-spec.js",
-    "build:babel": "babel --out-dir dist build",
+    "build:babel:esm": "babel --out-dir dist build",
     "build:flow": "sh gen-flow.sh",
-    "build": "npm run build:sweet && npm run build:babel && npm run build:flow",
-    "publish": "npm run build"
+    "build": "npm run build:sweet && npm run build:babel:esm && npm run build:flow",
+    "publish": "npm run build",
+    "test": "echo \"No tests in sweet-spec\""
   },
   "author": "Tim Disney",
   "license": "BSD-2-Clause",
@@ -20,5 +20,10 @@
     "sweet-spec-macro": "3.0.0",
     "@sweet-js/cli": "3.0.13",
     "@sweet-js/core": "3.0.13"
-  }
+  },
+  "exports": {
+    ".": "./dist/term-spec.js",
+    "./package.json": "./package.json"
+  },
+  "type": "module"
 }

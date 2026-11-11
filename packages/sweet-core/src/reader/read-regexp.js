@@ -2,8 +2,8 @@
 import type { CharStream } from 'readtable';
 
 import { isEOS } from 'readtable';
-import { RegExpToken } from '../tokens';
-import { isLineTerminator, isIdentifierPart } from './utils';
+import { RegExpToken } from '../tokens.js';
+import { isLineTerminator, isIdentifierPart } from './utils.js';
 
 export default function readRegExp(this: any, stream: CharStream): RegExpToken {
   let value = stream.readString(),

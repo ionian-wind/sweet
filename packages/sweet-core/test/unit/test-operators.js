@@ -1,4 +1,4 @@
-import { evalWithOutput } from '../assertions';
+import { evalWithOutput } from '../assertions.js';
 import test from 'ava';
 
 test(

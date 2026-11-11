@@ -1,4 +1,3 @@
-'use strict';
 /*
 This file makes debugging sweet.js easier. Uses the built version of sweet.js
 to compile 'test.js'. You can use node-inspector to step through the expansion
@@ -8,9 +7,9 @@ process:
 	node-debug debug.js
 */
 
-require('babel-register');
-var compile = require('./src/sweet-loader.js').default;
-let fs = require('fs');
+import fs from 'node:fs';
+import { compile } from './src/sweet.js';
+import NodeLoader from './src/node-loader.js';
 
 debugger;
 
@@ -164,7 +163,7 @@ const passExcluded = [
 
 function mkTester(subdir) {
   function f(fname) {
-    let result = compile(`${PARSER_TEST_DIR}/${subdir}/${fname}`).codegen()
+    let result = compile(`${PARSER_TEST_DIR}/${subdir}/${fname}`, new NodeLoader(import.meta.dirname), { noBabel: true }).code;
     if (result == null) {
       throw new Error('un expected null result');
     }

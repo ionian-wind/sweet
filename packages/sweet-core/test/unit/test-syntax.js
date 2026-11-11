@@ -1,9 +1,9 @@
-import Syntax from '../../src/syntax';
+import Syntax from '../../src/syntax.js';
 import expect from 'expect.js';
-import { freshScope } from '../../src/scope';
-import BindingMap from '../../src/binding-map';
+import { freshScope } from '../../src/scope.js';
+import BindingMap from '../../src/binding-map.js';
 
-import { gensym } from '../../src/symbol';
+import { gensym } from '../../src/symbol.js';
 import test from 'ava';
 
 test('that have no bindings or scopes should resolve to their original name ', () => {

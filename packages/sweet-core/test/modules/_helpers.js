@@ -1,7 +1,7 @@
 import { writeFileSync, mkdtempSync } from 'fs';
 import { execSync } from 'child_process';
-import { compile } from '../../src/sweet';
-import NodeLoader from '../../src/node-loader';
+import { compile } from '../../src/sweet.js';
+import NodeLoader from '../../src/node-loader.js';
 import { sync as rimraf } from 'rimraf';
 
 // write each module to a temp dir, compile them with sweet,

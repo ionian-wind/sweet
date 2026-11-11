@@ -1,9 +1,9 @@
 // @flow
 import type { CharStream } from 'readtable';
 
-import { readStringEscape, isLineTerminator } from './utils';
+import { readStringEscape, isLineTerminator } from './utils.js';
 import { isEOS } from 'readtable';
-import { StringToken } from '../tokens';
+import { StringToken } from '../tokens.js';
 
 export default function readStringLiteral(
   this: any,

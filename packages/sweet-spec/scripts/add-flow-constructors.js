@@ -1,7 +1,6 @@
 #!/usr/bin/env node
-'use strict';
 
-const fs = require('fs');
+import fs from 'node:fs';
 
 const file = process.argv[2];
 if (!file) {

@@ -1,9 +1,9 @@
 import { List } from 'immutable';
 
-import read from '../src/reader/token-reader';
-import { compile, parse } from '../src/sweet';
-import { Enforester } from '../src/enforester';
-import StoreLoader from '../src/store-loader';
+import read from '../src/reader/token-reader.js';
+import { compile, parse } from '../src/sweet.js';
+import { Enforester } from '../src/enforester.js';
+import StoreLoader from '../src/store-loader.js';
 
 export const stmt = (x) => x.items[0];
 export const expr = (x) => stmt(x).expression;

@@ -2,8 +2,8 @@
 import type { CharStream } from 'readtable';
 
 import { isEOS } from 'readtable';
-import { skipSingleLineComment } from './utils';
-import { EmptyToken } from '../tokens';
+import { skipSingleLineComment } from './utils.js';
+import { EmptyToken } from '../tokens.js';
 
 export default function readComment(
   this: any,

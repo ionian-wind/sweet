@@ -1,6 +1,6 @@
-import read from '../../src/reader/token-reader';
+import read from '../../src/reader/token-reader.js';
 import test from 'ava';
-import * as H from '../../helpers';
+import * as H from '../../helpers.js';
 import { wrapInTerms } from '../../src/macro-context.js';
 
 function wrappingRead(src) {

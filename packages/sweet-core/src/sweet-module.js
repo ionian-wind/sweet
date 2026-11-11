@@ -1,11 +1,11 @@
 // @flow
 import Term, * as T from 'sweet-spec';
 import * as _ from 'ramda';
-import * as S from './sweet-spec-utils';
-import codegen from './codegen';
+import * as S from './sweet-spec-utils.js';
+import codegen from './codegen.js';
 import { List } from 'immutable';
 import SweetToShiftReducer from './sweet-to-shift-reducer.js';
-import Syntax from './syntax';
+import Syntax from './syntax.js';
 
 const extractDeclaration = _.cond([
   [S.isExport, _.prop('declaration')],

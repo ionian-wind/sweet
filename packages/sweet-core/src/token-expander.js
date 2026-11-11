@@ -1,23 +1,23 @@
 // @flow
 import Term, * as S from 'sweet-spec';
 import { List } from 'immutable';
-import { Enforester } from './enforester';
+import { Enforester } from './enforester.js';
 import TermExpander from './term-expander.js';
-import Env from './env';
+import Env from './env.js';
 import * as _ from 'ramda';
-import * as T from './terms';
-import { gensym } from './symbol';
-import { VarBindingTransform, CompiletimeTransform } from './transforms';
-import { evalCompiletimeValue } from './load-syntax';
-import { freshScope } from './scope';
-import { ALL_PHASES } from './syntax';
-import ASTDispatcher from './ast-dispatcher';
+import * as T from './terms.js';
+import { gensym } from './symbol.js';
+import { VarBindingTransform, CompiletimeTransform } from './transforms.js';
+import { evalCompiletimeValue } from './load-syntax.js';
+import { freshScope } from './scope.js';
+import { ALL_PHASES } from './syntax.js';
+import ASTDispatcher from './ast-dispatcher.js';
 import Syntax from './syntax.js';
-import ScopeReducer from './scope-reducer';
+import ScopeReducer from './scope-reducer.js';
 import ModuleVisitor, {
   bindImports,
   isBoundToCompiletime,
-} from './module-visitor';
+} from './module-visitor.js';
 
 class RegisterBindingsReducer extends Term.CloneReducer {
   useScope: any;

@@ -51,6 +51,7 @@
     "nodeArguments": [
       "--import",
       "./ava.setup.mjs"
-    ]
+    ],
+    "timeout": "2m"
   }
 }

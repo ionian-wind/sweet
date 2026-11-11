@@ -1,5 +1,5 @@
 import test from 'ava';
-import { getAst } from '../assertions';
+import { getAst } from '../assertions.js';
 
 test('does not include the lang directive in the AST', (t) => {
   t.snapshot(

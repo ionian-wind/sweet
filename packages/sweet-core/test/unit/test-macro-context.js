@@ -1,7 +1,7 @@
 import test from 'ava';
-import MacroContext from '../../src/macro-context';
-import Syntax from '../../src/syntax';
-import { makeEnforester } from '../assertions';
+import MacroContext from '../../src/macro-context.js';
+import Syntax from '../../src/syntax.js';
+import { makeEnforester } from '../assertions.js';
 import { List } from 'immutable';
 
 test('a macro context should have a name', (t) => {

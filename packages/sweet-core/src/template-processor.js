@@ -1,8 +1,8 @@
 import { List } from 'immutable';
 import * as _ from 'ramda';
-import { assert } from './errors';
+import { assert } from './errors.js';
 import * as T from 'sweet-spec';
-import Syntax from './syntax';
+import Syntax from './syntax.js';
 
 /*
 Given a syntax list like:

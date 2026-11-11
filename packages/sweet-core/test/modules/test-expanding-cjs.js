@@ -1,4 +1,4 @@
-import { compileToCjs } from './_helpers';
+import { compileToCjs } from './_helpers.js';
 import test from 'ava';
 
 test(

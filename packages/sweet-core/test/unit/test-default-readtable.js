@@ -3,12 +3,12 @@ import expect from 'expect.js';
 import { List } from 'immutable';
 
 import { getCurrentReadtable } from 'readtable';
-import read from '../../src/reader/token-reader';
+import read from '../../src/reader/token-reader.js';
 import {
   TokenType as TT,
   TokenClass as TC,
   EmptyToken,
-} from '../../src/tokens';
+} from '../../src/tokens.js';
 
 function testParse(source, tst) {
   const prevTable = getCurrentReadtable();

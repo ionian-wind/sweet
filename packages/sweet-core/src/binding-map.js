@@ -1,9 +1,12 @@
 // @flow
 import { List } from 'immutable';
-import { assert } from './errors';
-import { Maybe } from 'ramda-fantasy';
-import type { SymbolClass } from './symbol';
-import Syntax from './syntax';
+import { assert } from './errors.js';
+import ramdaFantasy from 'ramda-fantasy';
+import type { Maybe } from 'ramda-fantasy';
+
+const { Maybe: MaybeValue } = ramdaFantasy;
+import type { SymbolClass } from './symbol.js';
+import Syntax from './syntax.js';
 
 type Scopeset = any;
 
@@ -52,7 +55,7 @@ export default class BindingMap {
         scopesetBindingList.push({
           scopes: scopeset,
           binding: binding,
-          alias: Maybe.Nothing(),
+          alias: MaybeValue.Nothing(),
         }),
       );
     } else {
@@ -61,7 +64,7 @@ export default class BindingMap {
         List.of({
           scopes: scopeset,
           binding: binding,
-          alias: Maybe.Nothing(),
+          alias: MaybeValue.Nothing(),
         }),
       );
     }
@@ -88,7 +91,7 @@ export default class BindingMap {
         scopesetBindingList.push({
           scopes: scopeset,
           binding: binding,
-          alias: Maybe.of(forwardStx),
+          alias: MaybeValue.of(forwardStx),
         }),
       );
     } else {
@@ -97,7 +100,7 @@ export default class BindingMap {
         List.of({
           scopes: scopeset,
           binding: binding,
-          alias: Maybe.of(forwardStx),
+          alias: MaybeValue.of(forwardStx),
         }),
       );
     }

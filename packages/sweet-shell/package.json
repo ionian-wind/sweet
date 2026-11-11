@@ -28,5 +28,12 @@
   "dependencies": {
     "@sweet-js/cli": "3.0.13",
     "@sweet-js/core": "3.0.13"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./node-loader.js": "./node-loader.js",
+    "./helpers.js": "./helpers.js",
+    "./package.json": "./package.json"
   }
 }

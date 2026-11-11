@@ -2,13 +2,13 @@
 
 import { List } from 'immutable';
 import { isEOS, getCurrentReadtable, setCurrentReadtable } from 'readtable';
-import readIdentifier from './read-identifier';
-import readNumericLiteral from './read-numeric';
-import readStringLiteral from './read-string';
-import readTemplateLiteral from './read-template';
+import readIdentifier from './read-identifier.js';
+import readNumericLiteral from './read-numeric.js';
+import readStringLiteral from './read-string.js';
+import readTemplateLiteral from './read-template.js';
 import readRegExp from './read-regexp.js';
-import readComment from './read-comment';
-import { readSyntaxTemplate } from './read-dispatch';
+import readComment from './read-comment.js';
+import { readSyntaxTemplate } from './read-dispatch.js';
 import {
   punctuatorTable as punctuatorMapping,
   keywordTable as keywordMapping,
@@ -16,7 +16,7 @@ import {
   PunctuatorToken,
   EmptyToken,
   IdentifierToken,
-} from '../tokens';
+} from '../tokens.js';
 import {
   insertSequence,
   retrieveSequenceLength,
@@ -26,7 +26,7 @@ import {
   isWhiteSpace,
   isLineTerminator,
   isDecimalDigit,
-} from './utils';
+} from './utils.js';
 
 import type { CharStream } from 'readtable';
 

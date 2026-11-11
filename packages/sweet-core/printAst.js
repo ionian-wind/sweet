@@ -1,13 +1,6 @@
-var parse = require("./build/src/sweet.js").parse;
-var readFile = require("fs").readFileSync;
-var moduleResolver = require('./build/src/node-module-resolver').default;
-var moduleLoader = require('./build/src/node-module-loader').default;
-var transform = require('babel-core').transform;
+import { parse } from './dist/sweet.js';
+import NodeLoader from './dist/node-loader.js';
 
-console.log(JSON.stringify(parse(readFile("test.js", "utf8"), {
-  cwd: __dirname,
-	transform: transform,
-	filename: './test.js',
-  moduleResolver: moduleResolver,
-  moduleLoader: moduleLoader
-}), null, 2));
+console.log(
+  JSON.stringify(parse('test.js', new NodeLoader(import.meta.dirname)), null, 2),
+);

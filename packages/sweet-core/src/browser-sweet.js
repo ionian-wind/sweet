@@ -1,6 +1,6 @@
-import { compile as sweetCompile } from './sweet';
-import StoreLoader from './store-loader';
-import Store from './store';
+import { compile as sweetCompile } from './sweet.js';
+import StoreLoader from './store-loader.js';
+import Store from './store.js';
 
 class BrowserStoreLoader extends StoreLoader {
   store: Map<string, string>;

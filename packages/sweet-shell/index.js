@@ -1,1 +1,1 @@
-module.exports = require('@sweet-js/core');
+export * from '@sweet-js/core';

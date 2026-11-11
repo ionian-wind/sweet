@@ -1,5 +1,5 @@
 // @flow
-import type SweetLoader from './sweet-loader';
+import type SweetLoader from './sweet-loader.js';
 import { transformSync as babel } from '@babel/core';
 
 type CompileOptions = {

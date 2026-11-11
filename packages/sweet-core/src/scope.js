@@ -1,6 +1,6 @@
 // @flow
-import type { SymbolClass } from './symbol';
-import { Symbol } from './symbol';
+import type { SymbolClass } from './symbol.js';
+import { Symbol } from './symbol.js';
 
 let scopeIndex = 0;
 

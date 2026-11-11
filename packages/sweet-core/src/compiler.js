@@ -1,7 +1,7 @@
 import TermExpander from './term-expander.js';
-import TokenExpander from './token-expander';
+import TokenExpander from './token-expander.js';
 import * as _ from 'ramda';
-import Multimap from './multimap';
+import Multimap from './multimap.js';
 
 export default class Compiler {
   constructor(phase, env, store, context) {

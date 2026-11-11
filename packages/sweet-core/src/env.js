@@ -29,7 +29,7 @@ import {
   WhileTransform,
   AsyncTransform,
   AwaitTransform,
-} from './transforms';
+} from './transforms.js';
 
 export default class Env {
   map: Map<string, any>;

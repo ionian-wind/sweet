@@ -1,7 +1,6 @@
 import test from 'ava';
 import { compile } from '@sweet-js/core';
-import NodeLoaderModule from '@sweet-js/core/dist/node-loader';
-const NodeLoader = NodeLoaderModule.default || NodeLoaderModule;
+import NodeLoader from '@sweet-js/core/dist/node-loader';
 import { transformSync } from '@babel/core';
 import { join } from 'node:path';
 
@@ -27,6 +26,7 @@ function compileAndEval(code) {
     babelrc: false,
     presets: [['@sweet-js/babel-preset', { modules: 'commonjs' }]],
   }).code;
+  // The compiled fixture exports classes, so evaluate it as CommonJS locally.
   const module = { exports: {} };
   const exports = module.exports;
   eval(res);

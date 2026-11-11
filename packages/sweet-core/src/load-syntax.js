@@ -1,13 +1,13 @@
 import * as S from 'sweet-spec';
 import * as _ from 'ramda';
 import { List } from 'immutable';
-import Syntax from './syntax';
+import Syntax from './syntax.js';
 import { codeGen as codegen, FormattedCodeGen } from 'shift-codegen';
-import SweetToShiftReducer from './sweet-to-shift-reducer';
-import TermExpander from './term-expander';
-import Env from './env';
+import SweetToShiftReducer from './sweet-to-shift-reducer.js';
+import TermExpander from './term-expander.js';
+import Env from './env.js';
 
-import { replaceTemplate } from './template-processor';
+import { replaceTemplate } from './template-processor.js';
 
 export function expandCompiletime(term, context) {
   // each compiletime value needs to be expanded with a fresh

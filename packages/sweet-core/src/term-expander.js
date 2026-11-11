@@ -1,16 +1,16 @@
 import { List } from 'immutable';
-import { isExpressionStatement, isLiteralStringExpression } from './terms';
+import { isExpressionStatement, isLiteralStringExpression } from './terms.js';
 import Term, * as T from 'sweet-spec';
-import { freshScope } from './scope';
-import Compiler from './compiler';
-import { ALL_PHASES } from './syntax';
-import { Enforester } from './enforester';
-import { processTemplate } from './template-processor';
-import ASTDispatcher from './ast-dispatcher';
-import ScopeReducer from './scope-reducer';
-import { gensym } from './symbol';
-import { VarBindingTransform } from './transforms';
-import Syntax from './syntax';
+import { freshScope } from './scope.js';
+import Compiler from './compiler.js';
+import { ALL_PHASES } from './syntax.js';
+import { Enforester } from './enforester.js';
+import { processTemplate } from './template-processor.js';
+import ASTDispatcher from './ast-dispatcher.js';
+import ScopeReducer from './scope-reducer.js';
+import { gensym } from './symbol.js';
+import { VarBindingTransform } from './transforms.js';
+import Syntax from './syntax.js';
 
 export default class TermExpander extends ASTDispatcher {
   constructor(context) {

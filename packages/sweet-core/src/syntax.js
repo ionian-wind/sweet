@@ -1,12 +1,14 @@
 // @flow
 import { List, Map } from 'immutable';
-import { assert } from './errors';
-import BindingMap from './binding-map';
-import { Maybe } from 'ramda-fantasy';
+import { assert } from './errors.js';
+import BindingMap from './binding-map.js';
+import ramdaFantasy from 'ramda-fantasy';
+
+const { Maybe } = ramdaFantasy;
 import * as _ from 'ramda';
 import * as T from 'sweet-spec';
 
-import { TokenType, TokenClass, TypeCodes } from './tokens';
+import { TokenType, TokenClass, TypeCodes } from './tokens.js';
 
 type Token = {
   type: any,

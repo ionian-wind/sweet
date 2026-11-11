@@ -3,10 +3,12 @@ import {
   isIdentifierExpression,
   isStaticMemberExpression,
   isComputedMemberExpression,
-} from './terms';
+} from './terms.js';
 import Term, * as T from 'sweet-spec';
-import { Maybe } from 'ramda-fantasy';
-import ScopeReducer from './scope-reducer';
+import ramdaFantasy from 'ramda-fantasy';
+
+const { Maybe } = ramdaFantasy;
+import ScopeReducer from './scope-reducer.js';
 const Just = Maybe.Just;
 const Nothing = Maybe.Nothing;
 
@@ -43,23 +45,23 @@ import {
   ModuleNamespaceTransform,
   AsyncTransform,
   AwaitTransform,
-} from './transforms';
+} from './transforms.js';
 import { List } from 'immutable';
-import { expect, assert } from './errors';
+import { expect, assert } from './errors.js';
 import {
   isOperator,
   isUnaryOperator,
   getOperatorAssoc,
   getOperatorPrec,
   operatorLt,
-} from './operators';
-import Syntax, { ALL_PHASES } from './syntax';
-import type { SymbolClass } from './symbol';
+} from './operators.js';
+import Syntax, { ALL_PHASES } from './syntax.js';
+import type { SymbolClass } from './symbol.js';
 
-import { freshScope } from './scope';
-import { sanitizeReplacementValues } from './load-syntax';
+import { freshScope } from './scope.js';
+import { sanitizeReplacementValues } from './load-syntax.js';
 
-import MacroContext from './macro-context';
+import MacroContext from './macro-context.js';
 
 const EXPR_LOOP_OPERATOR = {};
 const EXPR_LOOP_NO_CHANGE = {};

@@ -1,7 +1,7 @@
 'lang sweet.js';
 // @flow
-import { Either, Left } from './either';
-import { Maybe, Just, Nothing } from './maybe';
+import { Either, Left } from './either.js';
+import { Maybe, Just, Nothing } from './maybe.js';
 
 type Mark = {};
 
